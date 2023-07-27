@@ -20,10 +20,12 @@ const AboutUsButton = () => {
           Sobre Nós <FaChevronRight />
         </ToggleButton>
         <Links isOpen={isOpen}>
-          <StyledLink href="/">Quem somos</StyledLink>
-          <StyledLink href="/">Instituição Beneficiada</StyledLink>
-          <StyledLink href="/">Regulamentos</StyledLink>
-          <StyledLink href="/">Política de Privacidade</StyledLink>
+          <StyledLink href="/quem-somos">Quem somos</StyledLink>
+          <StyledLink href="/instituicao">Instituição Beneficiada</StyledLink>
+          <StyledLink href="/regulamentos">Regulamentos</StyledLink>
+          <StyledLink href="/politica-de-privacidade">
+            Política de Privacidade
+          </StyledLink>
         </Links>
       </Container>
     </Wrapper>
