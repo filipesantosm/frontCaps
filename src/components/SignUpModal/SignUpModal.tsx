@@ -1,10 +1,11 @@
-import handleError from '@/utils/handleToast';
+import handleError, { handleSuccess } from '@/utils/handleToast';
 import { ISignUpFormData } from '@/validations/SignUpSchemas';
 import { useState } from 'react';
 import {
   IoChevronBackCircleOutline,
   IoCloseCircleOutline,
 } from 'react-icons/io5';
+import api from '@/services/api';
 import AddressStep from './steps/AddressStep/AddressStep';
 import CpfStep from './steps/CpfStep/CpfStep';
 import PasswordStep from './steps/PasswordStep/PasswordStep';
@@ -39,7 +40,16 @@ const SignUpModal = ({ onClose, onClickLogin }: Props) => {
 
   const handleSubmit = async (finalForm: ISignUpFormData) => {
     try {
-      onClose();
+      const payload = {
+        ...finalForm,
+        username: finalForm.cpf,
+        confirm_password: undefined,
+      };
+
+      await api.post('/auth/local/register', payload);
+
+      handleSuccess('Cadastrado com sucesso!');
+      onClickLogin();
     } catch (error) {
       handleError(error);
     }
