@@ -1,4 +1,5 @@
 import { intervalToDuration } from 'date-fns';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { PiShoppingCartSimpleFill } from 'react-icons/pi';
 import ShadowSelect from '../ShadowSelect/ShadowSelect';
@@ -18,6 +19,8 @@ import {
 const raffleDate = new Date(2023, 6, 30);
 
 const NextRaffle = () => {
+  const router = useRouter();
+
   const [durationToNext, setDurationToNext] = useState({
     days: 0,
     hours: 0,
@@ -74,7 +77,7 @@ const NextRaffle = () => {
             ]}
             noOptionsMessage={() => 'Nenhuma opção encontrada'}
           />
-          <BuyButton>
+          <BuyButton type="button" onClick={() => router.push('/comprar')}>
             Comprar R$ 50,00
             <CartIconWrapper>
               <PiShoppingCartSimpleFill size={24} />
