@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
+import { IUser } from '@/interfaces/User';
 import React, {
   createContext,
   ReactNode,
@@ -8,27 +9,10 @@ import React, {
   useState,
 } from 'react';
 
-export interface IResponseLogin {
-  user: User;
-  access_token: string;
-  refresh_token: string;
-}
-
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  avatar: string;
-  role: string;
-  device_token: null;
-  created_at: string;
-  updated_at: string;
-}
-
 interface IUserProvider {
-  user: User;
-  setUser: React.Dispatch<SetStateAction<User>>;
-  isAuthenticated: () => boolean;
+  user: IUser;
+  setUser: React.Dispatch<SetStateAction<IUser>>;
+  isAuthenticated: boolean;
   logout: () => void;
 }
 
@@ -39,11 +23,11 @@ interface ChildrenProps {
 const AuthContext = createContext({} as IUserProvider);
 
 const AuthProvider = ({ children }: ChildrenProps) => {
-  const [user, setUser] = useState<User>({} as User);
+  const [user, setUser] = useState<IUser>({} as IUser);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const dataUser = localStorage.getItem('@token: user');
+    const dataUser = localStorage.getItem('@MultCapWeb: user');
 
     if (dataUser) {
       setUser(JSON.parse(dataUser));
@@ -51,15 +35,13 @@ const AuthProvider = ({ children }: ChildrenProps) => {
     setLoading(false);
   }, []);
 
-  const isAuthenticated = () => {
-    return user.id !== undefined;
-  };
+  const isAuthenticated = !!user.id;
 
   const logout = () => {
-    localStorage.removeItem('@token: user');
-    localStorage.removeItem('@token: accessToken');
-    localStorage.removeItem('@token: refreshToken');
-    setUser({} as User);
+    localStorage.removeItem('@MultCapWeb: user');
+    localStorage.removeItem('@MultCapWeb: accessToken');
+    localStorage.removeItem('@MultCapWeb: refreshToken');
+    setUser({} as IUser);
   };
 
   if (loading) {
