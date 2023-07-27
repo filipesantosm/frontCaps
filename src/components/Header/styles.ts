@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const Container = styled.header`
   position: relative;
-  z-index: 2;
+  z-index: 10;
 
   width: 100%;
   height: 5.375rem;

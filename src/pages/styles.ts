@@ -70,7 +70,7 @@ export const FloatingContactButton = styled.button`
   position: fixed;
   bottom: 2rem;
   right: 10%;
-  z-index: 999;
+  z-index: 3;
 
   min-height: 4.375rem;
   width: fit-content;

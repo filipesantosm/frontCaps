@@ -70,6 +70,7 @@ export const Links = styled.div<AboutContainerProps>`
 
   max-height: 0px;
   overflow: hidden;
+  visibility: hidden;
   opacity: 0;
 
   transition: all 0.2s;
@@ -81,6 +82,7 @@ export const Links = styled.div<AboutContainerProps>`
       overflow: visible;
       padding: 0 0 0.75rem;
       opacity: 1;
+      visibility: visible;
     `}
 `;
 
