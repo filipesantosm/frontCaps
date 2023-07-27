@@ -9,7 +9,7 @@ const Header = () => {
         <Logo src="/logo.png" />
         <Nav>
           <StyledLink href="/">Início</StyledLink>
-          <StyledLink href="/">Como funciona</StyledLink>
+          <StyledLink href="/como-funciona">Como funciona</StyledLink>
           <StyledLink href="/">Resultados</StyledLink>
           <StyledLink href="/">Sorteio ao vivo</StyledLink>
           <AboutUsButton />
