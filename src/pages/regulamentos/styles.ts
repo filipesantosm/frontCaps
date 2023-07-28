@@ -9,7 +9,7 @@ export const Banner = styled.img`
 `;
 
 export const PageContent = styled.div`
-  width: 100%;
+  width: 90%;
   max-width: 68.75rem;
   margin: 0 auto 2.5rem;
 `;

@@ -6,7 +6,8 @@ export const Container = styled.header`
   z-index: 10;
 
   width: 100%;
-  height: 5.375rem;
+  min-height: 5.375rem;
+  padding: 0.5rem;
 
   background: ${({ theme }) => theme.colors.grayf3};
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.37);
@@ -38,6 +39,10 @@ export const Nav = styled.nav`
   display: flex;
   align-items: center;
   gap: 0.75rem;
+
+  @media (max-width: 900px) {
+    flex-wrap: wrap;
+  }
 `;
 
 export const StyledLink = styled(Link)`

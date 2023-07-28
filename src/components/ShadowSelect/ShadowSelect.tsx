@@ -28,6 +28,7 @@ const ShadowSelect = (props: ReactSelectProps) => {
           boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.16)',
           borderRadius: '0.625rem',
           minWidth: '8.75rem',
+          minHeight: '2.375rem',
         }),
         dropdownIndicator: prev => ({
           ...prev,
