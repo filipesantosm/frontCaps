@@ -5,6 +5,7 @@ import ShadowSelect from '@/components/ShadowSelect/ShadowSelect';
 import { FaChevronRight } from 'react-icons/fa';
 import { BsFillLightningChargeFill } from 'react-icons/bs';
 import { PiShoppingCartSimpleFill } from 'react-icons/pi';
+import PurchaseSelect from '@/components/PurchaseSelect/PurchaseSelect';
 import {
   ButtonArrow,
   ContestImage,
@@ -26,16 +27,22 @@ const Purchase = () => {
           <PurchaseColumn>
             <Title>Comprar</Title>
 
-            <ShadowSelect
+            <PurchaseSelect
+              isSearchable={false}
               options={[
                 {
                   label: '1 Título | $ 15,00',
                   value: 1,
+                  price: 15,
                 },
               ]}
+              onChange={() => {
+                console.log('');
+              }}
               defaultValue={{
                 label: '1 Título | R$ 15,00',
                 value: 1,
+                price: 15,
               }}
             />
 
@@ -43,7 +50,7 @@ const Purchase = () => {
               <OptionsLabel>Escolha uma opção</OptionsLabel>
               <OptionButton>
                 <LeftButtonContent>
-                  <BsFillLightningChargeFill size={30} />
+                  <BsFillLightningChargeFill />
                   Compra rápida
                 </LeftButtonContent>
                 <ButtonArrow>
@@ -52,7 +59,7 @@ const Purchase = () => {
               </OptionButton>
               <OptionButton>
                 <LeftButtonContent>
-                  <PiShoppingCartSimpleFill size={30} />
+                  <PiShoppingCartSimpleFill />
                   Escolher meu título
                 </LeftButtonContent>
                 <ButtonArrow>

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const PageContent = styled.div`
-  width: 100%;
+  width: 90%;
   max-width: 68.75rem;
   margin: 0 auto 2.5rem;
 `;
@@ -83,6 +83,10 @@ export const LeftButtonContent = styled.div`
   gap: 1.375rem;
 
   padding-left: 1.6875rem;
+
+  svg {
+    font-size: 1.5rem;
+  }
 `;
 
 export const ButtonArrow = styled.div`

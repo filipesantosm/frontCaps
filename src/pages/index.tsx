@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout/Layout';
 import NextRaffle from '@/components/NextRaffle/NextRaffle';
-import { format } from 'date-fns';
+import { format, nextDay } from 'date-fns';
 import { IoLogoWhatsapp } from 'react-icons/io';
 import Results from '@/components/Results/Results';
 import PlatformNumbers from '@/components/PlatformNumbers/PlatformNumbers';
@@ -17,9 +17,9 @@ import {
   RaffleTitle,
 } from './styles';
 
-const Home = () => {
-  const nextRaffleDate = new Date(2023, 6, 30);
+const nextRaffleDate = nextDay(new Date(), 0);
 
+const Home = () => {
   return (
     <Layout>
       <HeroImage src="/home-hero.png" />

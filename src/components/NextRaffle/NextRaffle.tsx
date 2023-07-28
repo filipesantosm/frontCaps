@@ -1,4 +1,4 @@
-import { intervalToDuration } from 'date-fns';
+import { intervalToDuration, isBefore, nextDay } from 'date-fns';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { PiShoppingCartSimpleFill } from 'react-icons/pi';
@@ -16,7 +16,7 @@ import {
   Title,
 } from './styles';
 
-const raffleDate = new Date(2023, 6, 30);
+const raffleDate = nextDay(new Date(), 0);
 
 const NextRaffle = () => {
   const router = useRouter();
@@ -30,8 +30,20 @@ const NextRaffle = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      const now = new Date();
+
+      if (isBefore(raffleDate, now)) {
+        setDurationToNext({
+          days: 0,
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+        });
+        return;
+      }
+
       const duration = intervalToDuration({
-        start: new Date(),
+        start: now,
         end: raffleDate,
       });
 
