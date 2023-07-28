@@ -5,6 +5,7 @@ import { useCart } from '@/hooks/useCart';
 import { FaCartPlus } from 'react-icons/fa';
 import { ICartItem } from '@/interfaces/Cart';
 import handleError from '@/utils/handleToast';
+import { useRouter } from 'next/router';
 import {
   Card,
   CardBody,
@@ -30,6 +31,7 @@ import {
 const numbersArray = Array.from({ length: 20 }).map((_, index) => index + 1);
 
 const ChooseTitles = () => {
+  const router = useRouter();
   const { cartItems, toggleCartItem } = useCart();
   const [cards, setCards] = useState<ICartItem[]>([]);
   const [isChoosingNumbers, setIsChoosingNumbers] = useState(false);
@@ -104,7 +106,10 @@ const ChooseTitles = () => {
                 />
               ))}
             {cartItems.length > 0 && (
-              <FinishPurchaseButton>
+              <FinishPurchaseButton
+                type="button"
+                onClick={() => router.push('/finalizar-compra')}
+              >
                 Concluir compra ({cartItems.length})
               </FinishPurchaseButton>
             )}

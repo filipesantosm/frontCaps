@@ -41,7 +41,7 @@ export const Item = styled.div`
 `;
 
 export const TotalValueContainer = styled.div`
-  margin-top: auto;
+  margin-top: 5rem;
 
   width: 100%;
   padding: 1.5rem 1.5rem;

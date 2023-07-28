@@ -89,6 +89,10 @@ export const FloatingContactButton = styled.button`
   background: ${({ theme }) => theme.colors.green};
   border-radius: 3rem;
 
+  svg {
+    font-size: 2.5rem;
+  }
+
   transition: filter 0.3s;
 
   &:hover {

@@ -46,7 +46,7 @@ const Purchase = () => {
 
             <OptionsContainer>
               <OptionsLabel>Escolha uma opção</OptionsLabel>
-              <OptionLink href="">
+              <OptionLink href="/finalizar-compra">
                 <LeftButtonContent>
                   <BsFillLightningChargeFill />
                   Compra rápida

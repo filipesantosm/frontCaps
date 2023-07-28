@@ -1,7 +1,8 @@
 import Layout from '@/components/Layout/Layout';
-import React from 'react';
+import React, { useState } from 'react';
 import PageTitle from '@/components/PageTitle/PageTitle';
 import HelpFooter from '@/components/HelpFooter/HelpFooter';
+import { useRouter } from 'next/router';
 import {
   Checkbox,
   ContinueButton,
@@ -18,6 +19,25 @@ import {
 } from './styles';
 
 const FinishPurchase = () => {
+  const router = useRouter();
+  const [paymentMethod, setPaymentMethod] = useState('');
+
+  const handleContinue = () => {
+    if (!paymentMethod) {
+      return;
+    }
+
+    const paymentUrls: Record<string, string> = {
+      pix: '/finalizar-compra/pix',
+      credit_card: '/finalizar-compra/cartao',
+      balance: '/finalizar-compra/saldo',
+    };
+
+    if (paymentUrls[paymentMethod]) {
+      router.push(paymentUrls[paymentMethod]);
+    }
+  };
+
   return (
     <Layout>
       <PageContent>
@@ -66,19 +86,35 @@ const FinishPurchase = () => {
                   type="radio"
                   name="paymentMethod"
                   value="credit_card"
+                  checked={paymentMethod === 'credit_card'}
+                  onChange={() => setPaymentMethod('credit_card')}
                 />
                 Cartão de Crédito
               </PaymentMethodOption>
               <PaymentMethodOption>
-                <Checkbox type="radio" name="paymentMethod" value="balance" />
+                <Checkbox
+                  type="radio"
+                  name="paymentMethod"
+                  value="balance"
+                  checked={paymentMethod === 'balance'}
+                  onChange={() => setPaymentMethod('balance')}
+                />
                 Saldo da conta (R$ 0,00)
               </PaymentMethodOption>
               <PaymentMethodOption>
-                <Checkbox type="radio" name="paymentMethod" value="pix" />
+                <Checkbox
+                  type="radio"
+                  name="paymentMethod"
+                  value="pix"
+                  checked={paymentMethod === 'pix'}
+                  onChange={() => setPaymentMethod('pix')}
+                />
                 PIX
               </PaymentMethodOption>
 
-              <ContinueButton>Continuar</ContinueButton>
+              <ContinueButton onClick={handleContinue}>
+                Continuar
+              </ContinueButton>
             </PaymentMethodList>
           </PaymentMethodContainer>
         </TopSection>

@@ -47,7 +47,7 @@ const Home = () => {
       </HomeContent>
 
       <FloatingContactButton type="button">
-        <IoLogoWhatsapp size={40} />
+        <IoLogoWhatsapp />
         Fale com a gente!
       </FloatingContactButton>
     </Layout>
