@@ -15,6 +15,10 @@ export const TopSection = styled.section`
   gap: 2.5rem;
 
   margin-bottom: 5rem;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
 `;
 
 export const PurchaseColumn = styled.div`
@@ -29,6 +33,11 @@ export const ContestImage = styled.img`
   height: 21.875rem;
   object-fit: cover;
   border-radius: 0.625rem;
+
+  @media (max-width: 800px) {
+    width: 100%;
+    height: auto;
+  }
 `;
 
 export const Title = styled.h1`
@@ -61,7 +70,7 @@ export const OptionLink = styled(Link)`
   display: flex;
   align-items: center;
 
-  min-height: 3.4375rem;
+  height: 3.4375rem;
   width: 100%;
   border-radius: 0.625rem;
   overflow: hidden;
