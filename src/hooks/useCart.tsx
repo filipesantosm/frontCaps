@@ -6,6 +6,7 @@ interface CartContextData {
   cartItems: ICartItem[];
   addToCart: (item: ICartItem) => void;
   removeFromCart: (code: string) => void;
+  toggleCartItem: (item: ICartItem) => void;
 }
 
 const CartContext = createContext({} as CartContextData);
@@ -31,8 +32,19 @@ const CartProvider = ({ children }: Props) => {
     setCartItems(prev => prev.filter(item => item.code !== code));
   };
 
+  const toggleCartItem = (cartItem: ICartItem) => {
+    if (cartItems.find(item => item.code === cartItem.code)) {
+      setCartItems(prev => prev.filter(item => item.code !== cartItem.code));
+      return;
+    }
+
+    setCartItems(prev => [...prev, cartItem]);
+  };
+
   return (
-    <CartContext.Provider value={{ cartItems, removeFromCart, addToCart }}>
+    <CartContext.Provider
+      value={{ cartItems, removeFromCart, addToCart, toggleCartItem }}
+    >
       {children}
     </CartContext.Provider>
   );

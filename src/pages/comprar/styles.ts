@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styled from 'styled-components';
 
 export const PageContent = styled.div`
@@ -52,8 +53,10 @@ export const OptionsLabel = styled.p`
   color: ${({ theme }) => theme.colors.gray5d};
 `;
 
-export const OptionButton = styled.button`
+export const OptionLink = styled(Link)`
   border: none;
+
+  text-decoration: none;
 
   display: flex;
   align-items: center;

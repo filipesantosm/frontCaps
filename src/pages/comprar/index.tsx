@@ -1,16 +1,14 @@
 import HomeFooter from '@/components/HomeFooter/HomeFooter';
 import Layout from '@/components/Layout/Layout';
-import React from 'react';
-import ShadowSelect from '@/components/ShadowSelect/ShadowSelect';
-import { FaChevronRight } from 'react-icons/fa';
-import { BsFillLightningChargeFill } from 'react-icons/bs';
-import { PiShoppingCartSimpleFill } from 'react-icons/pi';
 import PurchaseSelect from '@/components/PurchaseSelect/PurchaseSelect';
+import { BsFillLightningChargeFill } from 'react-icons/bs';
+import { FaChevronRight } from 'react-icons/fa';
+import { PiShoppingCartSimpleFill } from 'react-icons/pi';
 import {
   ButtonArrow,
   ContestImage,
   LeftButtonContent,
-  OptionButton,
+  OptionLink,
   OptionsContainer,
   OptionsLabel,
   PageContent,
@@ -48,7 +46,7 @@ const Purchase = () => {
 
             <OptionsContainer>
               <OptionsLabel>Escolha uma opção</OptionsLabel>
-              <OptionButton>
+              <OptionLink href="">
                 <LeftButtonContent>
                   <BsFillLightningChargeFill />
                   Compra rápida
@@ -56,8 +54,8 @@ const Purchase = () => {
                 <ButtonArrow>
                   <FaChevronRight />
                 </ButtonArrow>
-              </OptionButton>
-              <OptionButton>
+              </OptionLink>
+              <OptionLink href="/escolher-titulo">
                 <LeftButtonContent>
                   <PiShoppingCartSimpleFill />
                   Escolher meu título
@@ -65,7 +63,7 @@ const Purchase = () => {
                 <ButtonArrow>
                   <FaChevronRight />
                 </ButtonArrow>
-              </OptionButton>
+              </OptionLink>
             </OptionsContainer>
           </PurchaseColumn>
           <ContestImage src="/home-hero.png" />
