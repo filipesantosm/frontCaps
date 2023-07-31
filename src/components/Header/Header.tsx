@@ -13,7 +13,7 @@ const Header = () => {
           <StyledLink href="/">Resultados</StyledLink>
           <StyledLink href="/">Sorteio ao vivo</StyledLink>
           <AboutUsButton />
-          <StyledLink href="/">Ajuda</StyledLink>
+          <StyledLink href="/ajuda">Ajuda</StyledLink>
         </Nav>
         <HeaderUser />
       </Content>
