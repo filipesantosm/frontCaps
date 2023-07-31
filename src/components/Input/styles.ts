@@ -85,6 +85,7 @@ export const ShowPasswordButton = styled.button`
   border-radius: 50%;
 
   color: #717692;
+  font-size: 1.875rem;
 
   transition: color 0.3s;
 

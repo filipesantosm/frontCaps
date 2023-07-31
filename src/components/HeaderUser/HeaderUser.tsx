@@ -71,7 +71,7 @@ const HeaderUser = () => {
             Cadastre-se
           </RegisterButton>
           <LoginButton type="button" onClick={() => setModalToShow('login')}>
-            <BsFillPersonFill size={20} />
+            <BsFillPersonFill />
             Entrar
           </LoginButton>
         </Container>

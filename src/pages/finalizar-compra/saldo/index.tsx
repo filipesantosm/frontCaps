@@ -2,6 +2,7 @@ import CartItemsList from '@/components/CartItemsList/CartItemsList';
 import HelpFooter from '@/components/HelpFooter/HelpFooter';
 import Layout from '@/components/Layout/Layout';
 import PageTitle from '@/components/PageTitle/PageTitle';
+import { useRouter } from 'next/router';
 import {
   BalanceCard,
   BalanceCardsContainer,
@@ -19,6 +20,8 @@ import {
 } from './styles';
 
 const BalancePayment = () => {
+  const router = useRouter();
+
   return (
     <Layout>
       <PageContent>
@@ -44,7 +47,9 @@ const BalancePayment = () => {
               </BalanceDescription>
               <ButtonsContainer>
                 <FilledButton>Realizar pagamento</FilledButton>
-                <OutlinedButton>Adicionar saldo</OutlinedButton>
+                <OutlinedButton onClick={() => router.push('/adicionar-saldo')}>
+                  Adicionar saldo
+                </OutlinedButton>
               </ButtonsContainer>
             </ColumnContent>
           </BalanceColumn>

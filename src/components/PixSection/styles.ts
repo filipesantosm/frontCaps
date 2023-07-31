@@ -12,6 +12,12 @@ export const Container = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: space-around;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
 `;
 
 export const Column = styled.div`

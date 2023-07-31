@@ -38,6 +38,10 @@ export const RegisterButton = styled(StyledButton)`
 export const LoginButton = styled(StyledButton)`
   background: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.white};
+
+  svg {
+    font-size: 1.25rem;
+  }
 `;
 
 interface UserDropdownProps {

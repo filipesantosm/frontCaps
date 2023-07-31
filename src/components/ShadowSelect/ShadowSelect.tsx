@@ -15,11 +15,12 @@ const ShadowSelect = (props: ReactSelectProps) => {
           fontWeight: 600,
           color: '#00214b',
         }),
-        option: prev => ({
+        option: (prev, { isSelected }) => ({
           ...prev,
           fontSize: '1rem',
           fontWeight: 600,
           color: '#00214b',
+          background: isSelected ? '#E4EEF7' : '#fff',
         }),
         control: prev => ({
           ...prev,
@@ -33,9 +34,14 @@ const ShadowSelect = (props: ReactSelectProps) => {
         dropdownIndicator: prev => ({
           ...prev,
           color: '#00214b',
+          padding: '0.5rem',
           ':hover': {
             color: '#00214b',
           },
+        }),
+        indicatorsContainer: prev => ({
+          ...prev,
+          padding: 0,
         }),
       }}
     />

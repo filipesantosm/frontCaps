@@ -49,11 +49,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             title={showPassword ? 'Esconder senha' : 'Mostrar senha'}
             tabIndex={-1}
           >
-            {showPassword ? (
-              <AiOutlineEye size={30} />
-            ) : (
-              <AiOutlineEyeInvisible size={30} />
-            )}
+            {showPassword ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
           </ShowPasswordButton>
         )}
         <StyledInput

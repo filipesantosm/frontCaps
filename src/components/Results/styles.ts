@@ -59,6 +59,10 @@ export const ItemTop = styled.div`
   display: flex;
   align-items: center;
   gap: 1.875rem;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 interface PrizeProps {
@@ -276,6 +280,13 @@ export const SpecialWinner = styled.article`
   background: ${({ theme }) => theme.colors.grayf3};
 
   padding: 1.25rem 1.875rem;
+
+  @media (max-width: 800px) {
+    max-width: unset;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const SpecialWinnerBottom = styled.div`

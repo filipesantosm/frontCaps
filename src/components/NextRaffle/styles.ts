@@ -71,6 +71,7 @@ export const CartIconWrapper = styled.div`
 
   color: ${({ theme }) => theme.colors.white};
   background: #34d665;
+  font-size: 1.5rem;
 `;
 
 export const RightSection = styled.div`
@@ -109,4 +110,9 @@ export const CountdownItem = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
+
+  span {
+    position: relative;
+    top: 1px;
+  }
 `;

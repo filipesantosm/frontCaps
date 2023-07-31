@@ -92,7 +92,7 @@ const NextRaffle = () => {
           <BuyButton type="button" onClick={() => router.push('/comprar')}>
             Comprar R$ 50,00
             <CartIconWrapper>
-              <PiShoppingCartSimpleFill size={24} />
+              <PiShoppingCartSimpleFill />
             </CartIconWrapper>
           </BuyButton>
         </BuyContainer>
@@ -101,22 +101,22 @@ const NextRaffle = () => {
         <RightTitle>Próximo sorteio em</RightTitle>
         <CountdownContainer>
           <CountdownItem>
-            {durationToNext.days.toString().padStart(2, '0')}
+            <span>{durationToNext.days.toString().padStart(2, '0')}</span>
           </CountdownItem>
           <CountdownItem
             style={{
               marginLeft: '0.5rem',
             }}
           >
-            {durationToNext.hours.toString().padStart(2, '0')}
+            <span>{durationToNext.hours.toString().padStart(2, '0')}</span>
           </CountdownItem>
           :
           <CountdownItem>
-            {durationToNext.minutes.toString().padStart(2, '0')}
+            <span>{durationToNext.minutes.toString().padStart(2, '0')}</span>
           </CountdownItem>
           :
           <CountdownItem>
-            {durationToNext.seconds.toString().padStart(2, '0')}
+            <span>{durationToNext.seconds.toString().padStart(2, '0')}</span>
           </CountdownItem>
         </CountdownContainer>
       </RightSection>
