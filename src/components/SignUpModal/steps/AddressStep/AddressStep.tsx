@@ -27,6 +27,13 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
     setError,
   } = useForm<IAddressStepForm>({
     resolver: yupResolver(AddressStepSchema),
+    defaultValues: {
+      cep: signUpFormData?.cep,
+      city: signUpFormData?.city,
+      state: signUpFormData?.state,
+      number: signUpFormData?.number,
+      street: signUpFormData?.street,
+    },
   });
 
   const onSubmit: SubmitHandler<IAddressStepForm> = form => {

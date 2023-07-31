@@ -15,7 +15,7 @@ export const TermsContainer = styled.div`
 `;
 
 export const TermsText = styled.div`
-  max-height: max(10rem, 33vh);
+  max-height: max(10rem, 35vh);
   width: 100%;
 
   padding-right: 3rem;
