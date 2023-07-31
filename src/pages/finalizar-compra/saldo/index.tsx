@@ -3,6 +3,7 @@ import HelpFooter from '@/components/HelpFooter/HelpFooter';
 import Layout from '@/components/Layout/Layout';
 import PageTitle from '@/components/PageTitle/PageTitle';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import {
   BalanceCard,
   BalanceCardsContainer,
@@ -21,6 +22,13 @@ import {
 
 const BalancePayment = () => {
   const router = useRouter();
+  const [hasEnoughBalance, setHasEnoughBalance] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setHasEnoughBalance(true);
+    }, 10000);
+  }, []);
 
   return (
     <Layout>
@@ -33,8 +41,12 @@ const BalancePayment = () => {
               <ColumnTitle>Pagamento com saldo</ColumnTitle>
               <BalanceCardsContainer>
                 <BalanceCard>
-                  <CardTitle>DISPONÍVEL</CardTitle>
-                  <CardValue>R$ 0,00</CardValue>
+                  <CardTitle hasEnoughBalance={hasEnoughBalance}>
+                    DISPONÍVEL
+                  </CardTitle>
+                  <CardValue textColor={hasEnoughBalance ? 'green' : 'red'}>
+                    R$ 0,00
+                  </CardValue>
                 </BalanceCard>
                 <BalanceCard>
                   <CardTitle>PENDENTE</CardTitle>
@@ -45,12 +57,26 @@ const BalancePayment = () => {
                 Obs.: O saldo pode demorar até 72 horas após pagamento do boleto
                 conforme compensação bancária
               </BalanceDescription>
-              <ButtonsContainer>
-                <FilledButton>Realizar pagamento</FilledButton>
-                <OutlinedButton onClick={() => router.push('/adicionar-saldo')}>
-                  Adicionar saldo
-                </OutlinedButton>
-              </ButtonsContainer>
+              {hasEnoughBalance ? (
+                <ButtonsContainer>
+                  <FilledButton>Realizar pagamento</FilledButton>
+                  <OutlinedButton
+                    onClick={() => router.push('/adicionar-saldo')}
+                  >
+                    Adicionar saldo
+                  </OutlinedButton>
+                </ButtonsContainer>
+              ) : (
+                <ButtonsContainer
+                  style={{
+                    marginTop: '5rem',
+                  }}
+                >
+                  <FilledButton onClick={() => router.push('/adicionar-saldo')}>
+                    Adicionar saldo
+                  </FilledButton>
+                </ButtonsContainer>
+              )}
             </ColumnContent>
           </BalanceColumn>
         </TopSection>

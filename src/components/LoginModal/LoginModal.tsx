@@ -10,6 +10,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { useAuth } from '@/hooks/useAuth';
 import { maskCPF } from '@/utils/masks';
+import { IUser } from '@/interfaces/User';
 import Input from '../Input/Input';
 import {
   CloseButton,
@@ -52,13 +53,21 @@ const LoginModal = ({ onClose, onClickSignUp, onClickForgot }: Props) => {
   const onSubmit: SubmitHandler<ILoginForm> = async form => {
     setIsSubmitting(true);
     try {
-      const { data } = await api.post<ILoginResponse>('/auth/local', {
+      /* const { data } = await api.post<ILoginResponse>('/auth/local', {
         identifier: form.cpf,
         password: form.password,
-      });
+      }); */
 
-      handleLocalStorage(data);
-      setUser(data.user);
+      const user = {
+        id: '123',
+        name: 'Nome usuário',
+      } as unknown as IUser;
+
+      handleLocalStorage({
+        jwt: '1234',
+        user,
+      });
+      setUser(user);
       onClose();
     } catch (error) {
       handleError(error);

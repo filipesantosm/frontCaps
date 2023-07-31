@@ -1,3 +1,4 @@
+import { theme as themeObj } from '@/styles/theme';
 import styled from 'styled-components';
 
 export const PageContent = styled.div`
@@ -61,13 +62,28 @@ export const BalanceCard = styled.div`
   gap: 1.25rem;
 `;
 
-export const CardTitle = styled.p`
+interface CardTitleProps {
+  hasEnoughBalance?: boolean;
+}
+
+export const CardTitle = styled.p<CardTitleProps>`
   font-size: 0.875rem;
   letter-spacing: 0.04em;
-  color: ${({ theme }) => theme.colors.gray2f};
+  color: ${({ theme, hasEnoughBalance }) =>
+    hasEnoughBalance ? theme.colors.green : theme.colors.gray2f};
 `;
 
-export const CardValue = styled.p`
+interface CardValueProps {
+  textColor?: 'green' | 'red' | 'gray';
+}
+
+const cardValueColors = {
+  green: themeObj.colors.green,
+  red: themeObj.colors.error,
+  gray: themeObj.colors.gray74,
+};
+
+export const CardValue = styled.p<CardValueProps>`
   width: 10.6875rem;
   height: 4.75rem;
 
@@ -81,7 +97,7 @@ export const CardValue = styled.p`
 
   font-size: 1.3125rem;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.gray74};
+  color: ${({ textColor }) => cardValueColors[textColor || 'gray']};
 `;
 
 export const BalanceDescription = styled.p`
