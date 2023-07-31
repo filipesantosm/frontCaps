@@ -13,13 +13,19 @@ interface Props {
   onClose: () => void;
   title?: string;
   message: string;
+  iconColor?: string;
 }
 
-const SuccessModal = ({ onClose, message, title = 'Sucesso!' }: Props) => {
+const SuccessModal = ({
+  onClose,
+  message,
+  title = 'Sucesso!',
+  iconColor = '#15c149',
+}: Props) => {
   return (
     <Container>
       <Content>
-        <FaCheckCircle color="#15C149" size={68} />
+        <FaCheckCircle color={iconColor} size={68} />
         <Title>{title}</Title>
         <Message>{message}</Message>
         <Separator />

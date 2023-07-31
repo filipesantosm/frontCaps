@@ -93,7 +93,7 @@ const HeaderUser = () => {
           <FaChevronRight size={16} />
         </DropdownButton>
         <DropdownList isOpen={isDropdownOpen}>
-          <DropdownLink href="/">Perfil</DropdownLink>
+          <DropdownLink href="/perfil">Perfil</DropdownLink>
           <DropdownLink href="/">Alterar senha</DropdownLink>
           <DropdownLink href="/">Extrato de compras</DropdownLink>
           <DropdownLink href="/">Meus títulos</DropdownLink>
