@@ -72,8 +72,8 @@ export const AmountItem = styled.label`
 
   min-height: 3rem;
   width: 100%;
-  padding: 0.875rem;
-  border-radius: 0.625rem;
+  padding: 0.25rem 0.875rem;
+  border-radius: 0.3125rem;
   border: 1px solid ${({ theme }) => theme.colors.primaryDark};
 
   display: flex;

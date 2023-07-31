@@ -13,7 +13,7 @@ export const Container = styled.div`
 export const CardOption = styled.label`
   margin-top: 0.625rem;
 
-  min-height: 3rem;
+  height: 3.4375rem;
   width: 100%;
   padding: 0.875rem;
   border-radius: 0.625rem;
@@ -24,7 +24,7 @@ export const CardOption = styled.label`
   gap: 0.625rem;
 
   color: ${({ theme }) => theme.colors.primaryDark};
-  font-size: 1rem;
+  font-size: 1.125rem;
   font-weight: 500;
 `;
 

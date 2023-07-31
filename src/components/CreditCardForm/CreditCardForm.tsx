@@ -4,6 +4,7 @@ import {
   ICreditCardForm,
 } from '@/validations/CreditCardSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Icon } from '@iconify/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Input from '../Input/Input';
 import MaskedInput from '../Input/MaskedInput';
@@ -25,14 +26,16 @@ const CreditCardForm = ({ onSuccess, onError }: Props) => {
     handleSubmit,
     register,
     formState: { errors },
+    watch,
   } = useForm<ICreditCardForm>({
     resolver: yupResolver(CreditCardSchema),
   });
 
   const onSubmit: SubmitHandler<ICreditCardForm> = form => {
-    console.log(form);
     onSuccess();
   };
+
+  const cardNumber = watch('card_number');
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -42,6 +45,20 @@ const CreditCardForm = ({ onSuccess, onError }: Props) => {
         placeholder="0000 0000 0000 0000"
         maxLength={19}
         error={errors?.card_number?.message}
+        icon={
+          cardNumber?.length ? (
+            <Icon
+              icon="brandico:mastercard"
+              style={{
+                position: 'absolute',
+                right: '1rem',
+                bottom: '0.375rem',
+                fontSize: '2.5rem',
+                color: '#00214b',
+              }}
+            />
+          ) : null
+        }
         {...register('card_number')}
       />
       <Input

@@ -16,6 +16,7 @@ interface MaskedInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   labelClassName?: string;
   containerClassName?: string;
   errorClassName?: string;
+  icon?: JSX.Element | null;
 }
 
 const MaskedInput = forwardRef<HTMLInputElement, MaskedInputProps>(
@@ -29,6 +30,7 @@ const MaskedInput = forwardRef<HTMLInputElement, MaskedInputProps>(
       labelClassName,
       containerClassName,
       errorClassName,
+      icon,
       ...rest
     },
     ref,
@@ -53,6 +55,7 @@ const MaskedInput = forwardRef<HTMLInputElement, MaskedInputProps>(
           ref={ref}
           hasError={!!error}
         />
+        {icon && icon}
         {error && (
           <ErrorMessage className={errorClassName}>{error}</ErrorMessage>
         )}

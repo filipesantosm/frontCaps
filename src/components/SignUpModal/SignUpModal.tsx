@@ -47,7 +47,8 @@ const SignUpModal = ({ onClose, onClickLogin }: Props) => {
       };
 
       // await api.post('/auth/local/register', payload);
-
+      setForm({} as ISignUpFormData);
+      setStep(0);
       handleSuccess('Cadastrado com sucesso!');
       onClickLogin();
     } catch (error) {

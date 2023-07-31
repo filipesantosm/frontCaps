@@ -1,4 +1,6 @@
 import { FaPlusCircle } from 'react-icons/fa';
+import { Icon } from '@iconify/react';
+import { theme } from '@/styles/theme';
 import {
   AddCardButton,
   CardOption,
@@ -18,7 +20,12 @@ const CreditCardList = ({ onClickAddCard, onError, onSuccess }: Props) => {
     <Container>
       <CardOption>
         <Checkbox type="checkbox" />
-        **** 2566
+        <Icon
+          icon="brandico:mastercard"
+          width="2.5rem"
+          color={theme.colors.primaryDark}
+        />
+        Mastercard **** 2566
       </CardOption>
       <AddCardButton type="button" onClick={onClickAddCard}>
         <FaPlusCircle />
