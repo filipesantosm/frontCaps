@@ -94,7 +94,7 @@ const HeaderUser = () => {
         </DropdownButton>
         <DropdownList isOpen={isDropdownOpen}>
           <DropdownLink href="/perfil">Perfil</DropdownLink>
-          <DropdownLink href="/">Alterar senha</DropdownLink>
+          <DropdownLink href="/alterar-senha">Alterar senha</DropdownLink>
           <DropdownLink href="/">Extrato de compras</DropdownLink>
           <DropdownLink href="/">Meus títulos</DropdownLink>
           <DropdownItemButton
