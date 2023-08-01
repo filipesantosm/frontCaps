@@ -4,6 +4,7 @@ import PageTitle from '@/components/PageTitle/PageTitle';
 import { useState } from 'react';
 import { FaPlusCircle } from 'react-icons/fa';
 import { useRouter } from 'next/router';
+import { theme } from '@/styles/theme';
 import {
   AddBalanceButton,
   BalanceCard,
@@ -77,25 +78,35 @@ const PurchaseHistory = () => {
         </Column>
         <Separator />
         <Column>
-          <ColumnTitle>Saldo da conta</ColumnTitle>
-          <BalanceCardsContainer>
-            <BalanceCard>
-              <BalanceCardTitle>DISPONÍVEL</BalanceCardTitle>
-              <BalanceCardValue>R$ 0,00</BalanceCardValue>
-            </BalanceCard>
-            <BalanceCard>
-              <BalanceCardTitle>PENDENTE</BalanceCardTitle>
-              <BalanceCardValue>R$ 30,00</BalanceCardValue>
-            </BalanceCard>
-          </BalanceCardsContainer>
-          <AddBalanceButton onClick={() => router.push('/adicionar-saldo')}>
-            <FaPlusCircle />
-            Adicionar saldo
-          </AddBalanceButton>
-          <BalanceDescription>
-            Obs.: O saldo pode demorar até 72 horas após pagamento do boleto
-            conforme compensação bancária
-          </BalanceDescription>
+          {tab === 'pix' && (
+            <>
+              <ColumnTitle>Saldo da conta</ColumnTitle>
+              <BalanceCardsContainer>
+                <BalanceCard>
+                  <BalanceCardTitle>DISPONÍVEL</BalanceCardTitle>
+                  <BalanceCardValue
+                    style={{
+                      color: theme.colors.green,
+                    }}
+                  >
+                    R$ 0,00
+                  </BalanceCardValue>
+                </BalanceCard>
+                <BalanceCard>
+                  <BalanceCardTitle>PENDENTE</BalanceCardTitle>
+                  <BalanceCardValue>R$ 30,00</BalanceCardValue>
+                </BalanceCard>
+              </BalanceCardsContainer>
+              <AddBalanceButton onClick={() => router.push('/adicionar-saldo')}>
+                <FaPlusCircle />
+                Adicionar saldo
+              </AddBalanceButton>
+              <BalanceDescription>
+                Obs.: O saldo pode demorar até 72 horas após pagamento do boleto
+                conforme compensação bancária
+              </BalanceDescription>
+            </>
+          )}
         </Column>
       </PageContent>
     </Layout>
