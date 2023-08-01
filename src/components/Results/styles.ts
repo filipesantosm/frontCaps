@@ -295,3 +295,22 @@ export const SpecialWinnerBottom = styled.div`
   display: flex;
   gap: 3rem;
 `;
+
+export const ResultsVideoTitle = styled.p`
+  margin-top: 6.25rem;
+
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: #00214b;
+  text-align: center;
+`;
+
+export const ResultsVideoImage = styled.img`
+  margin-top: 1.25rem;
+
+  width: 100%;
+  height: 34.375rem;
+  border-radius: 0.625rem;
+  object-fit: cover;
+  object-position: top;
+`;

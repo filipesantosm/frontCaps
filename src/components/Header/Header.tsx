@@ -10,7 +10,7 @@ const Header = () => {
         <Nav>
           <StyledLink href="/">Início</StyledLink>
           <StyledLink href="/como-funciona">Como funciona</StyledLink>
-          <StyledLink href="/">Resultados</StyledLink>
+          <StyledLink href="/resultados">Resultados</StyledLink>
           <StyledLink href="/">Sorteio ao vivo</StyledLink>
           <AboutUsButton />
           <StyledLink href="/ajuda">Ajuda</StyledLink>

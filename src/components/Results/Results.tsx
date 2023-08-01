@@ -16,6 +16,8 @@ import {
   ResultItem,
   ResultsHeader,
   ResultsTitle,
+  ResultsVideoImage,
+  ResultsVideoTitle,
   SelectedNumber,
   SelectedNumbersContainer,
   SpecialPrizeBottom,
@@ -59,7 +61,11 @@ const mockEditions = [
   },
 ];
 
-const Results = () => {
+interface Props {
+  showVideo?: boolean;
+}
+
+const Results = ({ showVideo = false }: Props) => {
   return (
     <Container>
       <ResultsHeader>
@@ -235,6 +241,13 @@ const Results = () => {
           </SpecialWinner>
         ))}
       </SpecialWinnerList>
+
+      {showVideo && (
+        <>
+          <ResultsVideoTitle>Veja o resultado!</ResultsVideoTitle>
+          <ResultsVideoImage src="/results-video-thumb.png" />
+        </>
+      )}
     </Container>
   );
 };
