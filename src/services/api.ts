@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { getTokenFromCookies } from '@/utils/cookies';
 import axios from 'axios';
 
 export const baseURL = process.env.NEXT_PUBLIC_API || '';
@@ -9,9 +10,9 @@ const api = axios.create({
 
 api.interceptors.request.use(
   async config => {
-    const accessToken = localStorage.getItem('@MultCapWeb: accessToken');
-    if (accessToken) {
-      config.headers!.Authorization = `Bearer ${accessToken}`;
+    const cookieAccessToken = getTokenFromCookies();
+    if (cookieAccessToken) {
+      config.headers!.Authorization = `Bearer ${cookieAccessToken}`;
     }
     return config;
   },

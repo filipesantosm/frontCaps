@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import { IUser } from '@/interfaces/User';
+import { clearTokenCookie } from '@/utils/cookies';
 import React, {
   createContext,
   ReactNode,
@@ -41,6 +42,7 @@ const AuthProvider = ({ children }: ChildrenProps) => {
     localStorage.removeItem('@MultCapWeb: user');
     localStorage.removeItem('@MultCapWeb: accessToken');
     localStorage.removeItem('@MultCapWeb: refreshToken');
+    clearTokenCookie();
     setUser({} as IUser);
   };
 

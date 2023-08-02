@@ -1,7 +1,9 @@
-import { intervalToDuration, isBefore, nextDay } from 'date-fns';
+import { useCurrentDraw } from '@/hooks/useCurrentDraw';
+import { intervalToDuration, isBefore, parseISO } from 'date-fns';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { PiShoppingCartSimpleFill } from 'react-icons/pi';
+import { formatCurrency } from '@/utils/formatCurrency';
 import ShadowSelect from '../ShadowSelect/ShadowSelect';
 import {
   BuyButton,
@@ -16,14 +18,13 @@ import {
   Title,
 } from './styles';
 
-const raffleDate = nextDay(new Date(), 0);
-
 interface Props {
   containerMarginTop?: string;
 }
 
 const NextRaffle = ({ containerMarginTop }: Props) => {
   const router = useRouter();
+  const { currentDraw } = useCurrentDraw();
 
   const [durationToNext, setDurationToNext] = useState({
     days: 0,
@@ -32,11 +33,19 @@ const NextRaffle = ({ containerMarginTop }: Props) => {
     seconds: 0,
   });
 
+  const drawDate = currentDraw
+    ? parseISO(currentDraw?.attributes?.dateDraw)
+    : undefined;
+
   useEffect(() => {
+    if (!drawDate) {
+      return;
+    }
+
     const interval = setInterval(() => {
       const now = new Date();
 
-      if (isBefore(raffleDate, now)) {
+      if (isBefore(drawDate, now)) {
         setDurationToNext({
           days: 0,
           hours: 0,
@@ -48,7 +57,7 @@ const NextRaffle = ({ containerMarginTop }: Props) => {
 
       const duration = intervalToDuration({
         start: now,
-        end: raffleDate,
+        end: drawDate,
       });
 
       setDurationToNext({
@@ -63,8 +72,7 @@ const NextRaffle = ({ containerMarginTop }: Props) => {
     }, 1000);
 
     return () => clearInterval(interval);
-    // TODO: Colocar dependência quando raffleDate for dinâmico
-  }, []);
+  }, [currentDraw]);
 
   return (
     <Container
@@ -98,7 +106,7 @@ const NextRaffle = ({ containerMarginTop }: Props) => {
             noOptionsMessage={() => 'Nenhuma opção encontrada'}
           />
           <BuyButton type="button" onClick={() => router.push('/comprar')}>
-            Comprar R$ 50,00
+            Comprar {formatCurrency(50)}
             <CartIconWrapper>
               <PiShoppingCartSimpleFill />
             </CartIconWrapper>

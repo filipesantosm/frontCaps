@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+import { useAuth } from '@/hooks/useAuth';
 import { useOutside } from '@/hooks/useOutside';
 import { ILoginResponse } from '@/interfaces/Auth';
 import api from '@/services/api';
+import { addTokenToCookies } from '@/utils/cookies';
 import handleError from '@/utils/handleToast';
+import { maskCPF } from '@/utils/masks';
 import { ILoginForm, LoginSchema } from '@/validations/LoginSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoCloseCircleOutline } from 'react-icons/io5';
-import { useAuth } from '@/hooks/useAuth';
-import { maskCPF } from '@/utils/masks';
-import { IUser } from '@/interfaces/User';
 import Input from '../Input/Input';
+import MaskedInput from '../Input/MaskedInput';
 import {
   CloseButton,
   Container,
@@ -22,7 +23,6 @@ import {
   SubmitButton,
   TextButton,
 } from './styles';
-import MaskedInput from '../Input/MaskedInput';
 
 interface Props {
   onClose: () => void;
@@ -60,6 +60,7 @@ const LoginModal = ({ onClose, onClickSignUp, onClickForgot }: Props) => {
 
       handleLocalStorage(data);
       setUser(data.user);
+      addTokenToCookies(data.jwt);
       onClose();
     } catch (error) {
       handleError(error);

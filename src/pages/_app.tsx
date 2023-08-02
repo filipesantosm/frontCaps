@@ -8,6 +8,7 @@ import { Poppins } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
 import CartProvider from '@/hooks/useCart';
+import CurrentDrawProvider from '@/hooks/useCurrentDraw';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -24,11 +25,13 @@ const App = ({ Component, pageProps }: AppProps) => {
         <ToastContainer />
         <GlobalStyle />
         <AuthProvider>
-          <CartProvider>
-            <main className={poppins.className}>
-              <Component {...pageProps} />
-            </main>
-          </CartProvider>
+          <CurrentDrawProvider>
+            <CartProvider>
+              <main className={poppins.className}>
+                <Component {...pageProps} />
+              </main>
+            </CartProvider>
+          </CurrentDrawProvider>
         </AuthProvider>
       </ThemeProvider>
     </AuthProvider>
