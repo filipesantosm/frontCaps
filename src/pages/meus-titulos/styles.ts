@@ -26,6 +26,46 @@ export const Subtitle = styled.h2`
   color: ${({ theme }) => theme.colors.gray74};
 `;
 
+export const TabSelector = styled.div`
+  margin-top: 1.875rem;
+
+  display: flex;
+`;
+
+interface TabButtonProps {
+  isActive?: boolean;
+}
+
+export const TabButton = styled.button<TabButtonProps>`
+  border: 2px solid ${({ theme }) => theme.colors.primary};
+  background: ${({ theme, isActive }) =>
+    isActive ? theme.colors.primary : theme.colors.white};
+  min-height: 2.5rem;
+  width: 100%;
+  max-width: 10rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: ${({ theme, isActive }) =>
+    isActive ? theme.colors.white : theme.colors.primary};
+
+  transition: all 0.3s;
+
+  &:nth-child(1) {
+    border-top-left-radius: 0.625rem;
+    border-bottom-left-radius: 0.625rem;
+  }
+
+  &:nth-child(2) {
+    border-top-right-radius: 0.625rem;
+    border-bottom-right-radius: 0.625rem;
+  }
+`;
+
 export const PurchasesList = styled.div`
   margin-top: 2rem;
 

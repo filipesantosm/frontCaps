@@ -2540,6 +2540,11 @@ react-is@^16.13.1, react-is@^16.7.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-scratchcard-v2@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-scratchcard-v2/-/react-scratchcard-v2-1.1.1.tgz#a1bfe1503b416a59b905c21b61dfa3a7ecfade6b"
+  integrity sha512-2yzLLOqJBthSIxeN7JViDqzRX/OBR8tLVPxe408AL3aWi/V1nVvUvOwU7aY+1/oAR/uuVTK3DC46unv4LzTKeg==
+
 react-select@^5.7.2:
   version "5.7.4"
   resolved "https://registry.yarnpkg.com/react-select/-/react-select-5.7.4.tgz#d8cad96e7bc9d6c8e2709bdda8f4363c5dd7ea7d"
