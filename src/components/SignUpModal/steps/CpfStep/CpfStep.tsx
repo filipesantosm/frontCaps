@@ -30,6 +30,7 @@ const CpfStep = ({ onNext, onClickLogin, signUpFormData }: SignUpStepProps) => {
       </FormDescription>
       <MaskedInput
         label="CPF"
+        id="cpf"
         maskFunction={maskCPF}
         maxLength={14}
         placeholder="000.000.000-00"

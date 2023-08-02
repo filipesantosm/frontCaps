@@ -30,6 +30,7 @@ const PasswordStep = ({ onNext }: SignUpStepProps) => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Input
+        id="password"
         label="SENHA"
         type="password"
         placeholder="*********"
@@ -43,6 +44,7 @@ const PasswordStep = ({ onNext }: SignUpStepProps) => {
         })}
       />
       <Input
+        id="confirm_password"
         label="CONFIRME A SENHA"
         type="password"
         placeholder="*********"

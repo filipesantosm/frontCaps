@@ -82,6 +82,7 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
         maxLength={9}
         maskFunction={maskCEP}
         label="CEP"
+        id="cep"
         readOnly={isCepValid}
         error={errors?.cep?.message}
         {...register('cep')}
@@ -90,21 +91,25 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
         <>
           <Input
             label="ESTADO"
+            id="state"
             error={errors?.state?.message}
             {...register('state')}
           />
           <Input
             label="CIDADE"
+            id="city"
             error={errors?.city?.message}
             {...register('city')}
           />
           <Input
             label="RUA"
+            id="street"
             error={errors?.street?.message}
             {...register('street')}
           />
           <Input
             label="NÚMERO"
+            id="number"
             placeholder="0000"
             error={errors?.number?.message}
             {...register('number')}

@@ -28,17 +28,20 @@ const PersonalDetailsStep = ({ onNext, signUpFormData }: SignUpStepProps) => {
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Input label="CPF" defaultValue={signUpFormData.cpf} readOnly />
       <Input
+        id="name"
         label="NOME COMPLETO"
         {...register('name')}
         error={errors?.name?.message}
       />
       <Input
+        id="dateBirth"
         type="date"
         label="DATA DE NASCIMENTO"
         error={errors?.dateBirth?.message}
         {...register('dateBirth')}
       />
       <Input
+        id="email"
         label="E-MAIL"
         type="email"
         {...register('email')}

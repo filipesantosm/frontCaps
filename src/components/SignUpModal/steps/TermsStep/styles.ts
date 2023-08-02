@@ -15,6 +15,8 @@ export const TermsContainer = styled.div`
 `;
 
 export const TermsText = styled.div`
+  min-height: 25vh;
+
   max-height: max(10rem, 35vh);
   width: 100%;
 

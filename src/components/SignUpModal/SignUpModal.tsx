@@ -46,7 +46,9 @@ const SignUpModal = ({ onClose, onClickLogin }: Props) => {
         confirm_password: undefined,
       };
 
-      // await api.post('/auth/local/register', payload);
+      await api.post('/validatorUser', { data: payload });
+
+      await api.post('/auth/local/register', payload);
       setForm({} as ISignUpFormData);
       setStep(0);
       handleSuccess('Cadastrado com sucesso!');
