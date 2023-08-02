@@ -53,21 +53,13 @@ const LoginModal = ({ onClose, onClickSignUp, onClickForgot }: Props) => {
   const onSubmit: SubmitHandler<ILoginForm> = async form => {
     setIsSubmitting(true);
     try {
-      /* const { data } = await api.post<ILoginResponse>('/auth/local', {
+      const { data } = await api.post<ILoginResponse>('/auth/local', {
         identifier: form.cpf,
         password: form.password,
-      }); */
-
-      const user = {
-        id: '123',
-        name: 'Nome usuário',
-      } as unknown as IUser;
-
-      handleLocalStorage({
-        jwt: '1234',
-        user,
       });
-      setUser(user);
+
+      handleLocalStorage(data);
+      setUser(data.user);
       onClose();
     } catch (error) {
       handleError(error);
