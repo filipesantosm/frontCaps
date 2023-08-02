@@ -28,6 +28,16 @@ export const PurchaseColumn = styled.div`
   flex-direction: column;
 `;
 
+export const SelectsContainer = styled.div`
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  margin-bottom: 2rem;
+`;
+
 export const ContestImage = styled.img`
   width: min(50%, 37.5rem);
   height: 21.875rem;
