@@ -30,6 +30,8 @@ export const Title = styled.h1`
 `;
 
 export const InstitutionBanner = styled.img`
+  margin-top: 2.5rem;
+
   width: 100%;
   height: 11.625rem;
 
@@ -49,7 +51,7 @@ export const InstitutionNameContainer = styled.div`
 export const InstitutionLogo = styled.img`
   width: 6.625rem;
   height: 6.625rem;
-  object-fit: cover;
+  object-fit: contain;
 `;
 
 export const InstitutionName = styled.h2`

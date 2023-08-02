@@ -30,6 +30,8 @@ export const Title = styled.h1`
 `;
 
 export const Text = styled.p`
+  margin-top: 1.875rem;
+
   font-size: 1rem;
   font-weight: 400;
   color: #00214b;
