@@ -2,7 +2,6 @@ import Layout from '@/components/Layout/Layout';
 import NextRaffle from '@/components/NextRaffle/NextRaffle';
 import {
   Banner,
-  NextRaffleWrapper,
   PageContent,
   PrivacyPolicySection,
   Text,
@@ -14,9 +13,7 @@ const PrivacyPolicy = () => {
     <Layout>
       <Banner src="/home-hero.png" />
       <PageContent>
-        <NextRaffleWrapper>
-          <NextRaffle />
-        </NextRaffleWrapper>
+        <NextRaffle />
         <PrivacyPolicySection>
           <Title>Termos de uso e política de privacidade</Title>
           <Text>

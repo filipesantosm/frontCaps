@@ -10,17 +10,6 @@ export const HeroImage = styled.img`
   height: 25.9375rem;
 `;
 
-export const NextRaffleWrapper = styled.section`
-  position: relative;
-  z-index: 2;
-
-  width: 90%;
-  max-width: 68.75rem;
-  margin: 0 auto;
-
-  margin-top: -5rem;
-`;
-
 export const HomeContent = styled.div`
   width: 90%;
   max-width: 68.75rem;

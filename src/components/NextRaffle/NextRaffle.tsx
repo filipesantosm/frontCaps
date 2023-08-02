@@ -18,7 +18,11 @@ import {
 
 const raffleDate = nextDay(new Date(), 0);
 
-const NextRaffle = () => {
+interface Props {
+  containerMarginTop?: string;
+}
+
+const NextRaffle = ({ containerMarginTop }: Props) => {
   const router = useRouter();
 
   const [durationToNext, setDurationToNext] = useState({
@@ -63,7 +67,11 @@ const NextRaffle = () => {
   }, []);
 
   return (
-    <Container>
+    <Container
+      style={{
+        marginTop: containerMarginTop,
+      }}
+    >
       <LeftSection>
         <Title>PARTICIPE AGORA!</Title>
         <BuyContainer>

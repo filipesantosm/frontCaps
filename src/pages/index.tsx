@@ -1,15 +1,14 @@
+import HomeFooter from '@/components/HomeFooter/HomeFooter';
 import Layout from '@/components/Layout/Layout';
 import NextRaffle from '@/components/NextRaffle/NextRaffle';
+import PlatformNumbers from '@/components/PlatformNumbers/PlatformNumbers';
+import Results from '@/components/Results/Results';
 import { format, nextDay } from 'date-fns';
 import { IoLogoWhatsapp } from 'react-icons/io';
-import Results from '@/components/Results/Results';
-import PlatformNumbers from '@/components/PlatformNumbers/PlatformNumbers';
-import HomeFooter from '@/components/HomeFooter/HomeFooter';
 import {
   FloatingContactButton,
   HeroImage,
   HomeContent,
-  NextRaffleWrapper,
   RaffleDescription,
   RaffleHeader,
   RaffleImage,
@@ -23,10 +22,8 @@ const Home = () => {
   return (
     <Layout>
       <HeroImage src="/home-hero.png" />
-      <NextRaffleWrapper>
-        <NextRaffle />
-      </NextRaffleWrapper>
       <HomeContent>
+        <NextRaffle containerMarginTop="-7rem" />
         <RaffleInformation>
           <RaffleHeader>
             <RaffleTitle>

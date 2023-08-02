@@ -1,22 +1,13 @@
 import Layout from '@/components/Layout/Layout';
 import NextRaffle from '@/components/NextRaffle/NextRaffle';
-import {
-  Banner,
-  NextRaffleWrapper,
-  PageContent,
-  Text,
-  Title,
-  WhoAreWeSection,
-} from './styles';
+import { Banner, PageContent, Text, Title, WhoAreWeSection } from './styles';
 
 const WhoAreWe = () => {
   return (
     <Layout>
       <Banner src="/home-hero.png" />
       <PageContent>
-        <NextRaffleWrapper>
-          <NextRaffle />
-        </NextRaffleWrapper>
+        <NextRaffle />
         <WhoAreWeSection>
           <Title>Quem somos</Title>
           <Text>

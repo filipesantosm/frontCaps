@@ -15,15 +15,6 @@ export const PageContent = styled.div`
   margin: 2.5rem auto;
 `;
 
-export const NextRaffleWrapper = styled.div`
-  position: relative;
-  z-index: 2;
-
-  margin-top: -5rem;
-
-  width: 100%;
-`;
-
 export const HelpSection = styled.div`
   margin-top: 2.5rem;
 

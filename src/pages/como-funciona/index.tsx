@@ -11,7 +11,6 @@ import {
   HelpText,
   HelpTitle,
   HowItWorksSection,
-  NextRaffleWrapper,
   PageContent,
   Title,
 } from './styles';
@@ -21,9 +20,7 @@ const HowItWorks = () => {
     <Layout>
       <Banner src="/home-hero.png" />
       <PageContent>
-        <NextRaffleWrapper>
-          <NextRaffle />
-        </NextRaffleWrapper>
+        <NextRaffle />
         <HowItWorksSection>
           <Title>Como funciona</Title>
 

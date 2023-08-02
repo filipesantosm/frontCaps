@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  position: relative;
+  z-index: 2;
+
+  margin-top: -5rem;
+
   width: 100%;
   border-radius: 1.25rem;
 

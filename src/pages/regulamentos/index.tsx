@@ -1,22 +1,13 @@
 import Layout from '@/components/Layout/Layout';
 import NextRaffle from '@/components/NextRaffle/NextRaffle';
-import {
-  Banner,
-  NextRaffleWrapper,
-  PageContent,
-  RulesSection,
-  Text,
-  Title,
-} from './styles';
+import { Banner, PageContent, RulesSection, Text, Title } from './styles';
 
 const Rules = () => {
   return (
     <Layout>
       <Banner src="/home-hero.png" />
       <PageContent>
-        <NextRaffleWrapper>
-          <NextRaffle />
-        </NextRaffleWrapper>
+        <NextRaffle />
         <RulesSection>
           <Title>Regulamentos</Title>
           <Text>

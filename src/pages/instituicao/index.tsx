@@ -6,7 +6,6 @@ import {
   InstitutionLogo,
   InstitutionName,
   InstitutionNameContainer,
-  NextRaffleWrapper,
   PageContent,
   PrivacyPolicySection,
   Text,
@@ -18,9 +17,7 @@ const Institution = () => {
     <Layout>
       <Banner src="/home-hero.png" />
       <PageContent>
-        <NextRaffleWrapper>
-          <NextRaffle />
-        </NextRaffleWrapper>
+        <NextRaffle />
         <PrivacyPolicySection>
           <Title>Instituição Beneficiada</Title>
 

@@ -16,7 +16,6 @@ import {
   HelpTitle,
   LoadMoreButton,
   MoreArticlesLink,
-  NextRaffleWrapper,
   PageContent,
   SearchTitle,
   VideoItem,
@@ -30,9 +29,7 @@ const HelpPage = () => {
     <Layout>
       <Banner src="/home-hero.png" />
       <PageContent>
-        <NextRaffleWrapper>
-          <NextRaffle />
-        </NextRaffleWrapper>
+        <NextRaffle containerMarginTop="-7rem" />
 
         <HelpSection>
           <HelpTitle>Olá! Boas-vindas à Central de Ajuda da MTCAP</HelpTitle>

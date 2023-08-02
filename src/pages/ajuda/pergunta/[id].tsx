@@ -1,16 +1,15 @@
+import ContactSection from '@/components/ContactSection/ContactSection';
 import Layout from '@/components/Layout/Layout';
 import NextRaffle from '@/components/NextRaffle/NextRaffle';
-import ContactSection from '@/components/ContactSection/ContactSection';
-import { IoChevronBackCircleOutline } from 'react-icons/io5';
-import { IoMdArrowForward } from 'react-icons/io';
 import { useRouter } from 'next/router';
+import { IoMdArrowForward } from 'react-icons/io';
+import { IoChevronBackCircleOutline } from 'react-icons/io5';
 import {
   BackButton,
   Banner,
   HelpSection,
   NavigatorLink,
   NavigatorQuestionTitle,
-  NextRaffleWrapper,
   PageContent,
   QuestionAnswer,
   QuestionHeader,
@@ -25,9 +24,7 @@ const FaqQuestionPage = () => {
     <Layout>
       <Banner src="/home-hero.png" />
       <PageContent>
-        <NextRaffleWrapper>
-          <NextRaffle />
-        </NextRaffleWrapper>
+        <NextRaffle containerMarginTop="-7rem" />
         <HelpSection>
           <QuestionHeader>
             <BackButton onClick={router.back}>
