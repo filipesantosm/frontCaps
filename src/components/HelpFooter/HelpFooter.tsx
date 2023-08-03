@@ -34,8 +34,10 @@ const HelpFooter = ({ showBilletSection = false }: Props) => {
               A compensação de boletos bancários acontece somente em dias úteis
               e pode demorar até 72hs para o banco confirmar para o MTCAP o
               recebimento. Boleto gerado em nome da Razão Social da MTCAP: CRP
-              Publicidade. Para adicionar saldo, escolha continuar pagamento por
-              saldo para gerar o boleto.
+              Publicidade. <br />
+              <br />
+              Para adicionar saldo, escolha continuar pagamento por saldo para
+              gerar o boleto.
             </SectionText>
           </Section>
         )}
