@@ -4,7 +4,7 @@ export const Container = styled.div`
   background: rgba(0, 33, 75, 0.44);
 
   position: fixed;
-  z-index: 9999;
+  z-index: 999;
   inset: 0;
 
   display: flex;
@@ -22,6 +22,15 @@ export const Content = styled.div`
   padding: 2.125rem 2rem 1.625rem;
   background: ${({ theme }) => theme.colors.white};
   border-radius: 0.625rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const Form = styled.form`
+  width: 100%;
+  flex: 1;
 
   display: flex;
   flex-direction: column;

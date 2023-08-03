@@ -13,17 +13,21 @@ import {
   OldPasswordSchema,
 } from '@/validations/ChangePasswordSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
+import api from '@/services/api';
+import { useAuth } from '@/hooks/useAuth';
 import { Form, FormDescription, PageContent, SubmitButton } from './styles';
 
 const ChangePassword = () => {
   const [passwordCorrect, setPasswordCorrect] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const { user } = useAuth();
 
   const {
     register: registerOld,
     handleSubmit: handleSubmitOld,
     formState: { errors: errorsOld },
     reset: resetOld,
+    getValues: getValuesOld,
   } = useForm<IOldPasswordForm>({
     resolver: yupResolver(OldPasswordSchema),
   });
@@ -34,23 +38,35 @@ const ChangePassword = () => {
     formState: { errors: errorsNew },
     trigger: triggerNew,
     reset: resetNew,
+    watch: watchNew,
   } = useForm<INewPasswordForm>({
     resolver: yupResolver(NewPasswordSchema),
+    mode: 'onChange',
   });
 
   const handleCheckPassword: SubmitHandler<IOldPasswordForm> = async form => {
     try {
-      // DO SOMETHING
+      await api.post('/auth/local', {
+        password: form.old_password,
+        identifier: user.username,
+      });
 
       setPasswordCorrect(true);
     } catch (error) {
-      handleError(error);
+      handleError('Senha incorreta');
     }
   };
 
   const handleChangePassword: SubmitHandler<INewPasswordForm> = async form => {
     try {
-      // DO SOMETHING
+      const oldPassword = getValuesOld('old_password');
+
+      await api.post('/auth/change-password', {
+        currentPassword: oldPassword,
+        password: form.new_password,
+        passwordConfirmation: form.confirm_password,
+      });
+
       resetOld();
       resetNew();
       setShowSuccessModal(true);
@@ -59,6 +75,8 @@ const ChangePassword = () => {
       handleError(error);
     }
   };
+
+  const confirmPassword = watchNew('confirm_password');
 
   return (
     <Layout>
@@ -79,7 +97,9 @@ const ChangePassword = () => {
               error={errorsNew?.new_password?.message}
               {...registerNew('new_password', {
                 onChange: () => {
-                  triggerNew('confirm_password');
+                  if (confirmPassword) {
+                    triggerNew('confirm_password');
+                  }
                 },
               })}
             />

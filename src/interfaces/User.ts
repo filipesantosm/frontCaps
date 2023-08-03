@@ -26,4 +26,5 @@ export interface IUser {
   origin: null | string;
   observation: null | string;
   country: null | string;
+  phone: null | string;
 }

@@ -5,6 +5,9 @@ import PageTitle from '@/components/PageTitle/PageTitle';
 import SuccessModal from '@/components/SuccessModal/SuccessModal';
 import { theme } from '@/styles/theme';
 import { useState } from 'react';
+import { useAuth } from '@/hooks/useAuth';
+import { format, parseISO } from 'date-fns';
+import { useRouter } from 'next/router';
 import {
   Column,
   ColumnTitle,
@@ -15,8 +18,15 @@ import {
 } from './styles';
 
 const Profile = () => {
+  const { user, logout } = useAuth();
+  const router = useRouter();
   const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  const handleDeleteAccountSuccess = () => {
+    logout();
+    router.push('/');
+  };
 
   return (
     <Layout>
@@ -28,31 +38,35 @@ const Profile = () => {
             <ColumnTitle>Cadastro</ColumnTitle>
             <Input
               label="CPF"
-              defaultValue="000.000.000-00"
+              defaultValue={user?.cpf || ''}
               disabled
               containerClassName="profile-field"
             />
             <Input
               label="NOME COMPLETO"
-              defaultValue="NOME COMPLETO USUÁRIO"
+              defaultValue={user?.name || ''}
               disabled
               containerClassName="profile-field"
             />
             <Input
               label="DATA DE NASCIMENTO"
-              defaultValue="01/01/2000"
+              defaultValue={
+                user?.dateBirth
+                  ? format(parseISO(user.dateBirth), 'dd/MM/yyyy')
+                  : ''
+              }
               disabled
               containerClassName="profile-field"
             />
             <Input
               label="E-MAIL"
-              defaultValue="email@email.com"
+              defaultValue={user.email}
               disabled
               containerClassName="profile-field"
             />
             <Input
               label="TELEFONE"
-              defaultValue="(00) 9 1234-5678"
+              defaultValue={user?.phone || ''}
               disabled
               containerClassName="profile-field"
             />
@@ -64,31 +78,31 @@ const Profile = () => {
             <ColumnTitle>Endereço</ColumnTitle>
             <Input
               label="CEP"
-              defaultValue="00000-000"
+              defaultValue={user?.cep || ''}
               disabled
               containerClassName="profile-field"
             />
             <Input
               label="ESTADO"
-              defaultValue="SÃO PAULO"
+              defaultValue={user?.state || ''}
               disabled
               containerClassName="profile-field"
             />
             <Input
               label="RUA"
-              placeholder="NOME DA RUA"
+              defaultValue={user?.street || ''}
               disabled
               containerClassName="profile-field"
             />
             <Input
               label="NÚMERO"
-              defaultValue="1234"
+              defaultValue={user?.number || ''}
               disabled
               containerClassName="profile-field"
             />
             <Input
               label="CIDADE"
-              defaultValue="SÃO PAULO"
+              defaultValue={user?.city || ''}
               disabled
               containerClassName="profile-field"
             />
@@ -116,6 +130,7 @@ const Profile = () => {
           onClose={() => setShowSuccessModal(false)}
           message="Sua conta foi excluída"
           iconColor={theme.colors.primary}
+          onContinue={handleDeleteAccountSuccess}
         />
       )}
     </Layout>

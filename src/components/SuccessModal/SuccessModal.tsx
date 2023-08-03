@@ -14,10 +14,12 @@ interface Props {
   title?: string;
   message: string;
   iconColor?: string;
+  onContinue?: () => void;
 }
 
 const SuccessModal = ({
   onClose,
+  onContinue,
   message,
   title = 'Sucesso!',
   iconColor = '#15c149',
@@ -29,7 +31,15 @@ const SuccessModal = ({
         <Title>{title}</Title>
         <Message>{message}</Message>
         <Separator />
-        <ContinueButton type="button" onClick={onClose}>
+        <ContinueButton
+          type="button"
+          onClick={() => {
+            if (onContinue) {
+              onContinue();
+            }
+            onClose();
+          }}
+        >
           Continuar
         </ContinueButton>
       </Content>
