@@ -11,7 +11,7 @@ export const PageSection = styled.section`
   background: ${({ theme }) => theme.colors.white};
   border-radius: 1.25rem;
 
-  padding: 1.875rem 5rem 2.5rem 2.5rem;
+  padding: 1.875rem 2.5rem 2.5rem 2.5rem;
 
   display: flex;
   flex-direction: column;
@@ -67,8 +67,10 @@ export const TabButton = styled.button<TabButtonProps>`
 `;
 
 export const PurchasesList = styled.div`
+  margin: 0 auto;
   margin-top: 2rem;
 
+  width: 100%;
   max-width: 56.25rem;
 
   display: grid;
