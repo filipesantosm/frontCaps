@@ -3,11 +3,11 @@ import type { NextRequest } from 'next/server';
 import { getTokenFromCookies } from './utils/cookies';
 
 export function middleware(request: NextRequest) {
-  if (!getTokenFromCookies()) {
+  /* if (!getTokenFromCookies()) {
     const url = request.nextUrl.clone();
     url.pathname = '/';
     return NextResponse.redirect(url);
-  }
+  } */
 
   return NextResponse.next();
 }
