@@ -94,7 +94,12 @@ export const DropdownButton = styled.button<UserDropdownProps>`
   background: ${({ theme }) => theme.colors.primaryTwo};
 
   svg {
+    &:nth-child(1) {
+      font-size: 1.25rem;
+    }
+
     &:nth-child(3) {
+      font-size: 1rem;
       transition: transform 0.2s;
 
       transform: ${({ isOpen }) => (isOpen ? 'rotate(90deg)' : 'unset')};

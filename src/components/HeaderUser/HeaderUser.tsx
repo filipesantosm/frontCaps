@@ -88,9 +88,9 @@ const HeaderUser = () => {
           type="button"
           onClick={() => setIsDropdownOpen(prev => !prev)}
         >
-          <BsFillPersonFill size={20} />
-          <UserName>{user.name || 'Usuário'}</UserName>
-          <FaChevronRight size={16} />
+          <BsFillPersonFill />
+          <UserName>{user.name?.split(' ')?.[0] || 'Usuário'}</UserName>
+          <FaChevronRight />
         </DropdownButton>
         <DropdownList isOpen={isDropdownOpen}>
           <DropdownLink href="/perfil">Perfil</DropdownLink>
