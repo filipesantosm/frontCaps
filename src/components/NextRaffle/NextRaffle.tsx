@@ -1,4 +1,4 @@
-import { useCurrentDraw } from '@/hooks/useCurrentDraw';
+import { PromoOption, useCurrentDraw } from '@/hooks/useCurrentDraw';
 import { intervalToDuration, isBefore, parseISO } from 'date-fns';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -24,7 +24,12 @@ interface Props {
 
 const NextRaffle = ({ containerMarginTop }: Props) => {
   const router = useRouter();
-  const { currentDraw } = useCurrentDraw();
+  const {
+    currentDraw,
+    setSelectedDrawOption,
+    selectedDrawOption,
+    promoOptions,
+  } = useCurrentDraw();
 
   const [durationToNext, setDurationToNext] = useState({
     days: 0,
@@ -84,29 +89,23 @@ const NextRaffle = ({ containerMarginTop }: Props) => {
         <Title>PARTICIPE AGORA!</Title>
         <BuyContainer>
           <ShadowSelect
-            placeholder="1 título"
-            defaultValue={{
-              label: '1 Título',
-              value: 1,
+            defaultValue={promoOptions[0]}
+            options={promoOptions}
+            noOptionsMessage={() => 'Nenhuma opção disponível'}
+            value={selectedDrawOption}
+            onChange={option => {
+              if (option) {
+                setSelectedDrawOption(option as PromoOption);
+              } else {
+                setSelectedDrawOption(undefined);
+              }
             }}
-            options={[
-              {
-                label: '1 Título',
-                value: 1,
-              },
-              {
-                label: '2 Títulos',
-                value: 2,
-              },
-              {
-                label: '3 Títulos',
-                value: 3,
-              },
-            ]}
-            noOptionsMessage={() => 'Nenhuma opção encontrada'}
           />
           <BuyButton type="button" onClick={() => router.push('/comprar')}>
-            Comprar {formatCurrency(50)}
+            Comprar{' '}
+            {selectedDrawOption
+              ? formatCurrency(selectedDrawOption?.price)
+              : ''}
             <CartIconWrapper>
               <PiShoppingCartSimpleFill />
             </CartIconWrapper>

@@ -20,6 +20,20 @@ export interface IDrawAttributes {
   draw_premiums: {
     data: DrawPremium[];
   };
+  draw_promos: {
+    data: DrawPromo[];
+  };
+}
+
+export interface DrawPromo {
+  id: number;
+  attributes: DrawPromoAttributes;
+}
+
+export interface DrawPromoAttributes {
+  Campanha: string;
+  value: number;
+  quantity: number;
 }
 
 export interface DrawPremium {
