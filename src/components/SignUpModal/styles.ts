@@ -11,6 +11,8 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  overflow: auto;
 `;
 
 interface ContentProps {
@@ -76,15 +78,38 @@ export const ModalTitle = styled.h1`
 
 export const Form = styled.form`
   width: 100%;
-  max-width: 23.125rem;
+  max-width: 27.125rem;
   margin: 0 auto;
   flex: 1;
 
-  padding: 2.5rem 0;
+  padding: 2.5rem 2rem;
 
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+
+  height: fit-content;
+  overflow: auto;
+
+  scrollbar-width: thin;
+  scrollbar-color: #d6d6d6 #f3f3f3;
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    width: 6px;
+    background: #f3f3f3;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    width: 6px;
+    border-radius: 6px;
+    background: #d6d6d6;
+  }
 `;
 
 export const FormDescription = styled.p`
