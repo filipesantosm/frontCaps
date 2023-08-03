@@ -3,6 +3,8 @@ import Layout from '@/components/Layout/Layout';
 import NextRaffle from '@/components/NextRaffle/NextRaffle';
 import PlatformNumbers from '@/components/PlatformNumbers/PlatformNumbers';
 import Results from '@/components/Results/Results';
+import { useCurrentDraw } from '@/hooks/useCurrentDraw';
+import { getDrawImage } from '@/utils/imageUrl';
 import { format, nextDay } from 'date-fns';
 import { IoLogoWhatsapp } from 'react-icons/io';
 import {
@@ -19,9 +21,11 @@ import {
 const nextRaffleDate = nextDay(new Date(), 0);
 
 const Home = () => {
+  const { currentDraw } = useCurrentDraw();
+
   return (
     <Layout>
-      <HeroImage src="/home-hero.png" />
+      <HeroImage src={getDrawImage(currentDraw)} />
       <HomeContent>
         <NextRaffle containerMarginTop="-7rem" />
         <RaffleInformation>
@@ -33,7 +37,7 @@ const Home = () => {
               Estaremos online no dia {format(nextRaffleDate, 'dd/MM/yyyy')}
             </RaffleDescription>
           </RaffleHeader>
-          <RaffleImage src="/home-hero.png" />
+          <RaffleImage src={getDrawImage(currentDraw)} />
         </RaffleInformation>
 
         <Results />

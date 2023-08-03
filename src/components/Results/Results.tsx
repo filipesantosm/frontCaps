@@ -1,5 +1,13 @@
 /* eslint-disable react/no-array-index-key */
-import React from 'react';
+import { IDraw } from '@/interfaces/Draw';
+import { PaginatedResponse } from '@/interfaces/Paginated';
+import { GetUserWinningResponse, IWinner } from '@/interfaces/Winner';
+import api from '@/services/api';
+import { formatCurrency } from '@/utils/formatCurrency';
+import handleError from '@/utils/handleToast';
+import { format, parseISO } from 'date-fns';
+import { useEffect, useState } from 'react';
+import OutlinedSelect from '../OutlinedSelect/OutlinedSelect';
 import {
   CertificateInfo,
   CertificateText,
@@ -32,216 +40,209 @@ import {
   WinnerCertificateSection,
   WinnerName,
 } from './styles';
-import OutlinedSelect from '../OutlinedSelect/OutlinedSelect';
 
-const mockEditions = [
-  {
-    label: 'Edição 198 | 16/07/2023',
-    value: 198,
-  },
-  {
-    label: 'Edição 197 | 09/07/2023',
-    value: 197,
-  },
-  {
-    label: 'Edição 196 | 02/07/2023',
-    value: 196,
-  },
-  {
-    label: 'Edição 195 | 25/06/2023',
-    value: 195,
-  },
-  {
-    label: 'Edição 194 | 18/06/2023',
-    value: 194,
-  },
-  {
-    label: 'Edição 193 | 11/06/2023',
-    value: 193,
-  },
-];
+interface IOption {
+  value: number;
+  label: string;
+  formattedTitle: string;
+}
+
+interface IResultsWinners {
+  normalPrizes: IWinner[];
+  specialPrizes: IWinner[];
+}
 
 interface Props {
   showVideo?: boolean;
 }
 
 const Results = ({ showVideo = false }: Props) => {
+  const [drawOptions, setDrawOptions] = useState<IOption[]>([]);
+  const [selectedDrawOption, setSelectedDrawOption] = useState<IOption>();
+  const [drawWinnings, setDrawWinnings] = useState<IResultsWinners>();
+
+  useEffect(() => {
+    getDraws();
+  }, []);
+
+  useEffect(() => {
+    getDrawDetails();
+  }, [selectedDrawOption]);
+
+  const getDraws = async () => {
+    try {
+      const { data } = await api.get<PaginatedResponse<IDraw>>('/draws', {
+        params: {
+          sort: 'publishedAt:asc',
+          'filters[active][$eq]': false,
+          fields: ['dateDraw', 'dateFinal', 'name'],
+          populate: '*',
+        },
+      });
+
+      const options = data.data.map(draw => ({
+        label: `${draw.attributes.name} | ${format(
+          parseISO(draw.attributes.dateDraw || draw.attributes.dateFinal),
+          'dd/MM/yyyy',
+        )}`,
+        value: draw.id,
+        formattedTitle: `${draw.attributes.name} - ${format(
+          parseISO(draw.attributes.dateDraw || draw.attributes.dateFinal),
+          'dd/MM/yyyy',
+        )}`,
+      }));
+
+      setDrawOptions(options);
+      setSelectedDrawOption(options[0]);
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
+  const getDrawDetails = async () => {
+    if (!selectedDrawOption) {
+      return;
+    }
+
+    try {
+      const { data } = await api.get<GetUserWinningResponse>(
+        '/getUserWinning',
+        {
+          params: {
+            id: selectedDrawOption.value,
+          },
+        },
+      );
+
+      if (data?.Premiados) {
+        const reducedObj = data.Premiados.reduce<IResultsWinners>(
+          (acc, winner) => {
+            if (winner.type === 'Especial') {
+              acc.specialPrizes.push(winner);
+            } else {
+              acc.normalPrizes.push(winner);
+            }
+
+            return acc;
+          },
+          {
+            normalPrizes: [],
+            specialPrizes: [],
+          },
+        );
+        setDrawWinnings(reducedObj);
+      } else {
+        setDrawWinnings(undefined);
+      }
+    } catch (error) {
+      setDrawWinnings(undefined);
+      handleError(error);
+    }
+  };
+
   return (
     <Container>
       <ResultsHeader>
         <ResultsTitle>Resultados</ResultsTitle>
         <OutlinedSelect
-          placeholder="Selecione a edição"
-          noOptionsMessage={() => 'Nenhuma edição'}
-          options={mockEditions}
-          defaultValue={mockEditions[0]}
+          placeholder="Selecione o sorteio"
+          noOptionsMessage={() => 'Nenhum sorteio encontrado'}
+          options={drawOptions}
+          value={selectedDrawOption}
+          onChange={option => {
+            setSelectedDrawOption(option as IOption);
+          }}
         />
       </ResultsHeader>
-      <EditionHeader>Edição 198 - 16/07/2023</EditionHeader>
-      <ResultItem>
-        <ItemTop>
-          <PrizeContainer>
-            <PrizeIndex>
-              <TrophyImage src="/trophy-icon.svg" />
-              1° PRÊMIO
-            </PrizeIndex>
-            <Prize>
-              <PrizeName>10 MIL REAIS</PrizeName>
-              <PrizeLiquidValue>Valor líquido de R$ 10.000,00</PrizeLiquidValue>
-            </Prize>
-          </PrizeContainer>
-          <SelectedNumbersContainer>
-            {Array.from({ length: 33 }).map((_, index) => (
-              <SelectedNumber key={index}>
-                {(index + 1).toString().padStart(2, '0')}
-              </SelectedNumber>
-            ))}
-          </SelectedNumbersContainer>
-        </ItemTop>
-        <ItemWinner>
-          <WinnerName>Lênito Morais</WinnerName>
-          <WinnerCertificateSection>
-            <CertificateInfo>
-              <CertificateTitle>TÍTULO</CertificateTitle>
-              <CertificateText>365388</CertificateText>
-            </CertificateInfo>
-            <CertificateInfo>
-              <CertificateTitle>CIDADE</CertificateTitle>
-              <CertificateText>CUIABA|REG. COXIPO</CertificateText>
-            </CertificateInfo>
-            <CertificateInfo>
-              <CertificateTitle>VENDEDOR</CertificateTitle>
-              <CertificateText>ROSANE</CertificateText>
-            </CertificateInfo>
-            <CertificateInfo>
-              <CertificateTitle>PONTOS</CertificateTitle>
-              <CertificateText>14</CertificateText>
-            </CertificateInfo>
-          </WinnerCertificateSection>
-        </ItemWinner>
-      </ResultItem>
-      <ResultItem>
-        <ItemTop>
-          <PrizeContainer>
-            <PrizeIndex>
-              <TrophyImage src="/trophy-icon.svg" />
-              2° PRÊMIO
-            </PrizeIndex>
-            <Prize>
-              <PrizeName>10 MIL REAIS</PrizeName>
-              <PrizeLiquidValue>Valor líquido de R$ 10.000,00</PrizeLiquidValue>
-            </Prize>
-          </PrizeContainer>
-          <SelectedNumbersContainer>
-            {Array.from({ length: 33 }).map((_, index) => (
-              <SelectedNumber key={index}>
-                {(index + 1).toString().padStart(2, '0')}
-              </SelectedNumber>
-            ))}
-          </SelectedNumbersContainer>
-        </ItemTop>
-        <ItemWinner>
-          <WinnerName>Lênito Morais</WinnerName>
-          <WinnerCertificateSection>
-            <CertificateInfo>
-              <CertificateTitle>TÍTULO</CertificateTitle>
-              <CertificateText>365388</CertificateText>
-            </CertificateInfo>
-            <CertificateInfo>
-              <CertificateTitle>CIDADE</CertificateTitle>
-              <CertificateText>CUIABA|REG. COXIPO</CertificateText>
-            </CertificateInfo>
-            <CertificateInfo>
-              <CertificateTitle>VENDEDOR</CertificateTitle>
-              <CertificateText>ROSANE</CertificateText>
-            </CertificateInfo>
-            <CertificateInfo>
-              <CertificateTitle>PONTOS</CertificateTitle>
-              <CertificateText>14</CertificateText>
-            </CertificateInfo>
-          </WinnerCertificateSection>
-        </ItemWinner>
-      </ResultItem>
-      <ResultItem>
-        <ItemTop>
-          <PrizeContainer isMainPrize>
-            <PrizeIndex isMainPrize>
-              <TrophyImage src="/trophy-icon.svg" />
-              3° PRÊMIO
-            </PrizeIndex>
-            <Prize isMainPrize>
-              <PrizeName isMainPrize>JEEP COMPASS</PrizeName>
-              <PrizeLiquidValue>
-                Valor líquido de R$ 160.000,00
-              </PrizeLiquidValue>
-            </Prize>
-          </PrizeContainer>
-          <SelectedNumbersContainer>
-            {Array.from({ length: 33 }).map((_, index) => (
-              <SelectedNumber key={index}>
-                {(index + 1).toString().padStart(2, '0')}
-              </SelectedNumber>
-            ))}
-          </SelectedNumbersContainer>
-        </ItemTop>
-        <ItemWinner>
-          <WinnerName>Lênito Morais</WinnerName>
-          <WinnerCertificateSection>
-            <CertificateInfo>
-              <CertificateTitle>TÍTULO</CertificateTitle>
-              <CertificateText>365388</CertificateText>
-            </CertificateInfo>
-            <CertificateInfo>
-              <CertificateTitle>CIDADE</CertificateTitle>
-              <CertificateText>CUIABA|REG. COXIPO</CertificateText>
-            </CertificateInfo>
-            <CertificateInfo>
-              <CertificateTitle>VENDEDOR</CertificateTitle>
-              <CertificateText>ROSANE</CertificateText>
-            </CertificateInfo>
-            <CertificateInfo>
-              <CertificateTitle>PONTOS</CertificateTitle>
-              <CertificateText>14</CertificateText>
-            </CertificateInfo>
-          </WinnerCertificateSection>
-        </ItemWinner>
-      </ResultItem>
-
-      <SpecialPrizeContainer>
-        <SpecialPrizeHeader>
-          <TrophyImage src="/trophy-icon.svg" />
-          PRÊMIO ESPECIAL
-        </SpecialPrizeHeader>
-        <SpecialPrizeBottom>
-          <SpecialPrizeName>10 PRÊMIOS DE R$ 1.500,00</SpecialPrizeName>
-          <SpecialPrizeDescription>
-            Valor líquido de R$ 1.500,00
-          </SpecialPrizeDescription>
-        </SpecialPrizeBottom>
-      </SpecialPrizeContainer>
-
-      <SpecialWinnerList>
-        {Array.from({ length: 10 }).map((_, index) => (
-          <SpecialWinner key={index}>
-            <WinnerName>Lênito Morais</WinnerName>
-            <SpecialWinnerBottom>
+      <EditionHeader>{selectedDrawOption?.formattedTitle}</EditionHeader>
+      {drawWinnings?.normalPrizes?.map(winner => (
+        <ResultItem key={winner.title}>
+          <ItemTop>
+            <PrizeContainer>
+              <PrizeIndex>
+                <TrophyImage src="/trophy-icon.svg" />
+                {winner.premiumNumber}º PRÊMIO
+              </PrizeIndex>
+              <Prize>
+                <PrizeName>{winner.premium}</PrizeName>
+                <PrizeLiquidValue>
+                  Valor líquido de {formatCurrency(winner.value)}
+                </PrizeLiquidValue>
+              </Prize>
+            </PrizeContainer>
+            <SelectedNumbersContainer>
+              {Object.values(winner.titlePremium).map(value => (
+                <SelectedNumber key={value}>
+                  {value.toString().padStart(2, '0')}
+                </SelectedNumber>
+              ))}
+            </SelectedNumbersContainer>
+          </ItemTop>
+          <ItemWinner>
+            <WinnerName>{winner.name}</WinnerName>
+            <WinnerCertificateSection>
+              <CertificateInfo>
+                <CertificateTitle>TÍTULO</CertificateTitle>
+                <CertificateText>{winner.title}</CertificateText>
+              </CertificateInfo>
               <CertificateInfo>
                 <CertificateTitle>CIDADE</CertificateTitle>
-                <CertificateText>CUIABA|REG. COXIPO</CertificateText>
+                <CertificateText>{winner.city}</CertificateText>
               </CertificateInfo>
               <CertificateInfo>
                 <CertificateTitle>VENDEDOR</CertificateTitle>
-                <CertificateText>ROSANE</CertificateText>
+                <CertificateText>{winner.seller}</CertificateText>
+              </CertificateInfo>
+              <CertificateInfo>
+                <CertificateTitle>PONTOS</CertificateTitle>
+                <CertificateText>{winner.points}</CertificateText>
+              </CertificateInfo>
+            </WinnerCertificateSection>
+          </ItemWinner>
+        </ResultItem>
+      ))}
+      {drawWinnings?.specialPrizes?.length &&
+        drawWinnings.specialPrizes.length > 0 && (
+          <SpecialPrizeContainer>
+            <SpecialPrizeHeader>
+              <TrophyImage src="/trophy-icon.svg" />
+              PRÊMIO ESPECIAL
+            </SpecialPrizeHeader>
+            <SpecialPrizeBottom>
+              <SpecialPrizeName>
+                {drawWinnings?.specialPrizes.length === 1
+                  ? '1 PRÊMIO'
+                  : `${drawWinnings.specialPrizes.length} PRÊMIOS`}{' '}
+                DE {formatCurrency(drawWinnings?.specialPrizes?.[0]?.value)}
+              </SpecialPrizeName>
+              <SpecialPrizeDescription>
+                Valor líquido de{' '}
+                {formatCurrency(drawWinnings?.specialPrizes?.[0]?.value)}
+              </SpecialPrizeDescription>
+            </SpecialPrizeBottom>
+          </SpecialPrizeContainer>
+        )}
+      <SpecialWinnerList>
+        {drawWinnings?.specialPrizes?.map(specialWinner => (
+          <SpecialWinner key={specialWinner.title}>
+            <WinnerName>{specialWinner.name}</WinnerName>
+            <SpecialWinnerBottom>
+              <CertificateInfo>
+                <CertificateTitle>CIDADE</CertificateTitle>
+                <CertificateText>{specialWinner.city}</CertificateText>
+              </CertificateInfo>
+              <CertificateInfo>
+                <CertificateTitle>VENDEDOR</CertificateTitle>
+                <CertificateText>{specialWinner.seller}</CertificateText>
               </CertificateInfo>
               <CertificateInfo>
                 <CertificateTitle>TÍTULO</CertificateTitle>
-                <CertificateText>365388</CertificateText>
+                <CertificateText>{specialWinner.title}</CertificateText>
               </CertificateInfo>
             </SpecialWinnerBottom>
           </SpecialWinner>
         ))}
       </SpecialWinnerList>
-
       {showVideo && (
         <>
           <ResultsVideoTitle>Veja o resultado!</ResultsVideoTitle>

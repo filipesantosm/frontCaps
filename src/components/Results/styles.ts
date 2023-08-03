@@ -57,10 +57,10 @@ export const ItemTop = styled.div`
   width: 100%;
 
   display: flex;
-  align-items: center;
+  // align-items: center;
   gap: 1.875rem;
 
-  @media (max-width: 600px) {
+  @media (max-width: 800px) {
     flex-direction: column;
   }
 `;
@@ -76,6 +76,10 @@ export const PrizeContainer = styled.div<PrizeProps>`
   background: ${({ theme }) => theme.colors.grayf3};
 
   border-radius: 0.625rem;
+
+  @media (max-width: 800px) {
+    max-width: unset;
+  }
 `;
 
 export const PrizeIndex = styled.div<PrizeProps>`
@@ -126,6 +130,7 @@ export const Prize = styled.div<PrizeProps>`
 export const PrizeName = styled.p<PrizeProps>`
   font-size: 1.75rem;
   font-weight: 700;
+  text-align: center;
   color: ${({ theme, isMainPrize }) =>
     isMainPrize ? '#f5c12e' : theme.colors.gray74};
 `;
@@ -138,10 +143,16 @@ export const PrizeLiquidValue = styled.p`
 
 export const SelectedNumbersContainer = styled.div`
   width: 100%;
+  height: fit-content;
 
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(2.5rem, 1fr));
+  // grid-template-columns: repeat(auto-fit, minmax(2.5rem, 1fr));
+  grid-template-columns: repeat(10, 1fr);
   grid-gap: 1.125rem;
+
+  @media (max-width: 400px) {
+    grid-template-columns: repeat(7, 1fr);
+  }
 `;
 
 export const SelectedNumber = styled.p`
