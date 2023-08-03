@@ -39,7 +39,7 @@ export const SelectsContainer = styled.div`
 `;
 
 export const ContestImage = styled.img`
-  width: min(50%, 37.5rem);
+  min-width: min(50%, 37.5rem);
   height: 21.875rem;
   object-fit: cover;
   border-radius: 0.625rem;
