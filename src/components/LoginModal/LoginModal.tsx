@@ -93,7 +93,7 @@ const LoginModal = ({ onClose, onClickSignUp, onClickForgot }: Props) => {
       const ipAddress = await getUserIpAddress();
 
       await api.post(
-        '/user-term-confirms',
+        '/confirmTerm',
         {
           data: {
             user: {
