@@ -8,8 +8,12 @@ export const imageUrl = (imagePath?: string) => {
   return `${baseApiUrl}${imagePath || ''}`;
 };
 
-export const getDrawImage = (draw: IDraw) => {
-  const imagePath = draw.attributes.image.data.attributes.url;
+export const getDrawImage = (draw?: IDraw) => {
+  const imagePath = draw?.attributes?.image?.data?.attributes?.url || '';
+
+  if (!imagePath) {
+    return '';
+  }
 
   return imageUrl(imagePath);
 };

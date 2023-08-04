@@ -102,7 +102,8 @@ export const CountdownContainer = styled.div`
 `;
 
 export const CountdownItem = styled.div`
-  width: 2.75rem;
+  min-width: 2.75rem;
+  padding: 0 0.25rem;
   height: 2.75rem;
   border-radius: 0.625rem;
   background: ${({ theme }) => theme.colors.primaryTwo};
