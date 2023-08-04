@@ -44,6 +44,7 @@ const SignUpModal = ({ onClose, onClickLogin }: Props) => {
         ...finalForm,
         username: finalForm.cpf,
         confirm_password: undefined,
+        isTermAccepted: true,
       };
 
       await api.post('/validatorUser', { data: payload });

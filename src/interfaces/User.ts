@@ -27,4 +27,5 @@ export interface IUser {
   observation: null | string;
   country: null | string;
   phone: null | string;
+  isTermAccepted: boolean;
 }

@@ -11,6 +11,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoCloseCircleOutline } from 'react-icons/io5';
+import { getUserIpAddress } from '@/services/ipAddress';
 import Input from '../Input/Input';
 import MaskedInput from '../Input/MaskedInput';
 import {
@@ -23,6 +24,7 @@ import {
   SubmitButton,
   TextButton,
 } from './styles';
+import TermsModal from '../TermsModal/TermsModal';
 
 interface Props {
   onClose: () => void;
@@ -34,6 +36,9 @@ const LoginModal = ({ onClose, onClickSignUp, onClickForgot }: Props) => {
   const { setUser } = useAuth();
   const contentRef = useRef<HTMLDivElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [pendingLoginResponse, setPendingLoginResponse] =
+    useState<ILoginResponse>();
+  const [showTermsModal, setShowTermsModal] = useState(false);
 
   const {
     register,
@@ -58,14 +63,59 @@ const LoginModal = ({ onClose, onClickSignUp, onClickForgot }: Props) => {
         password: form.password,
       });
 
-      handleLocalStorage(data);
-      setUser(data.user);
-      addTokenToCookies(data.jwt);
-      onClose();
+      if (!data.user.isTermAccepted) {
+        setShowTermsModal(true);
+        setPendingLoginResponse(data);
+        return;
+      }
+
+      handleSuccessfulLogin(data);
     } catch (error) {
       handleError(error);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleSuccessfulLogin = (data: ILoginResponse) => {
+    handleLocalStorage(data);
+    setUser(data.user);
+    addTokenToCookies(data.jwt);
+    onClose();
+  };
+
+  const handleAcceptTerms = async (termId: number) => {
+    if (!pendingLoginResponse) {
+      return;
+    }
+
+    try {
+      const ipAddress = await getUserIpAddress();
+
+      await api.post(
+        '/user-term-confirms',
+        {
+          data: {
+            user: {
+              id: pendingLoginResponse.user.id,
+            },
+            term: termId,
+            ip: ipAddress,
+            type: 'Web',
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${pendingLoginResponse.jwt}`,
+          },
+        },
+      );
+
+      handleSuccessfulLogin(pendingLoginResponse);
+
+      setShowTermsModal(false);
+    } catch (error) {
+      handleError(error);
     }
   };
 
@@ -113,6 +163,7 @@ const LoginModal = ({ onClose, onClickSignUp, onClickForgot }: Props) => {
             Não tem conta? Cadastre-se aqui!
           </TextButton>
         </Form>
+        {showTermsModal && <TermsModal onAccept={handleAcceptTerms} />}
       </Content>
     </Container>
   );
