@@ -39,6 +39,15 @@ export const EditionHeader = styled.div`
   border-radius: 1.25rem;
 `;
 
+export const EmptyText = styled.p`
+  margin-top: 2.5rem;
+
+  font-size: 1.125rem;
+  font-weight: 500;
+  text-align: center;
+  color: ${({ theme }) => theme.colors.gray2f};
+`;
+
 export const ResultItem = styled.article`
   width: 95%;
   margin: 0 auto;

@@ -14,6 +14,7 @@ import {
   CertificateTitle,
   Container,
   EditionHeader,
+  EmptyText,
   ItemTop,
   ItemWinner,
   Prize,
@@ -60,6 +61,7 @@ const Results = ({ showVideo = false }: Props) => {
   const [drawOptions, setDrawOptions] = useState<IOption[]>([]);
   const [selectedDrawOption, setSelectedDrawOption] = useState<IOption>();
   const [drawWinnings, setDrawWinnings] = useState<IResultsWinners>();
+  const [isLoadingWinners, setIsLoadingWinners] = useState(false);
 
   useEffect(() => {
     getDraws();
@@ -74,7 +76,8 @@ const Results = ({ showVideo = false }: Props) => {
       const { data } = await api.get<PaginatedResponse<IDraw>>('/draws', {
         params: {
           sort: 'publishedAt:asc',
-          'filters[active][$eq]': false,
+          'filters[isPublished][$eq]': false,
+          'filters[active][$eq]': true,
           fields: ['dateDraw', 'dateFinal', 'name'],
           populate: '*',
         },
@@ -103,6 +106,8 @@ const Results = ({ showVideo = false }: Props) => {
     if (!selectedDrawOption) {
       return;
     }
+
+    setIsLoadingWinners(true);
 
     try {
       const { data } = await api.get<GetUserWinningResponse>(
@@ -136,9 +141,14 @@ const Results = ({ showVideo = false }: Props) => {
       }
     } catch (error) {
       setDrawWinnings(undefined);
-      handleError(error);
+      // handleError(error);
+    } finally {
+      setIsLoadingWinners(false);
     }
   };
+
+  const hasWinners =
+    drawWinnings?.normalPrizes?.length || drawWinnings?.specialPrizes?.length;
 
   return (
     <Container>
@@ -155,6 +165,10 @@ const Results = ({ showVideo = false }: Props) => {
         />
       </ResultsHeader>
       <EditionHeader>{selectedDrawOption?.formattedTitle}</EditionHeader>
+
+      {!hasWinners && !isLoadingWinners && (
+        <EmptyText>Nenhum ganhador encontrado</EmptyText>
+      )}
       {drawWinnings?.normalPrizes?.map(winner => (
         <ResultItem key={winner.title}>
           <ItemTop>
