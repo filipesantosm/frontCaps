@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import { IUser } from '@/interfaces/User';
-import { clearTokenCookie } from '@/utils/cookies';
+import { addTokenToCookies, clearTokenCookie } from '@/utils/cookies';
 import React, {
   createContext,
   ReactNode,
@@ -32,6 +32,7 @@ const AuthProvider = ({ children }: ChildrenProps) => {
 
     if (dataUser) {
       setUser(JSON.parse(dataUser));
+      addTokenToCookies(localStorage.getItem('@MultCapWeb: accessToken') || '');
     }
     setLoading(false);
   }, []);

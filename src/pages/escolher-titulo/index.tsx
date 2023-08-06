@@ -1,11 +1,14 @@
 /* eslint-disable react/no-array-index-key */
 import Layout from '@/components/Layout/Layout';
-import React, { useEffect, useState } from 'react';
 import { useCart } from '@/hooks/useCart';
-import { FaCartPlus } from 'react-icons/fa';
-import { ICartItem } from '@/interfaces/Cart';
+import { useCurrentDraw } from '@/hooks/useCurrentDraw';
+import { ICartItem, ITitle } from '@/interfaces/Cart';
+import api from '@/services/api';
 import handleError from '@/utils/handleToast';
+import { titleToCartItem } from '@/utils/titleToCartItem';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { FaCartPlus } from 'react-icons/fa';
 import {
   Card,
   CardBody,
@@ -28,37 +31,40 @@ import {
   Toggle,
 } from './styles';
 
-const numbersArray = Array.from({ length: 20 }).map((_, index) => index + 1);
-
 const ChooseTitles = () => {
   const router = useRouter();
-  const { cartItems, toggleCartItem } = useCart();
+  const { cartItems, toggleCartItem, updateCartItem } = useCart();
   const [cards, setCards] = useState<ICartItem[]>([]);
   const [isChoosingNumbers, setIsChoosingNumbers] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [page, setPage] = useState(1);
   const [inputNumbers, setInputNumbers] = useState(['', '', '', '']);
+  const { currentDraw, selectedDrawOption } = useCurrentDraw();
 
   useEffect(() => {
     getCards();
-  }, [page]);
+  }, [page, currentDraw]);
 
   const getCards = async () => {
+    if (!currentDraw) {
+      return;
+    }
+
     setIsLoadingMore(true);
     try {
-      // TODO: integrar
-      await new Promise(resolve => {
-        setTimeout(() => {
-          resolve({});
-        }, 300);
+      const { data } = await api.get<ITitle[]>('/getSuggestedTitle', {
+        params: {
+          id: currentDraw?.id,
+        },
       });
-      setCards(
-        Array.from({ length: page * 9 }).map((_, index) => ({
-          code: (931784 + index).toString(),
-          luckyNumber: '225.029',
-          numbers: numbersArray,
-        })),
-      );
+
+      const suggestedCartItems = data.map(titleToCartItem);
+
+      if (page > 1) {
+        setCards(prev => [...prev, ...suggestedCartItems]);
+      } else {
+        setCards(suggestedCartItems);
+      }
     } catch (error) {
       handleError(error);
     } finally {
@@ -73,6 +79,21 @@ const ChooseTitles = () => {
     setInputNumbers(prev =>
       prev.map((value, idx) => (index === idx ? e.target.value : value)),
     );
+  };
+
+  const handleSwitchNumber = (cartItemId: number, keyToSwitch: string) => {
+    console.log(cartItemId, keyToSwitch);
+  };
+
+  const handleFinish = () => {
+    if (cartItems.length % (selectedDrawOption?.quantity || 1)) {
+      handleError(
+        `A quantidade de títulos deve ser múltipla de ${selectedDrawOption?.quantity}`,
+      );
+      return;
+    }
+
+    router.push('/finalizar-compra');
   };
 
   return (
@@ -106,10 +127,7 @@ const ChooseTitles = () => {
                 />
               ))}
             {cartItems.length > 0 && (
-              <FinishPurchaseButton
-                type="button"
-                onClick={() => router.push('/finalizar-compra')}
-              >
+              <FinishPurchaseButton type="button" onClick={handleFinish}>
                 Concluir compra ({cartItems.length})
               </FinishPurchaseButton>
             )}
@@ -117,17 +135,18 @@ const ChooseTitles = () => {
           <CardList>
             {cards.map(card => {
               const isInCart = cartItems.some(
-                cartItem => cartItem.code === card.code,
+                cartItem => cartItem.id === card.id,
               );
+
               return (
-                <Card key={card.code}>
+                <Card key={card.id}>
                   <CardHeader>
                     <CardHeaderInfos>
                       <CardHeaderText>N° do título</CardHeaderText>
                       <CardHeaderText>N° da sorte</CardHeaderText>
                     </CardHeaderInfos>
                     <CardHeaderInfos>
-                      <CardHeaderText>{card.code}</CardHeaderText>
+                      <CardHeaderText>{card.number}</CardHeaderText>
                       <CardHeaderText>{card.luckyNumber}</CardHeaderText>
                     </CardHeaderInfos>
                     <CartButton
@@ -149,14 +168,17 @@ const ChooseTitles = () => {
                     </CartButton>
                   </CardHeader>
                   <CardBody>
-                    {card.numbers.map(number => (
+                    {card.digits.map(numberObj => (
                       <CardNumber
-                        key={`${card.code}-${number}`}
+                        key={`${card.id}-${numberObj.key}`}
                         isSelectedNumber={inputNumbers.some(
-                          value => Number(value) === number,
+                          value => Number(value) === numberObj.number,
                         )}
+                        onClick={() =>
+                          handleSwitchNumber(card.id, numberObj.key)
+                        }
                       >
-                        {number.toString().padStart(2, '0')}
+                        {numberObj.number.toString().padStart(2, '0')}
                       </CardNumber>
                     ))}
                   </CardBody>

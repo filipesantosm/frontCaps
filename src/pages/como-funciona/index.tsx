@@ -1,5 +1,7 @@
 import Layout from '@/components/Layout/Layout';
 import NextRaffle from '@/components/NextRaffle/NextRaffle';
+import { useCurrentDraw } from '@/hooks/useCurrentDraw';
+import { getDrawImage } from '@/utils/imageUrl';
 import {
   Banner,
   Card,
@@ -16,9 +18,11 @@ import {
 } from './styles';
 
 const HowItWorks = () => {
+  const { currentDraw } = useCurrentDraw();
+
   return (
     <Layout>
-      <Banner src="/home-hero.png" />
+      <Banner src={getDrawImage(currentDraw)} />
       <PageContent>
         <NextRaffle />
         <HowItWorksSection>

@@ -92,6 +92,27 @@ export const OptionLink = styled(Link)`
   }
 `;
 
+export const OptionButton = styled.button`
+  border: none;
+  background: transparent;
+
+  text-decoration: none;
+
+  display: flex;
+  align-items: center;
+
+  height: 3.4375rem;
+  width: 100%;
+  border-radius: 0.625rem;
+  overflow: hidden;
+
+  transition: filter 0.3s;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+`;
+
 export const LeftButtonContent = styled.div`
   width: 100%;
   height: 100%;

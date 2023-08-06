@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { getTokenFromCookies } from '@/utils/cookies';
 import axios from 'axios';
+import { deleteCookie } from 'cookies-next';
 
 export const baseURL = process.env.NEXT_PUBLIC_API || '';
 
@@ -43,21 +44,26 @@ export async function refreshAccessToken() {
   window.location.href = '/';
 }
 
- api.interceptors.response.use(
+*/
+api.interceptors.response.use(
   response => response,
   async error => {
     const originalRequest = error.config;
 
-    if (
-      error.response.status === 401 &&
-      !originalRequest.retry &&
-      originalRequest.url !== 'your-refresh-token-url'
-    ) {
+    if (error.response.status === 401 && !originalRequest.retry) {
       originalRequest.retry = true;
-      const accessToken = await refreshAccessToken();
-      originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+
+      if (window) {
+        localStorage.clear();
+        window.location.href = '/';
+      }
+
+      deleteCookie('multcap-web: jwt');
+
+      /* const accessToken = await refreshAccessToken();
+      originalRequest.headers.Authorization = `Bearer ${accessToken}`; */
       return api(originalRequest);
     }
     return Promise.reject(error);
   },
-); */
+);

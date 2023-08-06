@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import styled, { keyframes } from 'styled-components';
 
 export const PageContent = styled.div`
   width: 90%;
@@ -226,4 +227,32 @@ export const CopyCodeButton = styled.button`
   &:hover {
     filter: brightness(0.9);
   }
+`;
+
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+export const LoadingWrapper = styled.div`
+  margin: 2.5rem auto;
+
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
+export const LoadingIcon = styled(AiOutlineLoading3Quarters)`
+  text-align: center;
+
+  color: ${({ theme }) => theme.colors.primary};
+
+  animation: ${rotate} 1s linear infinite;
+
+  font-size: 2rem;
 `;

@@ -1,8 +1,16 @@
+import HelpFooter from '@/components/HelpFooter/HelpFooter';
 import Layout from '@/components/Layout/Layout';
 import PageTitle from '@/components/PageTitle/PageTitle';
-import HelpFooter from '@/components/HelpFooter/HelpFooter';
+import api from '@/services/api';
+import handleError, { handleSuccess } from '@/utils/handleToast';
+import { useEffect, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { FaCopy } from 'react-icons/fa';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { format, parseISO } from 'date-fns';
+import { PaginatedResponse } from '@/interfaces/Paginated';
+import { ICreditSaleValue } from '@/interfaces/CreditSales';
+import { formatCurrency } from '@/utils/formatCurrency';
 import {
   AmountItem,
   AmountsList,
@@ -17,6 +25,8 @@ import {
   InstructionIconWrapper,
   InstructionItem,
   InstructionsList,
+  LoadingIcon,
+  LoadingWrapper,
   PageContent,
   PaymentInstructionsContainer,
   SubmitButton,
@@ -24,8 +34,91 @@ import {
   ValidDate,
 } from './styles';
 
+interface AddBalanceForm {
+  value: string;
+}
+
 const AddBalance = () => {
+  const router = useRouter();
   const [hasGenerated, setHasGenerated] = useState(false);
+  const [validDate, setValidDate] = useState('');
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [billetCode, setBilletCode] = useState(
+    '00020.101021.226770. 014456.456123.564884.6654555555',
+  );
+  const [creditValues, setCreditValues] = useState<ICreditSaleValue[]>([]);
+  const { register, handleSubmit } = useForm<AddBalanceForm>();
+
+  useEffect(() => {
+    getValidDate();
+    getCreditValues();
+  }, []);
+
+  const getValidDate = async () => {
+    try {
+      const { data } = await api.get<string>('/getDueDateCredit');
+
+      setValidDate(format(parseISO(data), 'dd/MM/yyyy'));
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
+  const getCreditValues = async () => {
+    setIsLoading(true);
+
+    try {
+      const { data } = await api.get<PaginatedResponse<ICreditSaleValue>>(
+        '/user-type-credit-sales',
+        {
+          params: {
+            'filters[active][$eq]': true,
+          },
+        },
+      );
+
+      setCreditValues(data.data);
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const onSubmit: SubmitHandler<AddBalanceForm> = async form => {
+    if (!form.value) {
+      handleError('Selecione um valor');
+      return;
+    }
+
+    setIsGenerating(true);
+
+    try {
+      const payload = {
+        data: {
+          value: Number(form.value),
+          origin: 'Web',
+        },
+      };
+
+      const { data } = await api.post('/createCredit', payload);
+
+      // TODO: Setar código do boleto
+
+      setHasGenerated(true);
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleCopyCode = () => {
+    navigator.clipboard.writeText(billetCode);
+    handleSuccess('Código copiado com sucesso!');
+  };
+
   return (
     <Layout>
       <PageContent>
@@ -34,26 +127,30 @@ const AddBalance = () => {
           <ChooseAmountContainer>
             <ChooseAmountContent>
               <ChooseAmountTitle>Adicionar saldo</ChooseAmountTitle>
-              <ValidDate>Vencimento 18/04/2023</ValidDate>
+              {validDate && <ValidDate>Vencimento {validDate}</ValidDate>}
               <AmountsList>
-                <AmountItem>
-                  <Checkbox type="radio" name="amount" />
-                  R$ 30,00
-                </AmountItem>
-                <AmountItem>
-                  <Checkbox type="radio" name="amount" />
-                  R$ 60,00
-                </AmountItem>
-                <AmountItem>
-                  <Checkbox type="radio" name="amount" />
-                  R$ 90,00
-                </AmountItem>
-                <AmountItem>
-                  <Checkbox type="radio" name="amount" />
-                  R$ 120,00
-                </AmountItem>
+                {isLoading && (
+                  <LoadingWrapper>
+                    <LoadingIcon />
+                  </LoadingWrapper>
+                )}
+                {creditValues.map(creditValue => (
+                  <AmountItem key={creditValue.id}>
+                    <Checkbox
+                      type="radio"
+                      value={creditValue.attributes.value.toString()}
+                      {...register('value')}
+                      disabled={hasGenerated}
+                    />
+                    {formatCurrency(creditValue.attributes.value)}
+                  </AmountItem>
+                ))}
               </AmountsList>
-              <SubmitButton type="button" onClick={() => setHasGenerated(true)}>
+              <SubmitButton
+                type="button"
+                disabled={isGenerating || hasGenerated}
+                onClick={handleSubmit(onSubmit)}
+              >
                 Gerar boleto
               </SubmitButton>
             </ChooseAmountContent>
@@ -86,11 +183,9 @@ const AddBalance = () => {
               </InstructionsList>
               <InstructionItem>
                 <BarcodeImage src="/add-balance/barcode.svg" />
-                <BilletCode>
-                  00020.101021.226770. 014456.456123.564884.6654555555
-                </BilletCode>
+                <BilletCode>{billetCode}</BilletCode>
               </InstructionItem>
-              <CopyCodeButton>
+              <CopyCodeButton onClick={handleCopyCode}>
                 <FaCopy />
                 Copiar código
               </CopyCodeButton>

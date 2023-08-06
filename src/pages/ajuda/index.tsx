@@ -3,6 +3,8 @@ import ContactSection from '@/components/ContactSection/ContactSection';
 import HelpSearchBar from '@/components/HelpSearchBar/HelpSearchBar';
 import Layout from '@/components/Layout/Layout';
 import NextRaffle from '@/components/NextRaffle/NextRaffle';
+import { useCurrentDraw } from '@/hooks/useCurrentDraw';
+import { getDrawImage } from '@/utils/imageUrl';
 import { FaChevronRight } from 'react-icons/fa';
 import {
   Banner,
@@ -25,9 +27,11 @@ import {
 } from './styles';
 
 const HelpPage = () => {
+  const { currentDraw } = useCurrentDraw();
+
   return (
     <Layout>
-      <Banner src="/home-hero.png" />
+      <Banner src={getDrawImage(currentDraw)} />
       <PageContent>
         <NextRaffle containerMarginTop="-7rem" />
 

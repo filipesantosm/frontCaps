@@ -24,5 +24,12 @@ export function middleware(request: NextRequest) {
     '/meus-titulos', */
 
 export const config = {
-  matcher: ['/perfil', '/alterar-senha'],
+  matcher: [
+    '/perfil',
+    '/alterar-senha',
+    '/escolher-titulo',
+    '/finalizar-compra',
+    '/finalizar-compra/:path*',
+    '/adicionar-saldo',
+  ],
 };

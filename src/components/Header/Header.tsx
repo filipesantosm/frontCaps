@@ -1,8 +1,13 @@
+import { useCurrentDraw } from '@/hooks/useCurrentDraw';
 import AboutUsButton from '../AboutUsButton/AboutUsButton';
 import HeaderUser from '../HeaderUser/HeaderUser';
 import { Container, Content, StyledLink, Logo, Nav } from './styles';
 
 const Header = () => {
+  const { currentDraw } = useCurrentDraw();
+
+  const youtubeLink = currentDraw?.attributes?.lnkYoutubeDraw || '/';
+
   return (
     <Container>
       <Content>
@@ -11,7 +16,13 @@ const Header = () => {
           <StyledLink href="/">Início</StyledLink>
           <StyledLink href="/como-funciona">Como funciona</StyledLink>
           <StyledLink href="/resultados">Resultados</StyledLink>
-          <StyledLink href="/">Sorteio ao vivo</StyledLink>
+          <StyledLink
+            href={youtubeLink}
+            target={youtubeLink !== '/' ? '_blank' : undefined}
+            referrerPolicy={youtubeLink !== '/' ? 'no-referrer' : undefined}
+          >
+            Sorteio ao vivo
+          </StyledLink>
           <AboutUsButton />
           <StyledLink href="/ajuda">Ajuda</StyledLink>
         </Nav>

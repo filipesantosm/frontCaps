@@ -18,6 +18,13 @@ export const ItemListHeader = styled.div`
   color: ${({ theme }) => theme.colors.grayb9};
 `;
 
+export const Items = styled.div`
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+`;
+
 export const Item = styled.div`
   margin-top: 0.875rem;
 

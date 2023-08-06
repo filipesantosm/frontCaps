@@ -1,40 +1,41 @@
-import { Item, ItemListHeader, ItemsList, TotalValueContainer } from './styles';
+import { useCart } from '@/hooks/useCart';
+import { useCurrentDraw } from '@/hooks/useCurrentDraw';
+import { formatCurrency } from '@/utils/formatCurrency';
+import {
+  Item,
+  ItemListHeader,
+  Items,
+  ItemsList,
+  TotalValueContainer,
+} from './styles';
 
 const CartItemsList = () => {
+  const { cartItems } = useCart();
+  const { selectedDrawOption } = useCurrentDraw();
+
+  const unitTitlePrice =
+    (selectedDrawOption?.price || 0) / (selectedDrawOption?.quantity || 1);
+
   return (
     <ItemsList>
       <ItemListHeader>
-        <p>Título(4)</p>
+        <p>Título({cartItems.length})</p>
         <p>Valor</p>
       </ItemListHeader>
-      <Item>
-        <p>
-          <span>1</span>
-          5416234
-        </p>
-        <p>R$5,00</p>
-      </Item>
-      <Item>
-        <p>
-          <span>2</span>5416546
-        </p>
-        <p>R$5,00</p>
-      </Item>
-      <Item>
-        <p>
-          <span>3</span>5741359
-        </p>
-        <p>R$5,00</p>
-      </Item>
-      <Item>
-        <p>
-          <span>4</span>5874139
-        </p>
-        <p>R$5,00</p>
-      </Item>
+      <Items>
+        {cartItems.map((cartTitle, index) => (
+          <Item key={cartTitle.id}>
+            <p>
+              <span>{index + 1}</span>
+              {cartTitle.number}
+            </p>
+            <p>{formatCurrency(unitTitlePrice || 0)}</p>
+          </Item>
+        ))}
+      </Items>
       <TotalValueContainer>
         <p>Valor total</p>
-        <p>R$ 20,00</p>
+        <p>{formatCurrency(unitTitlePrice * cartItems.length)}</p>
       </TotalValueContainer>
     </ItemsList>
   );

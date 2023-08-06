@@ -1,6 +1,8 @@
 import ContactSection from '@/components/ContactSection/ContactSection';
 import Layout from '@/components/Layout/Layout';
 import NextRaffle from '@/components/NextRaffle/NextRaffle';
+import { useCurrentDraw } from '@/hooks/useCurrentDraw';
+import { getDrawImage } from '@/utils/imageUrl';
 import { useRouter } from 'next/router';
 import { IoMdArrowForward } from 'react-icons/io';
 import { IoChevronBackCircleOutline } from 'react-icons/io5';
@@ -19,10 +21,11 @@ import {
 
 const FaqQuestionPage = () => {
   const router = useRouter();
+  const { currentDraw } = useCurrentDraw();
 
   return (
     <Layout>
-      <Banner src="/home-hero.png" />
+      <Banner src={getDrawImage(currentDraw)} />
       <PageContent>
         <NextRaffle containerMarginTop="-7rem" />
         <HelpSection>

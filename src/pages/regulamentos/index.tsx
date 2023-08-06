@@ -1,7 +1,9 @@
 import Layout from '@/components/Layout/Layout';
 import NextRaffle from '@/components/NextRaffle/NextRaffle';
+import { useCurrentDraw } from '@/hooks/useCurrentDraw';
 import { ITerm } from '@/interfaces/Terms';
 import api from '@/services/api';
+import { getDrawImage } from '@/utils/imageUrl';
 import { GetServerSideProps } from 'next';
 import { Banner, PageContent, RulesSection, Text, Title } from './styles';
 
@@ -10,9 +12,11 @@ interface Props {
 }
 
 const Rules = ({ data }: Props) => {
+  const { currentDraw } = useCurrentDraw();
+
   return (
     <Layout>
-      <Banner src="/home-hero.png" />
+      <Banner src={getDrawImage(currentDraw)} />
       <PageContent>
         <NextRaffle />
         <RulesSection>

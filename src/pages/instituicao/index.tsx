@@ -3,8 +3,9 @@ import NextRaffle from '@/components/NextRaffle/NextRaffle';
 import { IInstitution } from '@/interfaces/Institution';
 import { PaginatedResponse } from '@/interfaces/Paginated';
 import api from '@/services/api';
-import { imageUrl } from '@/utils/imageUrl';
+import { getDrawImage, imageUrl } from '@/utils/imageUrl';
 import { GetServerSideProps } from 'next';
+import { useCurrentDraw } from '@/hooks/useCurrentDraw';
 import {
   Banner,
   InstitutionBanner,
@@ -22,9 +23,11 @@ interface Props {
 }
 
 const Institution = ({ institution }: Props) => {
+  const { currentDraw } = useCurrentDraw();
+
   return (
     <Layout>
-      <Banner src="/home-hero.png" />
+      <Banner src={getDrawImage(currentDraw)} />
       <PageContent>
         <NextRaffle />
         <PrivacyPolicySection>

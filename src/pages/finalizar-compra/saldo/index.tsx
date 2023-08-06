@@ -4,6 +4,13 @@ import Layout from '@/components/Layout/Layout';
 import PageTitle from '@/components/PageTitle/PageTitle';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import handleError, { handleSuccess } from '@/utils/handleToast';
+import api from '@/services/api';
+import { GetExtractResponse } from '@/interfaces/Extract';
+import { useCart } from '@/hooks/useCart';
+import { useCurrentDraw } from '@/hooks/useCurrentDraw';
+import { formatCurrency } from '@/utils/formatCurrency';
+import { formatPaymentTitles } from '@/utils/formatPaymentTitles';
 import {
   BalanceCard,
   BalanceCardsContainer,
@@ -22,13 +29,56 @@ import {
 
 const BalancePayment = () => {
   const router = useRouter();
-  const [hasEnoughBalance, setHasEnoughBalance] = useState(false);
+  const [extractAccount, setExtractAccount] = useState<GetExtractResponse>();
+  const [isLoading, setIsLoading] = useState(false);
+  const { cartItems } = useCart();
+  const { selectedDrawOption } = useCurrentDraw();
 
   useEffect(() => {
-    setTimeout(() => {
-      setHasEnoughBalance(true);
-    }, 10000);
+    getExtractAccount();
   }, []);
+
+  const getExtractAccount = async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await api.get<GetExtractResponse>('/getExtractAccount');
+
+      setExtractAccount(data);
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleFinishPayment = async () => {
+    if (!cartItems.length) {
+      handleError('Seu carrinho está vazio!');
+      return;
+    }
+
+    try {
+      const { data } = await api.post('/paymentTitle', {
+        data: {
+          payment_type: {
+            id: 4,
+          },
+          titles: formatPaymentTitles(cartItems),
+        },
+      });
+
+      // TODO: Terminar
+      handleSuccess('Pagamento realizado com sucesso!');
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
+  const unitTitlePrice =
+    (selectedDrawOption?.price || 0) / (selectedDrawOption?.quantity || 1);
+
+  const hasEnoughBalance =
+    unitTitlePrice * cartItems.length <= (extractAccount?.balance || 0);
 
   return (
     <Layout>
@@ -45,12 +95,14 @@ const BalancePayment = () => {
                     DISPONÍVEL
                   </CardTitle>
                   <CardValue textColor={hasEnoughBalance ? 'green' : 'red'}>
-                    R$ 0,00
+                    {formatCurrency(extractAccount?.balance || 0)}
                   </CardValue>
                 </BalanceCard>
                 <BalanceCard>
                   <CardTitle>PENDENTE</CardTitle>
-                  <CardValue>R$ 0,00</CardValue>
+                  <CardValue>
+                    {formatCurrency(extractAccount?.totalCreditPendding || 0)}
+                  </CardValue>
                 </BalanceCard>
               </BalanceCardsContainer>
               <BalanceDescription>
@@ -59,7 +111,9 @@ const BalancePayment = () => {
               </BalanceDescription>
               {hasEnoughBalance ? (
                 <ButtonsContainer>
-                  <FilledButton>Realizar pagamento</FilledButton>
+                  <FilledButton onClick={handleFinishPayment}>
+                    Realizar pagamento
+                  </FilledButton>
                   <OutlinedButton
                     onClick={() => router.push('/adicionar-saldo')}
                   >

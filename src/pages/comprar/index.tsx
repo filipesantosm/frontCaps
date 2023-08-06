@@ -1,14 +1,23 @@
 import HomeFooter from '@/components/HomeFooter/HomeFooter';
 import Layout from '@/components/Layout/Layout';
 import PurchaseSelect from '@/components/PurchaseSelect/PurchaseSelect';
+import { useCart } from '@/hooks/useCart';
+import { PromoOption, useCurrentDraw } from '@/hooks/useCurrentDraw';
+import { ITitle } from '@/interfaces/Cart';
+import api from '@/services/api';
+import handleError from '@/utils/handleToast';
+import { getDrawImage } from '@/utils/imageUrl';
+import { titleToCartItem } from '@/utils/titleToCartItem';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { BsFillLightningChargeFill } from 'react-icons/bs';
 import { FaChevronRight } from 'react-icons/fa';
 import { PiShoppingCartSimpleFill } from 'react-icons/pi';
-import { useRouter } from 'next/router';
 import {
   ButtonArrow,
   ContestImage,
   LeftButtonContent,
+  OptionButton,
   OptionLink,
   OptionsContainer,
   OptionsLabel,
@@ -21,8 +30,42 @@ import {
 
 const Purchase = () => {
   const router = useRouter();
+  const {
+    promoOptions,
+    setSelectedDrawOption,
+    selectedDrawOption,
+    currentDraw,
+  } = useCurrentDraw();
+  const { addToCart } = useCart();
+  const [isBuying, setIsBuying] = useState(false);
 
   const isDoubleChance = !!router.query['dupla-chance'];
+
+  const handleQuickPurchase = async () => {
+    setIsBuying(true);
+
+    try {
+      const { data } = await api.get<ITitle[]>('/getSuggestedTitle', {
+        params: {
+          id: currentDraw?.id,
+        },
+      });
+
+      const suggestedCartItems = data.map(titleToCartItem);
+
+      suggestedCartItems
+        .slice(0, selectedDrawOption?.quantity || 1)
+        .forEach(cartItem => {
+          addToCart(cartItem);
+        });
+
+      router.push('/finalizar-compra');
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setIsBuying(false);
+    }
+  };
 
   return (
     <Layout>
@@ -34,21 +77,11 @@ const Purchase = () => {
             <SelectsContainer>
               <PurchaseSelect
                 isSearchable={false}
-                options={[
-                  {
-                    label: '1 Título | $ 15,00',
-                    value: 1,
-                    price: 15,
-                  },
-                ]}
-                onChange={() => {
-                  console.log('');
+                options={promoOptions}
+                onChange={option => {
+                  setSelectedDrawOption(option as PromoOption);
                 }}
-                defaultValue={{
-                  label: '1 Título | R$ 15,00',
-                  value: 1,
-                  price: 15,
-                }}
+                value={selectedDrawOption}
               />
               {isDoubleChance && (
                 <PurchaseSelect
@@ -84,7 +117,11 @@ const Purchase = () => {
 
             <OptionsContainer>
               <OptionsLabel>Escolha uma opção</OptionsLabel>
-              <OptionLink href="/finalizar-compra">
+              <OptionButton
+                type="button"
+                onClick={handleQuickPurchase}
+                disabled={isBuying}
+              >
                 <LeftButtonContent>
                   <BsFillLightningChargeFill />
                   Compra rápida
@@ -92,7 +129,7 @@ const Purchase = () => {
                 <ButtonArrow>
                   <FaChevronRight />
                 </ButtonArrow>
-              </OptionLink>
+              </OptionButton>
               <OptionLink href="/escolher-titulo">
                 <LeftButtonContent>
                   <PiShoppingCartSimpleFill />
@@ -104,7 +141,7 @@ const Purchase = () => {
               </OptionLink>
             </OptionsContainer>
           </PurchaseColumn>
-          <ContestImage src="/home-hero.png" />
+          <ContestImage src={getDrawImage(currentDraw)} />
         </TopSection>
         <HomeFooter />
       </PageContent>

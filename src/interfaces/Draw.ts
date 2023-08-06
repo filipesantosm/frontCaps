@@ -14,7 +14,23 @@ export interface IDrawAttributes {
   publishedAt: string;
   active: boolean;
   number: number;
-  lastDraw: boolean;
+  lastDraw: null | boolean;
+  susep: null | number;
+  chanceInicial01: null | number;
+  intervalChance1: null | number;
+  chanceFinal01: null | number;
+  chanceInicial02: null | number;
+  chanceFinal02: null | number;
+  intervalChance2: null | number;
+  chanceInicial03: null | number;
+  chanceFinal03: null | number;
+  lnkYoutube: null | string;
+  lnkYoutubeDraw: null | string;
+  redemptionPercent: null | number;
+  redemptionValue: null | number;
+  isScratchCard: boolean;
+  limSale: null | number;
+  isPublished: boolean;
   image: Image;
   draw_type_chance: DrawTypeChance;
   draw_premiums: {

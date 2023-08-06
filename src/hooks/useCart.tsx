@@ -5,7 +5,8 @@ import { createContext, useContext, useState } from 'react';
 interface CartContextData {
   cartItems: ICartItem[];
   addToCart: (item: ICartItem) => void;
-  removeFromCart: (code: string) => void;
+  removeFromCart: (id: number) => void;
+  updateCartItem: (cartItem: ICartItem) => void;
   toggleCartItem: (item: ICartItem) => void;
 }
 
@@ -20,7 +21,7 @@ const CartProvider = ({ children }: Props) => {
 
   const addToCart = (cartItem: ICartItem) => {
     setCartItems(prev => {
-      if (prev.find(item => item.code === cartItem.code)) {
+      if (prev.find(item => item.id === cartItem.id)) {
         return prev;
       }
 
@@ -28,22 +29,34 @@ const CartProvider = ({ children }: Props) => {
     });
   };
 
-  const removeFromCart = (code: string) => {
-    setCartItems(prev => prev.filter(item => item.code !== code));
+  const removeFromCart = (id: number) => {
+    setCartItems(prev => prev.filter(item => item.id !== id));
   };
 
   const toggleCartItem = (cartItem: ICartItem) => {
-    if (cartItems.find(item => item.code === cartItem.code)) {
-      setCartItems(prev => prev.filter(item => item.code !== cartItem.code));
+    if (cartItems.find(item => item.id === cartItem.id)) {
+      setCartItems(prev => prev.filter(item => item.id !== cartItem.id));
       return;
     }
 
     setCartItems(prev => [...prev, cartItem]);
   };
 
+  const updateCartItem = (cartItem: ICartItem) => {
+    setCartItems(prev =>
+      prev.map(item => (item.id === cartItem.id ? cartItem : item)),
+    );
+  };
+
   return (
     <CartContext.Provider
-      value={{ cartItems, removeFromCart, addToCart, toggleCartItem }}
+      value={{
+        cartItems,
+        removeFromCart,
+        addToCart,
+        toggleCartItem,
+        updateCartItem,
+      }}
     >
       {children}
     </CartContext.Provider>

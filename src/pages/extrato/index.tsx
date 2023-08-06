@@ -1,10 +1,14 @@
 /* eslint-disable react/no-array-index-key */
 import Layout from '@/components/Layout/Layout';
 import PageTitle from '@/components/PageTitle/PageTitle';
-import { useState } from 'react';
-import { FaPlusCircle } from 'react-icons/fa';
-import { useRouter } from 'next/router';
+import { GetExtractResponse } from '@/interfaces/Extract';
+import api from '@/services/api';
 import { theme } from '@/styles/theme';
+import handleError from '@/utils/handleToast';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { FaPlusCircle } from 'react-icons/fa';
+import { formatCurrency } from '@/utils/formatCurrency';
 import {
   AddBalanceButton,
   BalanceCard,
@@ -28,7 +32,26 @@ import {
 
 const PurchaseHistory = () => {
   const [tab, setTab] = useState<'pix' | 'credit_card'>('pix');
+  const [extractAccount, setExtractAccount] = useState<GetExtractResponse>();
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    getExtractAccount();
+  }, []);
+
+  const getExtractAccount = async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await api.get<GetExtractResponse>('/getExtractAccount');
+
+      setExtractAccount(data);
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Layout>
@@ -89,12 +112,14 @@ const PurchaseHistory = () => {
                       color: theme.colors.green,
                     }}
                   >
-                    R$ 0,00
+                    {formatCurrency(extractAccount?.balance || 0)}
                   </BalanceCardValue>
                 </BalanceCard>
                 <BalanceCard>
                   <BalanceCardTitle>PENDENTE</BalanceCardTitle>
-                  <BalanceCardValue>R$ 30,00</BalanceCardValue>
+                  <BalanceCardValue>
+                    {formatCurrency(extractAccount?.totalCreditPendding || 0)}
+                  </BalanceCardValue>
                 </BalanceCard>
               </BalanceCardsContainer>
               <AddBalanceButton onClick={() => router.push('/adicionar-saldo')}>
