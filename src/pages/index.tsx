@@ -5,7 +5,7 @@ import PlatformNumbers from '@/components/PlatformNumbers/PlatformNumbers';
 import Results from '@/components/Results/Results';
 import { useCurrentDraw } from '@/hooks/useCurrentDraw';
 import { getDrawImage } from '@/utils/imageUrl';
-import { format, nextDay } from 'date-fns';
+import { format, nextDay, parseISO } from 'date-fns';
 import { IoLogoWhatsapp } from 'react-icons/io';
 import {
   FloatingContactButton,
@@ -18,10 +18,14 @@ import {
   RaffleTitle,
 } from './styles';
 
-const nextRaffleDate = nextDay(new Date(), 0);
-
 const Home = () => {
   const { currentDraw } = useCurrentDraw();
+
+  const drawDate = currentDraw
+    ? parseISO(
+        currentDraw?.attributes?.dateDraw || currentDraw?.attributes?.dateFinal,
+      )
+    : undefined;
 
   return (
     <Layout>
@@ -33,9 +37,11 @@ const Home = () => {
             <RaffleTitle>
               Acompanhe nosso sorteio online pelo youtube!
             </RaffleTitle>
-            <RaffleDescription>
-              Estaremos online no dia {format(nextRaffleDate, 'dd/MM/yyyy')}
-            </RaffleDescription>
+            {drawDate && (
+              <RaffleDescription>
+                Estaremos online no dia {format(drawDate, 'dd/MM/yyyy')}
+              </RaffleDescription>
+            )}
           </RaffleHeader>
           <RaffleImage src={getDrawImage(currentDraw)} />
         </RaffleInformation>

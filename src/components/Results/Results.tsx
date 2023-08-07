@@ -7,6 +7,7 @@ import { formatCurrency } from '@/utils/formatCurrency';
 import handleError from '@/utils/handleToast';
 import { format, parseISO } from 'date-fns';
 import { useEffect, useState } from 'react';
+import { getEmbedFromYoutubeLink } from '@/utils/youtubeEmbed';
 import OutlinedSelect from '../OutlinedSelect/OutlinedSelect';
 import {
   CertificateInfo,
@@ -46,6 +47,7 @@ interface IOption {
   value: number;
   label: string;
   formattedTitle: string;
+  lnkYoutubeDraw?: string;
 }
 
 interface IResultsWinners {
@@ -78,7 +80,7 @@ const Results = ({ showVideo = false }: Props) => {
           sort: 'publishedAt:asc',
           'filters[isPublished][$eq]': false,
           'filters[active][$eq]': true,
-          fields: ['dateDraw', 'dateFinal', 'name'],
+          fields: ['dateDraw', 'dateFinal', 'name', 'lnkYoutubeDraw'],
           populate: '*',
         },
       });
@@ -93,6 +95,7 @@ const Results = ({ showVideo = false }: Props) => {
           parseISO(draw.attributes.dateDraw || draw.attributes.dateFinal),
           'dd/MM/yyyy',
         )}`,
+        lnkYoutubeDraw: draw.attributes.lnkYoutubeDraw || undefined,
       }));
 
       setDrawOptions(options);
@@ -149,6 +152,10 @@ const Results = ({ showVideo = false }: Props) => {
 
   const hasWinners =
     drawWinnings?.normalPrizes?.length || drawWinnings?.specialPrizes?.length;
+
+  const embedLink = selectedDrawOption?.lnkYoutubeDraw
+    ? getEmbedFromYoutubeLink(selectedDrawOption?.lnkYoutubeDraw)
+    : '';
 
   return (
     <Container>
@@ -257,10 +264,22 @@ const Results = ({ showVideo = false }: Props) => {
           </SpecialWinner>
         ))}
       </SpecialWinnerList>
-      {showVideo && (
+      {showVideo && embedLink && (
         <>
           <ResultsVideoTitle>Veja o resultado!</ResultsVideoTitle>
-          <ResultsVideoImage src="/results-video-thumb.png" />
+          {/* <ResultsVideoImage src="/results-video-thumb.png" /> */}
+          <iframe
+            src={embedLink}
+            title="Sorteio ao vivo"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            style={{
+              marginTop: '2.5rem',
+              width: '100%',
+              aspectRatio: '16 / 9',
+            }}
+          />
         </>
       )}
     </Container>

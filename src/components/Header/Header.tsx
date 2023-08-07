@@ -1,7 +1,7 @@
 import { useCurrentDraw } from '@/hooks/useCurrentDraw';
 import AboutUsButton from '../AboutUsButton/AboutUsButton';
 import HeaderUser from '../HeaderUser/HeaderUser';
-import { Container, Content, StyledLink, Logo, Nav } from './styles';
+import { Container, Content, Logo, Nav, StyledLink } from './styles';
 
 const Header = () => {
   const { currentDraw } = useCurrentDraw();
