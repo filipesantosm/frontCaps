@@ -81,7 +81,6 @@ const Results = ({ showVideo = false }: Props) => {
           'filters[isPublished][$eq]': false,
           'filters[active][$eq]': true,
           fields: ['dateDraw', 'dateFinal', 'name', 'lnkYoutubeDraw'],
-          populate: '*',
         },
       });
 
