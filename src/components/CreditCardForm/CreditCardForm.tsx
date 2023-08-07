@@ -1,11 +1,20 @@
+import { useCart } from '@/hooks/useCart';
+import { TokenizeError, TokenizeResponse } from '@/interfaces/CreditCard';
+import api from '@/services/api';
+import { formatPaymentTitles } from '@/utils/formatPaymentTitles';
+import handleError from '@/utils/handleToast';
 import { cardDateMask, cardNumberMask } from '@/utils/masks';
+import { handleTokenizeError } from '@/utils/tokenizeErrors';
 import {
   CreditCardSchema,
   ICreditCardForm,
 } from '@/validations/CreditCardSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Icon } from '@iconify/react';
+import creditCardType from 'credit-card-type';
+import Script from 'next/script';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useState } from 'react';
 import Input from '../Input/Input';
 import MaskedInput from '../Input/MaskedInput';
 import {
@@ -14,6 +23,7 @@ import {
   CheckboxLabel,
   ContinueButton,
   Form,
+  LoadingIcon,
 } from './styles';
 
 interface Props {
@@ -21,7 +31,18 @@ interface Props {
   onError: () => void;
 }
 
+const brandName: Record<string, string> = {
+  visa: 'visa',
+  mastercard: 'mastercard',
+  'american-express': 'amex',
+  elo: 'elo',
+  hipercard: 'hipercard',
+};
+
 const CreditCardForm = ({ onSuccess, onError }: Props) => {
+  const { cartItems } = useCart();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const {
     handleSubmit,
     register,
@@ -32,13 +53,87 @@ const CreditCardForm = ({ onSuccess, onError }: Props) => {
   });
 
   const onSubmit: SubmitHandler<ICreditCardForm> = form => {
-    onSuccess();
+    if (!cartItems.length) {
+      handleError('Você não possui itens no carrinho');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    const cardBrands = creditCardType(form.card_number);
+    const firstCardBrand = cardBrands[0];
+    const brand = firstCardBrand.type;
+
+    const [expiration_month, expiration_year] = form.date.split('/');
+
+    const gn = (window as any).$gn as any;
+
+    const shouldSaveCard = form.save_card === true;
+
+    const tokenizePayload = {
+      brand: brandName[brand] || brand,
+      number: form.card_number.replace(' ', ''),
+      cvv: form.cvv,
+      expiration_month,
+      expiration_year: `20${expiration_year}`,
+      reuse: shouldSaveCard,
+    };
+
+    gn.checkout.getPaymentToken(
+      tokenizePayload,
+      async (
+        tokenizeError: TokenizeError,
+        tokenizeResponse: TokenizeResponse,
+      ) => {
+        if (tokenizeError) {
+          onError();
+          handleTokenizeError(tokenizeError);
+          setIsSubmitting(false);
+          return;
+        }
+        try {
+          await api.post('/paymentTitle', {
+            data: {
+              payment_type: {
+                id: 3,
+              },
+              tokencard: tokenizeResponse.data.payment_token,
+              titles: formatPaymentTitles(cartItems),
+            },
+          });
+
+          if (shouldSaveCard) {
+            await api.post('/createCard', {
+              data: {
+                tokencard: tokenizeResponse.data.payment_token,
+              },
+            });
+          }
+
+          onSuccess();
+        } catch (apiError) {
+          handleError(apiError);
+          onError();
+        } finally {
+          setIsSubmitting(false);
+        }
+      },
+    );
   };
 
   const cardNumber = watch('card_number');
 
+  const possibleCardBrands = creditCardType(cardNumber);
+  const cardBrand =
+    possibleCardBrands.length && possibleCardBrands.length === 1
+      ? brandName[possibleCardBrands[0]?.type] || ''
+      : '';
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
+      <Script id="gerencianet-card">
+        {`var s=document.createElement('script');s.type='text/javascript';var v=parseInt(Math.random()*1000000);s.src='https://sandbox.gerencianet.com.br/v1/cdn/fc85f27aa219ff25f4fcbbafb97ac6ff/'+v;s.async=false;s.id='fc85f27aa219ff25f4fcbbafb97ac6ff';if(!document.getElementById('fc85f27aa219ff25f4fcbbafb97ac6ff')){document.getElementsByTagName('head')[0].appendChild(s);};$gn={validForm:true,processed:false,done:{},ready:function(fn){$gn.done=fn;}};`}
+      </Script>
       <MaskedInput
         label="NÚMERO DO CARTÃO"
         maskFunction={cardNumberMask}
@@ -46,9 +141,9 @@ const CreditCardForm = ({ onSuccess, onError }: Props) => {
         maxLength={19}
         error={errors?.card_number?.message}
         icon={
-          cardNumber?.length ? (
+          cardBrand ? (
             <Icon
-              icon="brandico:mastercard"
+              icon={`brandico:${cardBrand}`}
               style={{
                 position: 'absolute',
                 right: '1rem',
@@ -82,10 +177,14 @@ const CreditCardForm = ({ onSuccess, onError }: Props) => {
         {...register('cvv')}
       />
       <CheckboxContainer>
-        <Checkbox type="checkbox" />
-        <CheckboxLabel>Salvar para compras futuras</CheckboxLabel>
+        <Checkbox type="checkbox" id="save_card" {...register('save_card')} />
+        <CheckboxLabel htmlFor="save_card ">
+          Salvar para compras futuras
+        </CheckboxLabel>
       </CheckboxContainer>
-      <ContinueButton type="submit">Realizar pagamento</ContinueButton>
+      <ContinueButton type="submit" disabled={isSubmitting}>
+        {isSubmitting ? <LoadingIcon /> : 'Realizar pagamento'}
+      </ContinueButton>
     </Form>
   );
 };

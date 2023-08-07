@@ -31,4 +31,5 @@ export const CreditCardSchema = Yup.object({
     .matches(/^[0-9]+$/, 'O campo deve conter apenas números')
     .length(3, 'O campo deve conter 3 dígitos'),
   name: Yup.string().required('Preencha os campos necessários'),
+  save_card: Yup.boolean().optional().typeError(''),
 });

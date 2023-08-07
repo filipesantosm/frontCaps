@@ -17,6 +17,7 @@
     "axios": "^1.3.4",
     "cookies-next": "^2.1.2",
     "cpf-cnpj-validator": "^1.0.3",
+    "credit-card-type": "^9.1.0",
     "date-fns": "^2.29.2",
     "date-fns-tz": "^2.0.0",
     "eslint": "8.45.0",

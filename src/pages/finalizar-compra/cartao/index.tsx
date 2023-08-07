@@ -1,12 +1,12 @@
 import CartItemsList from '@/components/CartItemsList/CartItemsList';
 import CreditCardForm from '@/components/CreditCardForm/CreditCardForm';
+import CreditCardList from '@/components/CreditCardList/CreditCardList';
 import HelpFooter from '@/components/HelpFooter/HelpFooter';
 import Layout from '@/components/Layout/Layout';
 import PageTitle from '@/components/PageTitle/PageTitle';
-import { useState } from 'react';
-import CreditCardList from '@/components/CreditCardList/CreditCardList';
-import SuccessModal from '@/components/SuccessModal/SuccessModal';
 import PaymentErrorModal from '@/components/PaymentErrorModal/PaymentErrorModal';
+import SuccessModal from '@/components/SuccessModal/SuccessModal';
+import { useState } from 'react';
 import {
   CardPaymentContainer,
   CardPaymentContent,
@@ -41,7 +41,9 @@ const CreditCardPayment = () => {
               {showForm ? (
                 <CreditCardForm
                   onError={() => setShowErrorModal(true)}
-                  onSuccess={() => setShowForm(false)}
+                  onSuccess={() => {
+                    setShowSuccessModal(true);
+                  }}
                 />
               ) : (
                 <CreditCardList
