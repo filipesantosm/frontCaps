@@ -11,6 +11,7 @@ import { formatPaymentTitles } from '@/utils/formatPaymentTitles';
 import handleError, { handleSuccess } from '@/utils/handleToast';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import Loading from '@/components/Loading/Loading';
 import {
   BalanceCard,
   BalanceCardsContainer,
@@ -29,11 +30,12 @@ import {
 
 const BalancePayment = () => {
   const router = useRouter();
-  const { cartItems } = useCart();
+  const { cartItems, cartTotal } = useCart();
   const { selectedDrawPromo } = useCurrentDraw();
 
   const [balance, setBalance] = useState<GetBalanceResponse>();
   const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     getBalance();
@@ -53,25 +55,31 @@ const BalancePayment = () => {
   };
 
   const handleFinishPayment = async () => {
-    if (!cartItems.length) {
+    if (!cartItems.length || !cartTotal) {
       handleError('Seu carrinho está vazio!');
       return;
     }
 
+    setIsSubmitting(true);
     try {
-      const { data } = await api.post('/paymentTitle', {
+      await api.post('/paymentTitle', {
         data: {
           payment_type: {
             id: 4,
           },
+          origin: 'web',
           titles: formatPaymentTitles(cartItems),
+          value: cartTotal,
         },
       });
 
-      // TODO: Terminar
       handleSuccess('Pagamento realizado com sucesso!');
+
+      router.push('/extrato');
     } catch (error) {
       handleError(error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -110,8 +118,15 @@ const BalancePayment = () => {
               </BalanceDescription>
               {hasEnoughBalance ? (
                 <ButtonsContainer>
-                  <FilledButton onClick={handleFinishPayment}>
-                    Realizar pagamento
+                  <FilledButton
+                    onClick={handleFinishPayment}
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <Loading iconColor="white" />
+                    ) : (
+                      'Realizar pagamento'
+                    )}
                   </FilledButton>
                   <OutlinedButton
                     onClick={() => router.push('/adicionar-saldo')}

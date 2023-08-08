@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import { ICartItem } from '@/interfaces/Cart';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
+import { useCurrentDraw } from './useCurrentDraw';
 
 interface CartContextData {
   cartItems: ICartItem[];
@@ -10,6 +11,7 @@ interface CartContextData {
   toggleCartItem: (item: ICartItem) => void;
   clearCart: () => void;
   setCartItems: React.Dispatch<React.SetStateAction<ICartItem[]>>;
+  cartTotal: null | number;
 }
 
 const CartContext = createContext({} as CartContextData);
@@ -19,6 +21,7 @@ interface Props {
 }
 
 const CartProvider = ({ children }: Props) => {
+  const { selectedDrawPromo } = useCurrentDraw();
   const [cartItems, setCartItems] = useState<ICartItem[]>([]);
 
   const addToCart = (cartItem: ICartItem) => {
@@ -54,10 +57,23 @@ const CartProvider = ({ children }: Props) => {
     setCartItems([]);
   };
 
+  const cartTotal = useMemo(() => {
+    if (!selectedDrawPromo) {
+      return null;
+    }
+
+    const { price = 0, quantity = 1 } = selectedDrawPromo;
+
+    const pricePerUnit = price / quantity;
+
+    return cartItems.length * pricePerUnit;
+  }, [cartItems, selectedDrawPromo]);
+
   return (
     <CartContext.Provider
       value={{
         cartItems,
+        cartTotal,
         clearCart,
         removeFromCart,
         addToCart,
