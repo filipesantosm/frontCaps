@@ -38,7 +38,7 @@ const Purchase = () => {
     selectedDrawOption,
     currentDraw,
   } = useCurrentDraw();
-  const { addToCart } = useCart();
+  const { setCartItems } = useCart();
   const [isBuying, setIsBuying] = useState(false);
 
   const isDoubleChance = !!router.query['dupla-chance'];
@@ -65,11 +65,9 @@ const Purchase = () => {
 
       const suggestedCartItems = data.map(titleToCartItem);
 
-      suggestedCartItems
-        .slice(0, selectedDrawOption?.quantity || 1)
-        .forEach(cartItem => {
-          addToCart(cartItem);
-        });
+      setCartItems(
+        suggestedCartItems.slice(0, selectedDrawOption?.quantity || 1),
+      );
 
       router.push('/finalizar-compra');
     } catch (error) {

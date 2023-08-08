@@ -291,5 +291,5 @@ export const LoadingIcon = styled(AiOutlineLoading3Quarters)`
 
   animation: ${rotate} 1s linear infinite;
 
-  font-size: 2rem;
+  font-size: 3rem;
 `;

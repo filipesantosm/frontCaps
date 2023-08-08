@@ -8,6 +8,8 @@ interface CartContextData {
   removeFromCart: (id: number) => void;
   updateCartItem: (cartItem: ICartItem) => void;
   toggleCartItem: (item: ICartItem) => void;
+  clearCart: () => void;
+  setCartItems: React.Dispatch<React.SetStateAction<ICartItem[]>>;
 }
 
 const CartContext = createContext({} as CartContextData);
@@ -48,12 +50,18 @@ const CartProvider = ({ children }: Props) => {
     );
   };
 
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
   return (
     <CartContext.Provider
       value={{
         cartItems,
+        clearCart,
         removeFromCart,
         addToCart,
+        setCartItems,
         toggleCartItem,
         updateCartItem,
       }}

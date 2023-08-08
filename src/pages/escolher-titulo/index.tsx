@@ -33,7 +33,7 @@ import {
 
 const ChooseTitles = () => {
   const router = useRouter();
-  const { cartItems, toggleCartItem, updateCartItem } = useCart();
+  const { cartItems, toggleCartItem, clearCart } = useCart();
   const [cards, setCards] = useState<ICartItem[]>([]);
   const [isChoosingNumbers, setIsChoosingNumbers] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -44,6 +44,10 @@ const ChooseTitles = () => {
   useEffect(() => {
     getCards();
   }, [page, currentDraw]);
+
+  useEffect(() => {
+    clearCart();
+  }, []);
 
   const getCards = async () => {
     if (!currentDraw) {
@@ -60,11 +64,7 @@ const ChooseTitles = () => {
 
       const suggestedCartItems = data.map(titleToCartItem);
 
-      if (page > 1) {
-        setCards(prev => [...prev, ...suggestedCartItems]);
-      } else {
-        setCards(suggestedCartItems);
-      }
+      setCards(suggestedCartItems);
     } catch (error) {
       handleError(error);
     } finally {
@@ -133,58 +133,59 @@ const ChooseTitles = () => {
             )}
           </NumberInputsContainer>
           <CardList>
-            {cards.map(card => {
-              const isInCart = cartItems.some(
-                cartItem => cartItem.id === card.id,
-              );
+            {!isLoadingMore &&
+              cards.map(card => {
+                const isInCart = cartItems.some(
+                  cartItem => cartItem.id === card.id,
+                );
 
-              return (
-                <Card key={card.id}>
-                  <CardHeader>
-                    <CardHeaderInfos>
-                      <CardHeaderText>N° do título</CardHeaderText>
-                      <CardHeaderText>N° da sorte</CardHeaderText>
-                    </CardHeaderInfos>
-                    <CardHeaderInfos>
-                      <CardHeaderText>{card.number}</CardHeaderText>
-                      <CardHeaderText>{card.luckyNumber}</CardHeaderText>
-                    </CardHeaderInfos>
-                    <CartButton
-                      isInCart={isInCart}
-                      type="button"
-                      onClick={() => toggleCartItem(card)}
-                    >
-                      {isInCart ? (
-                        <>
-                          <CartButtonIcon src="/cart-minus.svg" />
-                          remover
-                        </>
-                      ) : (
-                        <>
-                          <FaCartPlus />
-                          adicionar
-                        </>
-                      )}
-                    </CartButton>
-                  </CardHeader>
-                  <CardBody>
-                    {card.digits.map(numberObj => (
-                      <CardNumber
-                        key={`${card.id}-${numberObj.key}`}
-                        isSelectedNumber={inputNumbers.some(
-                          value => Number(value) === numberObj.number,
-                        )}
-                        onClick={() =>
-                          handleSwitchNumber(card.id, numberObj.key)
-                        }
+                return (
+                  <Card key={card.id}>
+                    <CardHeader>
+                      <CardHeaderInfos>
+                        <CardHeaderText>N° do título</CardHeaderText>
+                        <CardHeaderText>N° da sorte</CardHeaderText>
+                      </CardHeaderInfos>
+                      <CardHeaderInfos>
+                        <CardHeaderText>{card.number}</CardHeaderText>
+                        <CardHeaderText>{card.luckyNumber}</CardHeaderText>
+                      </CardHeaderInfos>
+                      <CartButton
+                        isInCart={isInCart}
+                        type="button"
+                        onClick={() => toggleCartItem(card)}
                       >
-                        {numberObj.number.toString().padStart(2, '0')}
-                      </CardNumber>
-                    ))}
-                  </CardBody>
-                </Card>
-              );
-            })}
+                        {isInCart ? (
+                          <>
+                            <CartButtonIcon src="/cart-minus.svg" />
+                            remover
+                          </>
+                        ) : (
+                          <>
+                            <FaCartPlus />
+                            adicionar
+                          </>
+                        )}
+                      </CartButton>
+                    </CardHeader>
+                    <CardBody>
+                      {card.digits.map(numberObj => (
+                        <CardNumber
+                          key={`${card.id}-${numberObj.key}`}
+                          isSelectedNumber={inputNumbers.some(
+                            value => Number(value) === numberObj.number,
+                          )}
+                          onClick={() =>
+                            handleSwitchNumber(card.id, numberObj.key)
+                          }
+                        >
+                          {numberObj.number.toString().padStart(2, '0')}
+                        </CardNumber>
+                      ))}
+                    </CardBody>
+                  </Card>
+                );
+              })}
           </CardList>
           {isLoadingMore ? (
             <LoadingWrapper>
