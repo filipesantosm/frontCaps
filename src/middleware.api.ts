@@ -6,7 +6,12 @@ export function middleware(request: NextRequest) {
 
   if (!token) {
     const url = request.nextUrl.clone();
-    url.pathname = '/';
+
+    const originalUrl = request.headers.get('Referer');
+    const originalPathname = originalUrl?.split(`${url.origin}/`)[1] || '';
+
+    url.pathname = originalPathname;
+    url.searchParams.set('modal', 'login');
     return NextResponse.redirect(url);
   }
 
@@ -31,5 +36,6 @@ export const config = {
     '/finalizar-compra',
     '/finalizar-compra/:path*',
     '/adicionar-saldo',
+    '/extrato',
   ],
 };

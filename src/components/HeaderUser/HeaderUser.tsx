@@ -3,6 +3,7 @@ import { BsFillPersonFill } from 'react-icons/bs';
 import { useAuth } from '@/hooks/useAuth';
 import { FaChevronRight } from 'react-icons/fa';
 import { useOutside } from '@/hooks/useOutside';
+import { useRouter } from 'next/router';
 import ForgotModal from '../ForgotModal/ForgotModal';
 import LoginModal from '../LoginModal/LoginModal';
 import SuccessModal from '../SuccessModal/SuccessModal';
@@ -23,12 +24,34 @@ import SignUpModal from '../SignUpModal/SignUpModal';
 type AuthModals = '' | 'signUp' | 'login' | 'forgot' | 'success';
 
 const HeaderUser = () => {
-  const [modalToShow, setModalToShow] = useState<AuthModals>('');
+  const router = useRouter();
+  const { query } = router;
+
+  // const [modalToShow, setModalToShow] = useState<AuthModals>('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { isAuthenticated, user, logout } = useAuth();
   const containerRef = useRef<HTMLDivElement>(null);
 
   useOutside(containerRef, () => setIsDropdownOpen(false));
+
+  const setModalToShow = (type: AuthModals) => {
+    if (!type) {
+      router.replace({
+        pathname: '',
+        query: {},
+      });
+      return;
+    }
+
+    router.push({
+      pathname: '',
+      query: {
+        modal: type,
+      },
+    });
+  };
+
+  const modalToShow = (query.modal || '') as AuthModals;
 
   const modalComponents: Record<AuthModals, React.ReactNode> = {
     '': null,

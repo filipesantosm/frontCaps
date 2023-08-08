@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import { IUser } from '@/interfaces/User';
 import { addTokenToCookies, clearTokenCookie } from '@/utils/cookies';
+import { useRouter } from 'next/router';
 import React, {
   createContext,
   ReactNode,
@@ -26,6 +27,7 @@ const AuthContext = createContext({} as IUserProvider);
 const AuthProvider = ({ children }: ChildrenProps) => {
   const [user, setUser] = useState<IUser>({} as IUser);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const dataUser = localStorage.getItem('@MultCapWeb: user');
@@ -45,6 +47,7 @@ const AuthProvider = ({ children }: ChildrenProps) => {
     localStorage.removeItem('@MultCapWeb: refreshToken');
     clearTokenCookie();
     setUser({} as IUser);
+    router.push('/');
   };
 
   if (loading) {

@@ -7,6 +7,7 @@ import PageTitle from '@/components/PageTitle/PageTitle';
 import PaymentErrorModal from '@/components/PaymentErrorModal/PaymentErrorModal';
 import SuccessModal from '@/components/SuccessModal/SuccessModal';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import {
   CardPaymentContainer,
   CardPaymentContent,
@@ -17,6 +18,7 @@ import {
 } from './styles';
 
 const CreditCardPayment = () => {
+  const router = useRouter();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
 
@@ -61,6 +63,7 @@ const CreditCardPayment = () => {
         <SuccessModal
           message="O pagamento foi realizado"
           onClose={() => setShowSuccessModal(false)}
+          onContinue={() => router.push('/extrato')}
         />
       )}
       {showErrorModal && (

@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { BsFillLightningChargeFill } from 'react-icons/bs';
 import { FaChevronRight } from 'react-icons/fa';
 import { PiShoppingCartSimpleFill } from 'react-icons/pi';
+import { useAuth } from '@/hooks/useAuth';
 import {
   ButtonArrow,
   ContestImage,
@@ -30,6 +31,7 @@ import {
 
 const Purchase = () => {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
   const {
     promoOptions,
     setSelectedDrawOption,
@@ -42,6 +44,16 @@ const Purchase = () => {
   const isDoubleChance = !!router.query['dupla-chance'];
 
   const handleQuickPurchase = async () => {
+    if (!isAuthenticated) {
+      router.push({
+        pathname: '',
+        query: {
+          modal: 'login',
+        },
+      });
+      return;
+    }
+
     setIsBuying(true);
 
     try {
