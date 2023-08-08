@@ -14,6 +14,7 @@ import {
   ICreditSaleValue,
 } from '@/interfaces/CreditSales';
 import { formatCurrency } from '@/utils/formatCurrency';
+import Loading from '@/components/Loading/Loading';
 import {
   AmountItem,
   AmountsList,
@@ -28,8 +29,6 @@ import {
   InstructionIconWrapper,
   InstructionItem,
   InstructionsList,
-  LoadingIcon,
-  LoadingWrapper,
   PageContent,
   PaymentInstructionsContainer,
   SubmitButton,
@@ -134,11 +133,7 @@ const AddBalance = () => {
               <ChooseAmountTitle>Adicionar saldo</ChooseAmountTitle>
               {validDate && <ValidDate>Vencimento {validDate}</ValidDate>}
               <AmountsList>
-                {isLoading && (
-                  <LoadingWrapper>
-                    <LoadingIcon />
-                  </LoadingWrapper>
-                )}
+                {isLoading && <Loading />}
                 {creditValues.map(creditValue => (
                   <AmountItem key={creditValue.id}>
                     <Checkbox

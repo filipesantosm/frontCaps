@@ -13,17 +13,17 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Icon } from '@iconify/react';
 import creditCardType from 'credit-card-type';
 import Script from 'next/script';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import Input from '../Input/Input';
 import MaskedInput from '../Input/MaskedInput';
+import Loading from '../Loading/Loading';
 import {
   Checkbox,
   CheckboxContainer,
   CheckboxLabel,
   ContinueButton,
   Form,
-  LoadingIcon,
 } from './styles';
 
 interface Props {
@@ -183,7 +183,7 @@ const CreditCardForm = ({ onSuccess, onError }: Props) => {
         </CheckboxLabel>
       </CheckboxContainer>
       <ContinueButton type="submit" disabled={isSubmitting}>
-        {isSubmitting ? <LoadingIcon /> : 'Realizar pagamento'}
+        {isSubmitting ? <Loading iconColor="white" /> : 'Realizar pagamento'}
       </ContinueButton>
     </Form>
   );

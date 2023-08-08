@@ -1,5 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import Layout from '@/components/Layout/Layout';
+import Loading from '@/components/Loading/Loading';
 import { useCart } from '@/hooks/useCart';
 import { useCurrentDraw } from '@/hooks/useCurrentDraw';
 import { ICartItem, ITitle } from '@/interfaces/Cart';
@@ -22,8 +23,6 @@ import {
   ChooseNumbersLabel,
   FinishPurchaseButton,
   LoadMoreButton,
-  LoadingIcon,
-  LoadingWrapper,
   NumberInput,
   NumberInputsContainer,
   PageContent,
@@ -37,13 +36,12 @@ const ChooseTitles = () => {
   const [cards, setCards] = useState<ICartItem[]>([]);
   const [isChoosingNumbers, setIsChoosingNumbers] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [page, setPage] = useState(1);
   const [inputNumbers, setInputNumbers] = useState(['', '', '', '']);
   const { currentDraw, selectedDrawPromo } = useCurrentDraw();
 
   useEffect(() => {
     getCards();
-  }, [page, currentDraw]);
+  }, [currentDraw]);
 
   useEffect(() => {
     clearCart();
@@ -181,13 +179,12 @@ const ChooseTitles = () => {
               })}
           </CardList>
           {isLoadingMore ? (
-            <LoadingWrapper>
-              <LoadingIcon />
-            </LoadingWrapper>
+            <Loading iconFontSize="3rem" />
           ) : (
             <LoadMoreButton
               type="button"
-              onClick={() => setPage(prev => prev + 1)}
+              disabled={isLoadingMore}
+              onClick={getCards}
             >
               Me mostre mais opções
             </LoadMoreButton>

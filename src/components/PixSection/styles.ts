@@ -115,18 +115,6 @@ export const LoadingIcon = styled.img`
   width: 2rem;
   height: 2rem;
 
-  /* @keyframes rotation {
-    0% {
-      transform: rotate(0deg);
-    }
-
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  animation: rotation 2s linear infinite; */
-
   @keyframes fade {
     0% {
       opacity: 0.1;

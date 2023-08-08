@@ -9,6 +9,7 @@ import { formatPaymentTitles } from '@/utils/formatPaymentTitles';
 import handleError from '@/utils/handleToast';
 import { addMinutes } from 'date-fns';
 import { useState } from 'react';
+import Loading from '@/components/Loading/Loading';
 import {
   ContinueButton,
   PageContent,
@@ -87,7 +88,11 @@ const PixPayment = () => {
                 onClick={handlePay}
                 disabled={isLoading}
               >
-                Continuar
+                {isLoading ? (
+                  <Loading iconColor="white" iconFontSize="1.5rem" />
+                ) : (
+                  'Continuar'
+                )}
               </ContinueButton>
             </PixPaymentContent>
           </PixPaymentContainer>

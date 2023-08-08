@@ -95,23 +95,3 @@ export const ContinueButton = styled.button`
     filter: brightness(0.9);
   }
 `;
-
-const rotate = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
-export const LoadingIcon = styled(AiOutlineLoading3Quarters)`
-  text-align: center;
-
-  color: ${({ theme }) => theme.colors.white};
-
-  animation: ${rotate} 1s linear infinite;
-
-  font-size: 2rem;
-`;
