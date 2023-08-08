@@ -2,15 +2,15 @@ import CartItemsList from '@/components/CartItemsList/CartItemsList';
 import HelpFooter from '@/components/HelpFooter/HelpFooter';
 import Layout from '@/components/Layout/Layout';
 import PageTitle from '@/components/PageTitle/PageTitle';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import handleError, { handleSuccess } from '@/utils/handleToast';
-import api from '@/services/api';
-import { GetExtractResponse } from '@/interfaces/Extract';
 import { useCart } from '@/hooks/useCart';
 import { useCurrentDraw } from '@/hooks/useCurrentDraw';
+import { GetBalanceResponse } from '@/interfaces/Balance';
+import api from '@/services/api';
 import { formatCurrency } from '@/utils/formatCurrency';
 import { formatPaymentTitles } from '@/utils/formatPaymentTitles';
+import handleError, { handleSuccess } from '@/utils/handleToast';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import {
   BalanceCard,
   BalanceCardsContainer,
@@ -29,21 +29,22 @@ import {
 
 const BalancePayment = () => {
   const router = useRouter();
-  const [extractAccount, setExtractAccount] = useState<GetExtractResponse>();
-  const [isLoading, setIsLoading] = useState(false);
   const { cartItems } = useCart();
   const { selectedDrawPromo } = useCurrentDraw();
 
+  const [balance, setBalance] = useState<GetBalanceResponse>();
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
-    getExtractAccount();
+    getBalance();
   }, []);
 
-  const getExtractAccount = async () => {
+  const getBalance = async () => {
     setIsLoading(true);
     try {
-      const { data } = await api.get<GetExtractResponse>('/getExtractAccount');
+      const { data } = await api.get<GetBalanceResponse>('/getBalance');
 
-      setExtractAccount(data);
+      setBalance(data);
     } catch (error) {
       handleError(error);
     } finally {
@@ -78,7 +79,7 @@ const BalancePayment = () => {
     (selectedDrawPromo?.price || 0) / (selectedDrawPromo?.quantity || 1);
 
   const hasEnoughBalance =
-    unitTitlePrice * cartItems.length <= (extractAccount?.balance || 0);
+    unitTitlePrice * cartItems.length <= (balance?.credit || 0);
 
   return (
     <Layout>
@@ -95,14 +96,12 @@ const BalancePayment = () => {
                     DISPONÍVEL
                   </CardTitle>
                   <CardValue textColor={hasEnoughBalance ? 'green' : 'red'}>
-                    {formatCurrency(extractAccount?.balance || 0)}
+                    {formatCurrency(balance?.credit || 0)}
                   </CardValue>
                 </BalanceCard>
                 <BalanceCard>
                   <CardTitle>PENDENTE</CardTitle>
-                  <CardValue>
-                    {formatCurrency(extractAccount?.totalCreditPendding || 0)}
-                  </CardValue>
+                  <CardValue>{formatCurrency(balance?.pending || 0)}</CardValue>
                 </BalanceCard>
               </BalanceCardsContainer>
               <BalanceDescription>

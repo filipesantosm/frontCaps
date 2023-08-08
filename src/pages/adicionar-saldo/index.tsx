@@ -9,7 +9,10 @@ import { FaCopy } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import { format, parseISO } from 'date-fns';
 import { PaginatedResponse } from '@/interfaces/Paginated';
-import { ICreditSaleValue } from '@/interfaces/CreditSales';
+import {
+  CreateCreditResponse,
+  ICreditSaleValue,
+} from '@/interfaces/CreditSales';
 import { formatCurrency } from '@/utils/formatCurrency';
 import {
   AmountItem,
@@ -102,10 +105,12 @@ const AddBalance = () => {
         },
       };
 
-      const { data } = await api.post('/createCredit', payload);
+      const { data } = await api.post<CreateCreditResponse>(
+        '/createCredit',
+        payload,
+      );
 
-      // TODO: Setar código do boleto
-
+      setBilletCode(data.ourNumber);
       setHasGenerated(true);
     } catch (error) {
       handleError(error);

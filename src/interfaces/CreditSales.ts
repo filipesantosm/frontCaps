@@ -11,3 +11,7 @@ export interface CreditSaleValueAttributes {
   updatedAt: string;
   publishedAt: string;
 }
+
+export interface CreateCreditResponse {
+  ourNumber: string;
+}

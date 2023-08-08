@@ -81,10 +81,6 @@ const ChooseTitles = () => {
     );
   };
 
-  const handleSwitchNumber = (cartItemId: number, keyToSwitch: string) => {
-    console.log(cartItemId, keyToSwitch);
-  };
-
   const handleFinish = () => {
     if (cartItems.length % (selectedDrawPromo?.quantity || 1)) {
       handleError(
@@ -175,9 +171,6 @@ const ChooseTitles = () => {
                           isSelectedNumber={inputNumbers.some(
                             value => Number(value) === numberObj.number,
                           )}
-                          onClick={() =>
-                            handleSwitchNumber(card.id, numberObj.key)
-                          }
                         >
                           {numberObj.number.toString().padStart(2, '0')}
                         </CardNumber>

@@ -1,14 +1,14 @@
 /* eslint-disable react/no-array-index-key */
 import Layout from '@/components/Layout/Layout';
 import PageTitle from '@/components/PageTitle/PageTitle';
-import { GetExtractResponse } from '@/interfaces/Extract';
+import { GetBalanceResponse } from '@/interfaces/Balance';
 import api from '@/services/api';
 import { theme } from '@/styles/theme';
+import { formatCurrency } from '@/utils/formatCurrency';
 import handleError from '@/utils/handleToast';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FaPlusCircle } from 'react-icons/fa';
-import { formatCurrency } from '@/utils/formatCurrency';
 import {
   AddBalanceButton,
   BalanceCard,
@@ -31,21 +31,22 @@ import {
 } from './styles';
 
 const PurchaseHistory = () => {
-  const [tab, setTab] = useState<'pix' | 'credit_card'>('pix');
-  const [extractAccount, setExtractAccount] = useState<GetExtractResponse>();
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
+  const [tab, setTab] = useState<'pix' | 'credit_card'>('pix');
+  const [balance, setBalance] = useState<GetBalanceResponse>();
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
-    getExtractAccount();
+    getBalance();
   }, []);
 
-  const getExtractAccount = async () => {
+  const getBalance = async () => {
     setIsLoading(true);
     try {
-      const { data } = await api.get<GetExtractResponse>('/getExtractAccount');
+      const { data } = await api.get<GetBalanceResponse>('/getBalance');
 
-      setExtractAccount(data);
+      setBalance(data);
     } catch (error) {
       handleError(error);
     } finally {
@@ -112,13 +113,13 @@ const PurchaseHistory = () => {
                       color: theme.colors.green,
                     }}
                   >
-                    {formatCurrency(extractAccount?.balance || 0)}
+                    {formatCurrency(balance?.credit || 0)}
                   </BalanceCardValue>
                 </BalanceCard>
                 <BalanceCard>
                   <BalanceCardTitle>PENDENTE</BalanceCardTitle>
                   <BalanceCardValue>
-                    {formatCurrency(extractAccount?.totalCreditPendding || 0)}
+                    {formatCurrency(balance?.pending || 0)}
                   </BalanceCardValue>
                 </BalanceCard>
               </BalanceCardsContainer>

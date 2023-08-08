@@ -2,12 +2,12 @@ import CartItemsList from '@/components/CartItemsList/CartItemsList';
 import HelpFooter from '@/components/HelpFooter/HelpFooter';
 import Layout from '@/components/Layout/Layout';
 import PageTitle from '@/components/PageTitle/PageTitle';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { GetExtractResponse } from '@/interfaces/Extract';
-import handleError from '@/utils/handleToast';
+import { GetBalanceResponse } from '@/interfaces/Balance';
 import api from '@/services/api';
 import { formatCurrency } from '@/utils/formatCurrency';
+import handleError from '@/utils/handleToast';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import {
   Checkbox,
   ContinueButton,
@@ -22,19 +22,19 @@ import {
 const FinishPurchase = () => {
   const router = useRouter();
   const [paymentMethod, setPaymentMethod] = useState('');
-  const [extractAccount, setExtractAccount] = useState<GetExtractResponse>();
+  const [balance, setBalance] = useState<GetBalanceResponse>();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    getExtractAccount();
+    getBalance();
   }, []);
 
-  const getExtractAccount = async () => {
+  const getBalance = async () => {
     setIsLoading(true);
     try {
-      const { data } = await api.get<GetExtractResponse>('/getExtractAccount');
+      const { data } = await api.get<GetBalanceResponse>('/getBalance');
 
-      setExtractAccount(data);
+      setBalance(data);
     } catch (error) {
       handleError(error);
     } finally {
@@ -85,7 +85,7 @@ const FinishPurchase = () => {
                   checked={paymentMethod === 'balance'}
                   onChange={() => setPaymentMethod('balance')}
                 />
-                Saldo da conta ({formatCurrency(extractAccount?.balance || 0)})
+                Saldo da conta ({formatCurrency(balance?.credit || 0)})
               </PaymentMethodOption>
               <PaymentMethodOption>
                 <Checkbox
