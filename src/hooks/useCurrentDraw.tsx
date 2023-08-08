@@ -14,8 +14,8 @@ export interface PromoOption {
 
 interface CurrentDrawData {
   currentDraw?: IDraw;
-  selectedDrawOption?: PromoOption;
-  setSelectedDrawOption: React.Dispatch<
+  selectedDrawPromo?: PromoOption;
+  setSelectedDrawPromo: React.Dispatch<
     React.SetStateAction<PromoOption | undefined>
   >;
   promoOptions: PromoOption[];
@@ -41,7 +41,7 @@ const drawPromoToOption = (drawPromotion: DrawPromo) => {
 
 const CurrentDrawProvider = ({ children }: Props) => {
   const [currentDraw, setCurrentDraw] = useState<IDraw>();
-  const [selectedDrawOption, setSelectedDrawOption] = useState<PromoOption>();
+  const [selectedDrawPromo, setSelectedDrawPromo] = useState<PromoOption>();
 
   useEffect(() => {
     getCurrentDraw();
@@ -62,7 +62,7 @@ const CurrentDrawProvider = ({ children }: Props) => {
       const drawPromo = draw?.attributes?.draw_promos?.data?.[0];
 
       if (drawPromo) {
-        setSelectedDrawOption(drawPromoToOption(drawPromo));
+        setSelectedDrawPromo(drawPromoToOption(drawPromo));
       }
     } catch (error) {
       handleError(error);
@@ -77,8 +77,8 @@ const CurrentDrawProvider = ({ children }: Props) => {
     <CurrentDrawContext.Provider
       value={{
         currentDraw,
-        setSelectedDrawOption,
-        selectedDrawOption,
+        setSelectedDrawPromo,
+        selectedDrawPromo,
         promoOptions,
       }}
     >

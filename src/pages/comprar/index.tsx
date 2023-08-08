@@ -32,12 +32,8 @@ import {
 const Purchase = () => {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
-  const {
-    promoOptions,
-    setSelectedDrawOption,
-    selectedDrawOption,
-    currentDraw,
-  } = useCurrentDraw();
+  const { promoOptions, setSelectedDrawPromo, selectedDrawPromo, currentDraw } =
+    useCurrentDraw();
   const { setCartItems } = useCart();
   const [isBuying, setIsBuying] = useState(false);
 
@@ -66,7 +62,7 @@ const Purchase = () => {
       const suggestedCartItems = data.map(titleToCartItem);
 
       setCartItems(
-        suggestedCartItems.slice(0, selectedDrawOption?.quantity || 1),
+        suggestedCartItems.slice(0, selectedDrawPromo?.quantity || 1),
       );
 
       router.push('/finalizar-compra');
@@ -89,9 +85,9 @@ const Purchase = () => {
                 isSearchable={false}
                 options={promoOptions}
                 onChange={option => {
-                  setSelectedDrawOption(option as PromoOption);
+                  setSelectedDrawPromo(option as PromoOption);
                 }}
-                value={selectedDrawOption}
+                value={selectedDrawPromo}
               />
               {isDoubleChance && (
                 <PurchaseSelect

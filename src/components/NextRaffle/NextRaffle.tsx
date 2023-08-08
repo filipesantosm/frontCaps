@@ -24,12 +24,8 @@ interface Props {
 
 const NextRaffle = ({ containerMarginTop }: Props) => {
   const router = useRouter();
-  const {
-    currentDraw,
-    setSelectedDrawOption,
-    selectedDrawOption,
-    promoOptions,
-  } = useCurrentDraw();
+  const { currentDraw, setSelectedDrawPromo, selectedDrawPromo, promoOptions } =
+    useCurrentDraw();
 
   const [durationToNext, setDurationToNext] = useState({
     days: 0,
@@ -94,20 +90,18 @@ const NextRaffle = ({ containerMarginTop }: Props) => {
             defaultValue={promoOptions[0]}
             options={promoOptions}
             noOptionsMessage={() => 'Nenhuma opção disponível'}
-            value={selectedDrawOption}
+            value={selectedDrawPromo}
             onChange={option => {
               if (option) {
-                setSelectedDrawOption(option as PromoOption);
+                setSelectedDrawPromo(option as PromoOption);
               } else {
-                setSelectedDrawOption(undefined);
+                setSelectedDrawPromo(undefined);
               }
             }}
           />
           <BuyButton type="button" onClick={() => router.push('/comprar')}>
             Comprar{' '}
-            {selectedDrawOption
-              ? formatCurrency(selectedDrawOption?.price)
-              : ''}
+            {selectedDrawPromo ? formatCurrency(selectedDrawPromo?.price) : ''}
             <CartIconWrapper>
               <PiShoppingCartSimpleFill />
             </CartIconWrapper>

@@ -32,7 +32,7 @@ const BalancePayment = () => {
   const [extractAccount, setExtractAccount] = useState<GetExtractResponse>();
   const [isLoading, setIsLoading] = useState(false);
   const { cartItems } = useCart();
-  const { selectedDrawOption } = useCurrentDraw();
+  const { selectedDrawPromo } = useCurrentDraw();
 
   useEffect(() => {
     getExtractAccount();
@@ -75,7 +75,7 @@ const BalancePayment = () => {
   };
 
   const unitTitlePrice =
-    (selectedDrawOption?.price || 0) / (selectedDrawOption?.quantity || 1);
+    (selectedDrawPromo?.price || 0) / (selectedDrawPromo?.quantity || 1);
 
   const hasEnoughBalance =
     unitTitlePrice * cartItems.length <= (extractAccount?.balance || 0);

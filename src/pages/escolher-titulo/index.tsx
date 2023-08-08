@@ -39,7 +39,7 @@ const ChooseTitles = () => {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [page, setPage] = useState(1);
   const [inputNumbers, setInputNumbers] = useState(['', '', '', '']);
-  const { currentDraw, selectedDrawOption } = useCurrentDraw();
+  const { currentDraw, selectedDrawPromo } = useCurrentDraw();
 
   useEffect(() => {
     getCards();
@@ -86,9 +86,9 @@ const ChooseTitles = () => {
   };
 
   const handleFinish = () => {
-    if (cartItems.length % (selectedDrawOption?.quantity || 1)) {
+    if (cartItems.length % (selectedDrawPromo?.quantity || 1)) {
       handleError(
-        `A quantidade de títulos deve ser múltipla de ${selectedDrawOption?.quantity}`,
+        `A quantidade de títulos deve ser múltipla de ${selectedDrawPromo?.quantity}`,
       );
       return;
     }
