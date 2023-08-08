@@ -1,7 +1,13 @@
 import Layout from '@/components/Layout/Layout';
 import NextRaffle from '@/components/NextRaffle/NextRaffle';
 import { useCurrentDraw } from '@/hooks/useCurrentDraw';
-import { getDrawImage } from '@/utils/imageUrl';
+import { getDrawImage, imageUrl } from '@/utils/imageUrl';
+import { ITermDetails } from '@/interfaces/Terms';
+import { GetServerSideProps } from 'next';
+import api from '@/services/api';
+import { PaginatedResponse } from '@/interfaces/Paginated';
+import { useEffect } from 'react';
+import handleError from '@/utils/handleToast';
 import {
   Banner,
   Card,
@@ -17,8 +23,23 @@ import {
   Title,
 } from './styles';
 
-const HowItWorks = () => {
+interface Props {
+  termDetails: ITermDetails[];
+  error?: string;
+}
+
+const HowItWorks = ({ termDetails, error }: Props) => {
   const { currentDraw } = useCurrentDraw();
+
+  useEffect(() => {
+    if (error) {
+      handleError(error);
+    }
+  }, [error]);
+
+  const middleIndex = Math.ceil(termDetails.length / 2);
+  const firstHalf = termDetails.slice(0, middleIndex);
+  const secondHalf = termDetails.slice(middleIndex);
 
   return (
     <Layout>
@@ -30,56 +51,28 @@ const HowItWorks = () => {
 
           <CardsList>
             <CardsColumn>
-              <Card>
-                <CardImage src="/how-it-works/shopping-online.png" />
-                <CardText>
-                  Caso seja comprado online, os dados são automaticamente
-                  registrados ao realizar o cadastro.
-                </CardText>
-              </Card>
-              <Card>
-                <CardImage src="/how-it-works/lottery.png" />
-                <CardText>
-                  Todos os domingos são feitos 03(três) ou 4(quatro) sorteios
-                  principais, através de globo lúdico, de onde são tiradas
-                  tantas bolas quantas forem necessárias até que uma ou mais
-                  pessoas completem uma sequência de 20 (vinte) dezenas
-                  dispostas nos títulos vendidos.
-                </CardText>
-              </Card>
-              <Card>
-                <CardImage src="/how-it-works/mesa.png" />
-                <CardText>
-                  Ao adquirir o seu título de capitalização, você concorre a
-                  prêmios semanais únicos.
-                </CardText>
-              </Card>
+              {firstHalf.map(details => (
+                <Card key={details.id}>
+                  <CardImage
+                    src={imageUrl(
+                      details.attributes.image.data?.[0]?.attributes?.url,
+                    )}
+                  />
+                  <CardText>{details.attributes.description}</CardText>
+                </Card>
+              ))}
             </CardsColumn>
             <CardsColumn>
-              <Card>
-                <CardImage src="/how-it-works/filling-form.png" />
-                <CardText>
-                  No ato da compra do título físico é necessário preencher
-                  corretamente a ficha de cadastro, que encontra-se na parte
-                  inferior do título, com todos os dados, para que o contemplado
-                  seja identificado.
-                </CardText>
-              </Card>
-              <Card>
-                <CardImage src="/how-it-works/save-the-date.png" />
-                <CardText>
-                  Os sorteios são realizados todos os domingos, sempre a partir
-                  das 9hrs.
-                </CardText>
-              </Card>
-              <Card>
-                <CardImage src="/how-it-works/trophy.png" />
-                <CardText>
-                  Os ganhadores que conseguirem completar as 20 dezenas
-                  referentes ao prêmio em questão são contemplado(s) com um dos
-                  prêmios oferecidos na edição correspondente.
-                </CardText>
-              </Card>
+              {secondHalf.map(details => (
+                <Card key={details.id}>
+                  <CardImage
+                    src={imageUrl(
+                      details.attributes.image.data?.[0]?.attributes?.url,
+                    )}
+                  />
+                  <CardText>{details.attributes.description}</CardText>
+                </Card>
+              ))}
             </CardsColumn>
           </CardsList>
 
@@ -93,3 +86,30 @@ const HowItWorks = () => {
 };
 
 export default HowItWorks;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  try {
+    const { data } = await api.get<PaginatedResponse<ITermDetails>>(
+      '/term-details',
+      {
+        params: {
+          'filters[term_use][id][$eq]': 5,
+          populate: '*',
+        },
+      },
+    );
+
+    return {
+      props: {
+        termDetails: data.data,
+      },
+    };
+  } catch (error: any) {
+    return {
+      props: {
+        termDetails: [],
+        error: error?.response?.data?.error?.message || error?.message,
+      },
+    };
+  }
+};
