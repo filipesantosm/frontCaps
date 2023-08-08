@@ -25,9 +25,8 @@ type AuthModals = '' | 'signUp' | 'login' | 'forgot' | 'success';
 
 const HeaderUser = () => {
   const router = useRouter();
-  const { query } = router;
+  const { query, pathname } = router;
 
-  // const [modalToShow, setModalToShow] = useState<AuthModals>('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { isAuthenticated, user, logout } = useAuth();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -36,16 +35,21 @@ const HeaderUser = () => {
 
   const setModalToShow = (type: AuthModals) => {
     if (!type) {
+      const newQuery = { ...query };
+
+      delete newQuery.modal;
+
       router.replace({
-        pathname: '',
-        query: {},
+        pathname,
+        query: newQuery,
       });
       return;
     }
 
     router.push({
-      pathname: '',
+      pathname,
       query: {
+        ...query,
         modal: type,
       },
     });
