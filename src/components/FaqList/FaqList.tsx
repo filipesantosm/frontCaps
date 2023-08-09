@@ -28,11 +28,11 @@ const FaqList = () => {
   const [maximumPage, setMaximumPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
-  useDebounceWithCallback(search, () => setPage(1));
+  const debouncedSearch = useDebounceWithCallback(search, () => setPage(1));
 
   useEffect(() => {
     getFaqs();
-  }, [page]);
+  }, [page, debouncedSearch]);
 
   const getFaqs = async () => {
     setIsLoading(true);

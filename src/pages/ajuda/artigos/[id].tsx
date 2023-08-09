@@ -11,6 +11,7 @@ import { getDrawImage } from '@/utils/imageUrl';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { IoChevronBackCircleOutline } from 'react-icons/io5';
+import useDebounce from '@/hooks/useDebounce';
 import {
   BackButton,
   Banner,
@@ -39,14 +40,17 @@ const FaqArticles = () => {
   const router = useRouter();
   const { currentDraw } = useCurrentDraw();
   const { id: faqId } = router.query;
+  const [search, setSearch] = useState('');
 
   const [faq, setFaq] = useState<IFaq>();
+
+  const debouncedSearch = useDebounce(search);
 
   useEffect(() => {
     if (faqId) {
       getFaq();
     }
-  }, [faqId]);
+  }, [faqId, debouncedSearch]);
 
   const getFaq = async () => {
     try {
@@ -54,6 +58,8 @@ const FaqArticles = () => {
         data: IFaq;
       }>(`/faqs/${faqId}`, {
         params: {
+          'populate[faq_questions][filters][question][$contains]':
+            search || undefined,
           populate: '*',
         },
       });
@@ -76,7 +82,11 @@ const FaqArticles = () => {
 
         <HelpSection>
           <SearchTitle>Como podemos te ajudar?</SearchTitle>
-          <HelpSearchBar placeholder="Pesquise sua dúvida" />
+          <HelpSearchBar
+            placeholder="Pesquise sua dúvida"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
           <QuestionHeader>
             <BackButton onClick={router.back}>
               <IoChevronBackCircleOutline />
