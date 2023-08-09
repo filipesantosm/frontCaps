@@ -1,10 +1,17 @@
 /* eslint-disable react/no-array-index-key */
 import Layout from '@/components/Layout/Layout';
 import PageTitle from '@/components/PageTitle/PageTitle';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { FaTable } from 'react-icons/fa';
 import ScratchCardsList from '@/components/ScratchCardsList/ScratchCardsList';
+import { useCurrentDraw } from '@/hooks/useCurrentDraw';
+import { GetMyTitleResponse, ITitle } from '@/interfaces/MyTitle';
+import api from '@/services/api';
+import { formatCurrency } from '@/utils/formatCurrency';
+import handleError from '@/utils/handleToast';
+import { format, parseISO } from 'date-fns';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { FaTable } from 'react-icons/fa';
+import { getTitleNumbers } from '@/utils/getTitleNumbers';
 import {
   BuyButton,
   EmptyContent,
@@ -34,21 +41,47 @@ import {
 
 type Tabs = 'scratchcard' | 'purchases';
 
+interface TitleToRender extends ITitle {
+  titleNumbers: number[];
+}
+
 const Purchases = () => {
-  const [amount, setAmount] = useState(4);
+  const [titles, setTitles] = useState<TitleToRender[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const { currentDraw } = useCurrentDraw();
   const [tab, setTab] = useState<Tabs>('purchases');
   const router = useRouter();
 
+  useEffect(() => {
+    getTitles();
+  }, []);
+
+  const getTitles = async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await api.get<GetMyTitleResponse>('/getMyTitle');
+
+      const formattedTitles: TitleToRender[] = data?.Ttitulos?.map(title => ({
+        ...title,
+        titleNumbers: getTitleNumbers(title),
+      }));
+
+      setTitles(formattedTitles || []);
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const enableScratchCards = !!router.query.riscadinha;
 
-  if (amount === 0) {
+  if (titles.length === 0 && !isLoading) {
     return (
       <Layout>
         <PageContent>
           <PageSection>
-            <PageTitle onClick={() => setAmount(4)}>
-              Títulos adquiridos (0)
-            </PageTitle>
+            <PageTitle>Títulos adquiridos (0)</PageTitle>
             <EmptyContent>
               <FaTable />
               <EmptyTitle>Títulos indisponíveis</EmptyTitle>
@@ -69,13 +102,16 @@ const Purchases = () => {
     );
   }
 
+  const susep = currentDraw?.attributes?.susep;
+  const formattedDrawDate = currentDraw?.attributes?.dateDraw
+    ? format(parseISO(currentDraw.attributes.dateDraw), 'dd-MM-yyyy')
+    : '';
+
   return (
     <Layout>
       <PageContent>
         <PageSection>
-          <PageTitle onClick={() => setAmount(0)}>
-            Títulos adquiridos ({amount})
-          </PageTitle>
+          <PageTitle>Títulos adquiridos ({titles.length})</PageTitle>
           {!enableScratchCards && <Subtitle>Meus títulos</Subtitle>}
 
           {enableScratchCards && (
@@ -97,16 +133,16 @@ const Purchases = () => {
 
           {tab === 'purchases' ? (
             <PurchasesList>
-              {Array.from({ length: 4 }).map((_, index) => (
-                <Purchase key={index}>
+              {titles.map(title => (
+                <Purchase key={title.id}>
                   <RaffleRow>
                     <RaffleColumn>
                       <RaffleTitle>PROCESSO SUSEP</RaffleTitle>
-                      <RaffleText>15414.633570/2022-18</RaffleText>
+                      <RaffleText>{susep}</RaffleText>
                     </RaffleColumn>
                     <RaffleColumn>
                       <RaffleTitle>SORTEIO</RaffleTitle>
-                      <RaffleText>30-04-2023</RaffleText>
+                      <RaffleText>{formattedDrawDate}</RaffleText>
                     </RaffleColumn>
                     <RaffleColumn>
                       <RaffleTitle>QTD</RaffleTitle>
@@ -124,33 +160,32 @@ const Purchases = () => {
                       <div>
                         <InformationItem>
                           <p>Nº do título</p>
-                          <p>0.931.784</p>
+                          <p>{title.number}</p>
                         </InformationItem>
                         <InformationItem>
                           <p>Nº da sorte</p>
-                          <p>229.570</p>
+                          <p>{title.luckyNumber}</p>
                         </InformationItem>
                       </div>
                       <div>
                         <InformationItem>
                           <p>Valor</p>
-                          <p>R$ 5,00</p>
+                          <p>{formatCurrency(title.price || 0)}</p>
                         </InformationItem>
                         <InformationItem>
                           <p>Compra</p>
-                          <p>04/12/23</p>
+                          <p>
+                            {title.dateSale
+                              ? format(parseISO(title.dateSale), 'dd/MM/yyyy')
+                              : '-'}
+                          </p>
                         </InformationItem>
                       </div>
                     </PurchaseInformation>
                     <NumbersContainer>
                       <NumbersGrid>
-                        {Array.from({ length: 28 }).map((__, numberIndex) => (
-                          <NumberText
-                            key={numberIndex}
-                            isActive={Math.random() > 0.75}
-                          >
-                            {(numberIndex + 1).toString().padStart(2, '0')}
-                          </NumberText>
+                        {title.titleNumbers.map(number => (
+                          <NumberText key={number}>{number}</NumberText>
                         ))}
                       </NumbersGrid>
                     </NumbersContainer>

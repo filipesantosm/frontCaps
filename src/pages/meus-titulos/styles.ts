@@ -144,8 +144,12 @@ export const NumbersContainer = styled.div`
 `;
 
 export const NumbersGrid = styled.div`
+  width: 100%;
+  max-width: 20rem;
+  margin: 0 auto;
+
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(2.125rem, 1fr));
+  grid-template-columns: repeat(5, minmax(2.125rem, 1fr));
   grid-gap: 1.5rem;
 `;
 
