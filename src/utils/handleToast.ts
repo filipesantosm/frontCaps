@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import axios, { AxiosError } from 'axios';
 
 const isBackEndError = (err: any): err is AxiosError<{ message: string }> => {
-  if (err.response.data) {
+  if (err?.response?.data) {
     return true;
   }
   return false;
@@ -15,7 +15,7 @@ const isStrapiError = (
     message: string;
   };
 }> => {
-  if (err.response.data.error) {
+  if (err?.response?.data?.error) {
     return true;
   }
   return false;
@@ -35,11 +35,11 @@ const notifySuccess = (message: string) =>
 function handleError(err: any) {
   if (axios.isAxiosError(err)) {
     if (isStrapiError(err)) {
-      return notifyError(err.response?.data.error.message as string);
+      return notifyError(err?.response?.data?.error?.message as string);
     }
 
     if (isBackEndError(err)) {
-      return notifyError(err.response?.data.message as string);
+      return notifyError(err?.response?.data?.message as string);
     }
   }
 
