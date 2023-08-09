@@ -77,7 +77,9 @@ const ChooseTitles = () => {
     index: number,
   ) => {
     setInputNumbers(prev =>
-      prev.map((value, idx) => (index === idx ? e.target.value : value)),
+      prev.map((value, idx) =>
+        index === idx ? e.target.value.substring(0, 2) : value,
+      ),
     );
   };
 

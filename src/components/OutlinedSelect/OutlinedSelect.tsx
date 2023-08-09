@@ -26,7 +26,7 @@ const OutlinedSelect = (props: ReactSelectProps) => {
           ...prev,
           padding: '0.25rem 0.25rem',
           borderRadius: '0.625rem',
-          minWidth: '8.75rem',
+          minWidth: '13rem',
           minHeight: '2.375rem',
           border: '1px solid #003a83',
           zIndex: 2,

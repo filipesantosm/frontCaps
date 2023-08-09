@@ -77,9 +77,11 @@ const Results = ({ showVideo = false }: Props) => {
     try {
       const { data } = await api.get<PaginatedResponse<IDraw>>('/draws', {
         params: {
-          sort: 'publishedAt:asc',
+          sort: 'dateDraw:desc',
           'filters[isPublished][$eq]': false,
           'filters[active][$eq]': true,
+          'filters[dateDraw][$notNull]': true,
+          'filters[dateDraw][$lte]': new Date().toISOString(),
           fields: ['dateDraw', 'dateFinal', 'name', 'lnkYoutubeDraw'],
         },
       });
