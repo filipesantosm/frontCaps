@@ -92,4 +92,12 @@ export const QuestionLink = styled(Link)`
   font-weight: 400;
   color: ${({ theme }) => theme.colors.gray2f};
   text-decoration: none;
+  word-break: break-word;
+
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;

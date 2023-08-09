@@ -47,6 +47,7 @@ export const QuestionTitle = styled.h1`
   font-size: 1.75rem;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.gray2f};
+  word-break: break-word;
 `;
 
 export const QuestionNavigator = styled.nav`
@@ -65,11 +66,13 @@ export const NavigatorLink = styled(Link)`
   font-size: 0.875rem;
   color: ${({ theme }) => theme.colors.gray2f};
   text-decoration: underline;
+  word-break: break-word;
 `;
 
 export const NavigatorQuestionTitle = styled.p`
   font-size: 0.875rem;
   color: ${({ theme }) => theme.colors.gray2f};
+  word-break: break-word;
 `;
 
 export const QuestionAnswer = styled.p`
