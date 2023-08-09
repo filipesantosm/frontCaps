@@ -60,6 +60,8 @@ const ChooseTitles = () => {
         },
       });
 
+      clearCart();
+
       const suggestedCartItems = data.map(titleToCartItem);
 
       setCards(suggestedCartItems);

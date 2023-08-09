@@ -1,15 +1,15 @@
 import CartItemsList from '@/components/CartItemsList/CartItemsList';
 import HelpFooter from '@/components/HelpFooter/HelpFooter';
 import Layout from '@/components/Layout/Layout';
+import Loading from '@/components/Loading/Loading';
 import PageTitle from '@/components/PageTitle/PageTitle';
 import PixSection from '@/components/PixSection/PixSection';
 import { useCart } from '@/hooks/useCart';
+import { useCurrentDraw } from '@/hooks/useCurrentDraw';
 import api from '@/services/api';
-import { formatPaymentTitles } from '@/utils/formatPaymentTitles';
 import handleError from '@/utils/handleToast';
 import { addMinutes } from 'date-fns';
 import { useState } from 'react';
-import Loading from '@/components/Loading/Loading';
 import {
   ContinueButton,
   PageContent,
@@ -23,6 +23,7 @@ import {
 const PixPayment = () => {
   const [isPaying, setIsPaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { selectedDrawPromo } = useCurrentDraw();
 
   const { cartItems } = useCart();
 
@@ -40,7 +41,11 @@ const PixPayment = () => {
           payment_type: {
             id: 1,
           },
-          titles: formatPaymentTitles(cartItems),
+          origin: 'Web',
+          titles: cartItems.map(cartItem => ({
+            id: cartItem.id,
+          })),
+          promo: selectedDrawPromo?.value,
         },
       });
 

@@ -11,7 +11,6 @@ interface CartContextData {
   toggleCartItem: (item: ICartItem) => void;
   clearCart: () => void;
   setCartItems: React.Dispatch<React.SetStateAction<ICartItem[]>>;
-  cartTotal: null | number;
 }
 
 const CartContext = createContext({} as CartContextData);
@@ -57,23 +56,10 @@ const CartProvider = ({ children }: Props) => {
     setCartItems([]);
   };
 
-  const cartTotal = useMemo(() => {
-    if (!selectedDrawPromo) {
-      return null;
-    }
-
-    const { price = 0, quantity = 1 } = selectedDrawPromo;
-
-    const pricePerUnit = price / quantity;
-
-    return cartItems.length * pricePerUnit;
-  }, [cartItems, selectedDrawPromo]);
-
   return (
     <CartContext.Provider
       value={{
         cartItems,
-        cartTotal,
         clearCart,
         removeFromCart,
         addToCart,

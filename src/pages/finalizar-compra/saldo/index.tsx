@@ -1,17 +1,16 @@
 import CartItemsList from '@/components/CartItemsList/CartItemsList';
 import HelpFooter from '@/components/HelpFooter/HelpFooter';
 import Layout from '@/components/Layout/Layout';
+import Loading from '@/components/Loading/Loading';
 import PageTitle from '@/components/PageTitle/PageTitle';
 import { useCart } from '@/hooks/useCart';
 import { useCurrentDraw } from '@/hooks/useCurrentDraw';
 import { GetBalanceResponse } from '@/interfaces/Balance';
 import api from '@/services/api';
 import { formatCurrency } from '@/utils/formatCurrency';
-import { formatPaymentTitles } from '@/utils/formatPaymentTitles';
 import handleError, { handleSuccess } from '@/utils/handleToast';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import Loading from '@/components/Loading/Loading';
 import {
   BalanceCard,
   BalanceCardsContainer,
@@ -30,7 +29,7 @@ import {
 
 const BalancePayment = () => {
   const router = useRouter();
-  const { cartItems, cartTotal } = useCart();
+  const { cartItems } = useCart();
   const { selectedDrawPromo } = useCurrentDraw();
 
   const [balance, setBalance] = useState<GetBalanceResponse>();
@@ -55,7 +54,7 @@ const BalancePayment = () => {
   };
 
   const handleFinishPayment = async () => {
-    if (!cartItems.length || !cartTotal) {
+    if (!cartItems.length) {
       handleError('Seu carrinho está vazio!');
       return;
     }
@@ -67,9 +66,11 @@ const BalancePayment = () => {
           payment_type: {
             id: 4,
           },
-          origin: 'web',
-          titles: formatPaymentTitles(cartItems),
-          value: cartTotal,
+          promo: selectedDrawPromo?.value,
+          origin: 'Web',
+          titles: cartItems.map(cartItem => ({
+            id: cartItem.id,
+          })),
         },
       });
 

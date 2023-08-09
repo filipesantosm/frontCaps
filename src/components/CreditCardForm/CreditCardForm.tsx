@@ -1,7 +1,7 @@
 import { useCart } from '@/hooks/useCart';
+import { useCurrentDraw } from '@/hooks/useCurrentDraw';
 import { TokenizeError, TokenizeResponse } from '@/interfaces/CreditCard';
 import api from '@/services/api';
-import { formatPaymentTitles } from '@/utils/formatPaymentTitles';
 import handleError from '@/utils/handleToast';
 import { cardDateMask, cardNumberMask } from '@/utils/masks';
 import { handleTokenizeError } from '@/utils/tokenizeErrors';
@@ -41,6 +41,7 @@ const brandName: Record<string, string> = {
 
 const CreditCardForm = ({ onSuccess, onError }: Props) => {
   const { cartItems } = useCart();
+  const { selectedDrawPromo } = useCurrentDraw();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -98,7 +99,11 @@ const CreditCardForm = ({ onSuccess, onError }: Props) => {
                 id: 3,
               },
               tokencard: tokenizeResponse.data.payment_token,
-              titles: formatPaymentTitles(cartItems),
+              titles: cartItems.map(cartItem => ({
+                id: cartItem.id,
+              })),
+              promo: selectedDrawPromo?.value,
+              origin: 'Web',
             },
           });
 
