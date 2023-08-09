@@ -46,6 +46,7 @@ export const StyledTextArea = styled.textarea<TextAreaProps>`
   font-weight: 500;
   color: #30375c;
   background: transparent;
+  resize: none;
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.grayb9};
