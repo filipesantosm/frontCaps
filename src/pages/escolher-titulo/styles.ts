@@ -6,10 +6,37 @@ export const PageContent = styled.div`
   margin: 2.5rem auto 2.5rem;
 `;
 
+export const TitleContainer = styled.div`
+  width: 100%;
+  max-width: 62.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 export const Title = styled.h1`
   font-size: 1.75rem;
   font-weight: 600;
   color: #00214b;
+`;
+
+export const GoBackButton = styled.button`
+  border: none;
+
+  width: fit-content;
+  padding: 0.5rem 1.3125rem 0.5625rem 1.125rem;
+  border-radius: 0.3125rem;
+
+  background: ${({ theme }) => theme.colors.primary};
+
+  color: ${({ theme }) => theme.colors.white};
+  font-size: 1rem;
+  font-weight: 500;
+
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
 `;
 
 export const ChooseNumbersLabel = styled.label`
@@ -63,6 +90,10 @@ export const Toggle = styled.input`
       transform: translateX(-3%) translateY(-5%);
     }
   }
+`;
+
+export const PageBody = styled.div`
+  max-width: 62.5rem;
 `;
 
 export const NumberInputsContainer = styled.div`

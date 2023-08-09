@@ -9,7 +9,7 @@ import handleError from '@/utils/handleToast';
 import { titleToCartItem } from '@/utils/titleToCartItem';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { FaCartPlus } from 'react-icons/fa';
+import { FaArrowLeft, FaCartPlus } from 'react-icons/fa';
 import {
   Card,
   CardBody,
@@ -22,11 +22,14 @@ import {
   CartButtonIcon,
   ChooseNumbersLabel,
   FinishPurchaseButton,
+  GoBackButton,
   LoadMoreButton,
   NumberInput,
   NumberInputsContainer,
+  PageBody,
   PageContent,
   Title,
+  TitleContainer,
   Toggle,
 } from './styles';
 
@@ -97,7 +100,18 @@ const ChooseTitles = () => {
   return (
     <Layout>
       <PageContent>
-        <Title>Escolher título</Title>
+        <TitleContainer>
+          <Title>Escolher título</Title>
+          <GoBackButton
+            type="button"
+            onClick={() => {
+              router.push('/comprar');
+            }}
+          >
+            <FaArrowLeft />
+            Voltar
+          </GoBackButton>
+        </TitleContainer>
         <ChooseNumbersLabel>
           <Toggle
             type="checkbox"
@@ -106,11 +120,7 @@ const ChooseTitles = () => {
           />
           Quero escolher meus números
         </ChooseNumbersLabel>
-        <div
-          style={{
-            maxWidth: '62.5rem',
-          }}
-        >
+        <PageBody>
           <NumberInputsContainer>
             {isChoosingNumbers &&
               inputNumbers.map((value, index) => (
@@ -193,7 +203,7 @@ const ChooseTitles = () => {
               Me mostre mais opções
             </LoadMoreButton>
           )}
-        </div>
+        </PageBody>
       </PageContent>
     </Layout>
   );
