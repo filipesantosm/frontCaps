@@ -26,7 +26,6 @@ import {
   ResultItem,
   ResultsHeader,
   ResultsTitle,
-  ResultsVideoImage,
   ResultsVideoTitle,
   SelectedNumber,
   SelectedNumbersContainer,

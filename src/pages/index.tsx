@@ -5,7 +5,7 @@ import PlatformNumbers from '@/components/PlatformNumbers/PlatformNumbers';
 import Results from '@/components/Results/Results';
 import { useCurrentDraw } from '@/hooks/useCurrentDraw';
 import { getDrawImage } from '@/utils/imageUrl';
-import { format, nextDay, parseISO } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { IoLogoWhatsapp } from 'react-icons/io';
 import {
   FloatingContactButton,

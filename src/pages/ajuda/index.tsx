@@ -1,29 +1,19 @@
 /* eslint-disable react/no-array-index-key */
 import ContactSection from '@/components/ContactSection/ContactSection';
-import HelpSearchBar from '@/components/HelpSearchBar/HelpSearchBar';
+import FaqList from '@/components/FaqList/FaqList';
+import FaqVideosList from '@/components/FaqVideosList/FaqVideosList';
 import Layout from '@/components/Layout/Layout';
 import NextRaffle from '@/components/NextRaffle/NextRaffle';
 import { useCurrentDraw } from '@/hooks/useCurrentDraw';
 import { getDrawImage } from '@/utils/imageUrl';
-import { FaChevronRight } from 'react-icons/fa';
 import {
   Banner,
-  FaqItem,
-  FaqLink,
-  FaqList,
-  FaqSectionTitle,
-  FaqTitle,
   HelpSection,
   HelpSectionBanner,
   HelpTitle,
-  LoadMoreButton,
-  MoreArticlesLink,
   PageContent,
   SearchTitle,
-  VideoItem,
-  VideoThumbnail,
-  VideoTitle,
-  VideosContainer,
+  Separator,
 } from './styles';
 
 const HelpPage = () => {
@@ -42,48 +32,11 @@ const HelpPage = () => {
 
           <SearchTitle>Como podemos te ajudar?</SearchTitle>
 
-          <HelpSearchBar placeholder="Pesquise sua dúvida" />
+          <FaqList />
 
-          <FaqSectionTitle>
-            Consulte nosso F.A.Q (Perguntas frequentes)
-          </FaqSectionTitle>
-          <FaqList>
-            {Array.from({ length: 9 }).map((_, index) => (
-              <FaqItem key={index}>
-                <FaqTitle>Como comprar</FaqTitle>
-                <FaqLink href="/ajuda/pergunta/1">
-                  Como comprar títulos online?
-                </FaqLink>
-                <FaqLink href="/ajuda/pergunta/1">
-                  Onde encontro MTCAP perto de mim?
-                </FaqLink>
-                <FaqLink href="/ajuda/pergunta/1">
-                  Onde encontro MTCAP perto de mim?
-                </FaqLink>
-                <MoreArticlesLink href="/ajuda/artigos/1">
-                  Ver mais artigos <FaChevronRight />
-                </MoreArticlesLink>
-              </FaqItem>
-            ))}
-          </FaqList>
-          <LoadMoreButton>Ver mais perguntas</LoadMoreButton>
+          <FaqVideosList />
 
-          <VideosContainer>
-            <VideoItem>
-              <VideoThumbnail src="/video-thumb.png" />
-              <VideoTitle>Como comprar</VideoTitle>
-            </VideoItem>
-            <VideoItem>
-              <VideoThumbnail src="/video-thumb.png" />
-              <VideoTitle>Como comprar</VideoTitle>
-            </VideoItem>
-            <VideoItem>
-              <VideoThumbnail src="/video-thumb.png" />
-              <VideoTitle>Como comprar</VideoTitle>
-            </VideoItem>
-          </VideosContainer>
-
-          <LoadMoreButton>Ver mais vídeos</LoadMoreButton>
+          <Separator />
 
           <ContactSection />
         </HelpSection>
