@@ -1,5 +1,5 @@
 export interface GetMyTitleResponse {
-  Ttitulos: ITitle[];
+  titulos: ITitle[];
 }
 
 export interface ITitle {

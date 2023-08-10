@@ -61,7 +61,7 @@ const Purchases = () => {
     try {
       const { data } = await api.get<GetMyTitleResponse>('/getMyTitle');
 
-      const formattedTitles: TitleToRender[] = data?.Ttitulos?.map(title => ({
+      const formattedTitles: TitleToRender[] = data?.titulos?.map(title => ({
         ...title,
         titleNumbers: getTitleNumbers(title),
       }));
