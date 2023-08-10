@@ -77,7 +77,7 @@ const NextRaffle = ({ containerMarginTop }: Props) => {
         setDisablePurchase(true);
       }
 
-      const durationInSeconds = differenceInSeconds(now, drawDate);
+      const durationInSeconds = differenceInSeconds(drawDate, now);
 
       setDurationToNext(secondsToDuration(durationInSeconds));
     }, 1000);
