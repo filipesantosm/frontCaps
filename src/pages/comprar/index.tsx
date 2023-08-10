@@ -9,7 +9,6 @@ import api from '@/services/api';
 import handleError from '@/utils/handleToast';
 import { getDrawImage } from '@/utils/imageUrl';
 import { titleToCartItem } from '@/utils/titleToCartItem';
-import { isBefore, parseISO } from 'date-fns';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { BsFillLightningChargeFill } from 'react-icons/bs';
@@ -33,8 +32,13 @@ import {
 const Purchase = () => {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
-  const { promoOptions, setSelectedDrawPromo, selectedDrawPromo, currentDraw } =
-    useCurrentDraw();
+  const {
+    promoOptions,
+    setSelectedDrawPromo,
+    selectedDrawPromo,
+    currentDraw,
+    disablePurchase,
+  } = useCurrentDraw();
   const { setCartItems } = useCart();
   const [isBuying, setIsBuying] = useState(false);
 
@@ -73,10 +77,6 @@ const Purchase = () => {
       setIsBuying(false);
     }
   };
-
-  const disablePurchase =
-    !!currentDraw?.attributes?.dateFinal &&
-    isBefore(parseISO(currentDraw.attributes.dateFinal), new Date());
 
   return (
     <Layout>

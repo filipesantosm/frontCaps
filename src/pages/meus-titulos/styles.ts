@@ -258,6 +258,12 @@ export const BuyButton = styled.button`
   transition: filter 0.3s;
 
   &:hover {
-    filter: brightness(0.9);
+    &:not(:disabled) {
+      filter: brightness(0.9);
+    }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
   }
 `;

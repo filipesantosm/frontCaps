@@ -25,16 +25,14 @@ interface Props {
 
 const NextRaffle = ({ containerMarginTop }: Props) => {
   const router = useRouter();
-  const { currentDraw, setSelectedDrawPromo, selectedDrawPromo, promoOptions } =
-    useCurrentDraw();
-
-  const [durationToNext, setDurationToNext] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
-  const [disablePurchase, setDisablePurchase] = useState(false);
+  const {
+    currentDraw,
+    setSelectedDrawPromo,
+    selectedDrawPromo,
+    promoOptions,
+    disablePurchase,
+    setDisablePurchase,
+  } = useCurrentDraw();
 
   const drawDate = currentDraw
     ? parseISO(
@@ -45,6 +43,13 @@ const NextRaffle = ({ containerMarginTop }: Props) => {
   const finalDate = currentDraw?.attributes?.dateFinal
     ? parseISO(currentDraw?.attributes.dateFinal)
     : undefined;
+
+  const [durationToNext, setDurationToNext] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
 
   useEffect(() => {
     if (!drawDate) {

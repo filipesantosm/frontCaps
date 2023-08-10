@@ -7,7 +7,7 @@ import { GetMyTitleResponse, ITitle } from '@/interfaces/MyTitle';
 import api from '@/services/api';
 import { formatCurrency } from '@/utils/formatCurrency';
 import handleError from '@/utils/handleToast';
-import { format, parseISO } from 'date-fns';
+import { format, isBefore, parseISO } from 'date-fns';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FaTable } from 'react-icons/fa';
@@ -48,7 +48,7 @@ interface TitleToRender extends ITitle {
 const Purchases = () => {
   const [titles, setTitles] = useState<TitleToRender[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { currentDraw } = useCurrentDraw();
+  const { currentDraw, disablePurchase } = useCurrentDraw();
   const [tab, setTab] = useState<Tabs>('purchases');
   const router = useRouter();
 
@@ -92,7 +92,10 @@ const Purchases = () => {
                 Clique no botão à baixo para comprar novos títulos!
               </EmptyText>
 
-              <BuyButton onClick={() => router.push('/comprar')}>
+              <BuyButton
+                disabled={disablePurchase}
+                onClick={() => router.push('/comprar')}
+              >
                 Comprar
               </BuyButton>
             </EmptyContent>

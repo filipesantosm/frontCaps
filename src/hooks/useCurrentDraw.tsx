@@ -3,6 +3,7 @@ import { DrawPromo, IDraw } from '@/interfaces/Draw';
 import { PaginatedResponse } from '@/interfaces/Paginated';
 import api from '@/services/api';
 import handleError from '@/utils/handleToast';
+import { isBefore, parseISO } from 'date-fns';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 export interface PromoOption {
@@ -19,6 +20,9 @@ interface CurrentDrawData {
     React.SetStateAction<PromoOption | undefined>
   >;
   promoOptions: PromoOption[];
+
+  disablePurchase: boolean;
+  setDisablePurchase: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CurrentDrawContext = createContext({} as CurrentDrawData);
@@ -42,6 +46,7 @@ const drawPromoToOption = (drawPromotion: DrawPromo) => {
 const CurrentDrawProvider = ({ children }: Props) => {
   const [currentDraw, setCurrentDraw] = useState<IDraw>();
   const [selectedDrawPromo, setSelectedDrawPromo] = useState<PromoOption>();
+  const [disablePurchase, setDisablePurchase] = useState(true);
 
   useEffect(() => {
     getCurrentDraw();
@@ -59,6 +64,14 @@ const CurrentDrawProvider = ({ children }: Props) => {
       const draw = data?.data?.[0];
 
       setCurrentDraw(draw);
+
+      const finalDate =
+        draw?.attributes?.dateFinal || draw?.attributes?.dateDraw
+          ? parseISO(draw?.attributes?.dateFinal || draw?.attributes?.dateDraw)
+          : undefined;
+
+      setDisablePurchase(!!finalDate && isBefore(finalDate, new Date()));
+
       const drawPromo = draw?.attributes?.draw_promos?.data?.[0];
 
       if (drawPromo) {
@@ -80,6 +93,8 @@ const CurrentDrawProvider = ({ children }: Props) => {
         setSelectedDrawPromo,
         selectedDrawPromo,
         promoOptions,
+        disablePurchase,
+        setDisablePurchase,
       }}
     >
       {children}
