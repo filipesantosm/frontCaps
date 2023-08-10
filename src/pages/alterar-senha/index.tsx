@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout/Layout';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PageTitle from '@/components/PageTitle/PageTitle';
 import Input from '@/components/Input/Input';
 import handleError from '@/utils/handleToast';

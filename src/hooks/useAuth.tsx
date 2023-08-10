@@ -2,7 +2,7 @@
 import { IUser } from '@/interfaces/User';
 import { addTokenToCookies, clearTokenCookie } from '@/utils/cookies';
 import { useRouter } from 'next/router';
-import React, {
+import {
   createContext,
   ReactNode,
   SetStateAction,

@@ -1,4 +1,3 @@
-import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { maskPhone } from '@/utils/masks';
 import { yupResolver } from '@hookform/resolvers/yup';
