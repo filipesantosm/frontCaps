@@ -1,9 +1,10 @@
 import { PromoOption, useCurrentDraw } from '@/hooks/useCurrentDraw';
-import { intervalToDuration, isBefore, parseISO } from 'date-fns';
+import { formatCurrency } from '@/utils/formatCurrency';
+import { secondsToDuration } from '@/utils/secondsToDuration';
+import { differenceInSeconds, isBefore, parseISO } from 'date-fns';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { PiShoppingCartSimpleFill } from 'react-icons/pi';
-import { formatCurrency } from '@/utils/formatCurrency';
 import ShadowSelect from '../ShadowSelect/ShadowSelect';
 import {
   BuyButton,
@@ -33,11 +34,16 @@ const NextRaffle = ({ containerMarginTop }: Props) => {
     minutes: 0,
     seconds: 0,
   });
+  const [disablePurchase, setDisablePurchase] = useState(false);
 
   const drawDate = currentDraw
     ? parseISO(
         currentDraw?.attributes?.dateDraw || currentDraw?.attributes?.dateFinal,
       )
+    : undefined;
+
+  const finalDate = currentDraw
+    ? parseISO(currentDraw?.attributes.dateFinal)
     : undefined;
 
   useEffect(() => {
@@ -55,23 +61,20 @@ const NextRaffle = ({ containerMarginTop }: Props) => {
           minutes: 0,
           seconds: 0,
         });
+        setDisablePurchase(true);
+
+        clearInterval(interval);
+
         return;
       }
 
-      const duration = intervalToDuration({
-        start: now,
-        end: drawDate,
-      });
+      if (finalDate && isBefore(finalDate, now)) {
+        setDisablePurchase(true);
+      }
 
-      setDurationToNext({
-        days:
-          (duration?.days || 0) +
-          (duration?.weeks || 0) * 7 +
-          (duration?.months || 0) * 30,
-        hours: duration?.hours || 0,
-        minutes: duration?.minutes || 0,
-        seconds: duration?.seconds || 0,
-      });
+      const durationInSeconds = differenceInSeconds(now, drawDate);
+
+      setDurationToNext(secondsToDuration(durationInSeconds));
     }, 1000);
 
     return () => clearInterval(interval);
@@ -99,7 +102,11 @@ const NextRaffle = ({ containerMarginTop }: Props) => {
               }
             }}
           />
-          <BuyButton type="button" onClick={() => router.push('/comprar')}>
+          <BuyButton
+            type="button"
+            onClick={() => router.push('/comprar')}
+            disabled={disablePurchase}
+          >
             Comprar{' '}
             {selectedDrawPromo ? formatCurrency(selectedDrawPromo?.price) : ''}
             <CartIconWrapper>

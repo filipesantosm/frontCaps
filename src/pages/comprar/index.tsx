@@ -1,6 +1,7 @@
 import HomeFooter from '@/components/HomeFooter/HomeFooter';
 import Layout from '@/components/Layout/Layout';
 import PurchaseSelect from '@/components/PurchaseSelect/PurchaseSelect';
+import { useAuth } from '@/hooks/useAuth';
 import { useCart } from '@/hooks/useCart';
 import { PromoOption, useCurrentDraw } from '@/hooks/useCurrentDraw';
 import { ITitle } from '@/interfaces/Cart';
@@ -8,12 +9,12 @@ import api from '@/services/api';
 import handleError from '@/utils/handleToast';
 import { getDrawImage } from '@/utils/imageUrl';
 import { titleToCartItem } from '@/utils/titleToCartItem';
+import { isBefore, parseISO } from 'date-fns';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { BsFillLightningChargeFill } from 'react-icons/bs';
 import { FaChevronRight } from 'react-icons/fa';
 import { PiShoppingCartSimpleFill } from 'react-icons/pi';
-import { useAuth } from '@/hooks/useAuth';
 import {
   ButtonArrow,
   ContestImage,
@@ -73,6 +74,10 @@ const Purchase = () => {
     }
   };
 
+  const disablePurchase =
+    !!currentDraw?.attributes?.dateFinal &&
+    isBefore(parseISO(currentDraw.attributes.dateFinal), new Date());
+
   return (
     <Layout>
       <PageContent>
@@ -126,7 +131,7 @@ const Purchase = () => {
               <OptionButton
                 type="button"
                 onClick={handleQuickPurchase}
-                disabled={isBuying}
+                disabled={isBuying || disablePurchase}
               >
                 <LeftButtonContent>
                   <BsFillLightningChargeFill />
@@ -136,7 +141,7 @@ const Purchase = () => {
                   <FaChevronRight />
                 </ButtonArrow>
               </OptionButton>
-              <OptionLink href="/escolher-titulo">
+              <OptionLink href={disablePurchase ? '' : '/escolher-titulo'}>
                 <LeftButtonContent>
                   <PiShoppingCartSimpleFill />
                   Escolher meu título
