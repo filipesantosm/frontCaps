@@ -15,6 +15,7 @@ interface Props {
   message: string;
   iconColor?: string;
   onContinue?: () => void;
+  alignCenter?: boolean;
 }
 
 const SuccessModal = ({
@@ -23,13 +24,20 @@ const SuccessModal = ({
   message,
   title = 'Sucesso!',
   iconColor = '#15c149',
+  alignCenter = false,
 }: Props) => {
   return (
     <Container>
       <Content>
         <FaCheckCircle color={iconColor} size={68} />
         <Title>{title}</Title>
-        <Message>{message}</Message>
+        <Message
+          style={{
+            textAlign: alignCenter ? 'center' : undefined,
+          }}
+        >
+          {message}
+        </Message>
         <Separator />
         <ContinueButton
           type="button"

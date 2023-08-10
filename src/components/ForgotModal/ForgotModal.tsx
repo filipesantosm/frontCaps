@@ -1,8 +1,16 @@
 import { useOutside } from '@/hooks/useOutside';
-import { useRef } from 'react';
+import api from '@/services/api';
+import handleError from '@/utils/handleToast';
+import {
+  ForgotPasswordSchema,
+  IForgotPasswordForm,
+} from '@/validations/ForgotPasswordSchema';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import Input from '../Input/Input';
+import Loading from '../Loading/Loading';
 import {
   CloseButton,
   Container,
@@ -22,13 +30,30 @@ interface Props {
 
 const ForgotModal = ({ onClose, onSuccess, onClickLogin }: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<IForgotPasswordForm>({
+    resolver: yupResolver(ForgotPasswordSchema),
+  });
 
   useOutside(contentRef, onClose);
 
-  const onSubmit: SubmitHandler<any> = form => {
-    onSuccess();
+  const onSubmit: SubmitHandler<any> = async form => {
+    setIsSubmitting(true);
+    try {
+      await api.post('/auth/forgot-password', {
+        email: form.email,
+      });
+      onSuccess();
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -48,9 +73,16 @@ const ForgotModal = ({ onClose, onSuccess, onClickLogin }: Props) => {
             placeholder="email@email.com"
             id="email"
             type="email"
+            error={errors?.email?.message}
             {...register('email')}
           />
-          <SubmitButton>ENVIAR PARA E-MAIL</SubmitButton>
+          <SubmitButton disabled={isSubmitting}>
+            {isSubmitting ? (
+              <Loading iconColor="white" />
+            ) : (
+              'ENVIAR PARA E-MAIL'
+            )}
+          </SubmitButton>
           <TextButton type="button" onClick={onClickLogin}>
             Sabe sua senha? Entre na sua conta aqui!
           </TextButton>

@@ -81,8 +81,9 @@ const HeaderUser = () => {
     ),
     success: (
       <SuccessModal
-        message="Sua senha foi enviada"
+        message="Foi enviado um link de redefinição para o seu e-mail"
         onClose={() => setModalToShow('')}
+        alignCenter
       />
     ),
   };

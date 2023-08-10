@@ -1,6 +1,7 @@
 import Input from '@/components/Input/Input';
 import Loading from '@/components/Loading/Loading';
 import PageTitle from '@/components/PageTitle/PageTitle';
+import api from '@/services/api';
 import handleError, { handleSuccess } from '@/utils/handleToast';
 import {
   IResetPasswordForm,
@@ -30,18 +31,26 @@ const ResetPassword = () => {
   const onSubmit: SubmitHandler<IResetPasswordForm> = async form => {
     setIsSubmitting(true);
     try {
-      const { token } = router.query;
+      const { code } = router.query;
 
-      if (!token) {
-        handleError('Token não encontrado!');
+      if (!code) {
+        handleError('Código não encontrado!');
         return;
       }
 
-      /* const { data } = await api.post('', {
-        token,
-        password: form.password,
-        passwordConfirmation: form.passwordConfirmation
-      }) */
+      await api.post(
+        '/auth/reset-password',
+        {
+          code,
+          password: form.password,
+          passwordConfirmation: form.passwordConfirmation,
+        },
+        {
+          headers: {
+            Authorization: '',
+          },
+        },
+      );
 
       handleSuccess('Senha redefinida com sucesso!');
       router.push({
