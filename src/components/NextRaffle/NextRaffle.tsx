@@ -42,7 +42,7 @@ const NextRaffle = ({ containerMarginTop }: Props) => {
       )
     : undefined;
 
-  const finalDate = currentDraw
+  const finalDate = currentDraw?.attributes?.dateFinal
     ? parseISO(currentDraw?.attributes.dateFinal)
     : undefined;
 
