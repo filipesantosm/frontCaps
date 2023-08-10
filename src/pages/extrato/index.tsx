@@ -9,6 +9,8 @@ import handleError from '@/utils/handleToast';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FaPlusCircle } from 'react-icons/fa';
+import { GetMyExtractResponse } from '@/interfaces/MyExtract';
+import { format, parseISO } from 'date-fns';
 import {
   AddBalanceButton,
   BalanceCard,
@@ -35,10 +37,13 @@ const PurchaseHistory = () => {
 
   const [tab, setTab] = useState<'pix' | 'credit_card'>('pix');
   const [balance, setBalance] = useState<GetBalanceResponse>();
+  const [extract, setExtract] = useState<GetMyExtractResponse>();
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingExtract, setIsLoadingExtract] = useState(false);
 
   useEffect(() => {
     getBalance();
+    getMyExtract();
   }, []);
 
   const getBalance = async () => {
@@ -51,6 +56,19 @@ const PurchaseHistory = () => {
       handleError(error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const getMyExtract = async () => {
+    setIsLoadingExtract(true);
+    try {
+      const { data } = await api.get<GetMyExtractResponse>('/getMyExtract');
+
+      setExtract(data);
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setIsLoadingExtract(false);
     }
   };
 
@@ -87,16 +105,26 @@ const PurchaseHistory = () => {
               <PurchaseHeaderText>MÉTODO</PurchaseHeaderText>
             </PurchaseHeader>
             <PurchaseList>
-              {Array.from({ length: 20 }).map((_, index) => (
-                <PurchaseItem key={index}>
-                  <PurchaseText>27/04/2023 | 14:25H</PurchaseText>
-                  <PurchaseText>1 Título</PurchaseText>
-                  <PurchaseText>R$ 90,00</PurchaseText>
-                  <PurchaseText>
-                    {tab === 'pix' ? 'Pix' : 'Cartão'}
-                  </PurchaseText>
-                </PurchaseItem>
-              ))}
+              {tab === 'pix' &&
+                extract?.payment?.map((extractPayment, index) => (
+                  <PurchaseItem key={`${index}-${extractPayment.date}`}>
+                    <PurchaseText>
+                      {format(
+                        parseISO(extractPayment.date),
+                        "dd/MM/yyyy '|' HH:mm'H'",
+                      )}
+                    </PurchaseText>
+                    <PurchaseText>
+                      {extractPayment.quantity
+                        ? `${extractPayment.quantity} títulos`
+                        : '-'}
+                    </PurchaseText>
+                    <PurchaseText>
+                      {formatCurrency(extractPayment.value || 0)}
+                    </PurchaseText>
+                    <PurchaseText>{extractPayment.type}</PurchaseText>
+                  </PurchaseItem>
+                ))}
             </PurchaseList>
           </PurchaseTableWrapper>
         </Column>

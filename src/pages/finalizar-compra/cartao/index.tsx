@@ -68,7 +68,10 @@ const CreditCardPayment = () => {
       )}
       {showErrorModal && (
         <PaymentErrorModal
-          onChooseOtherMethod={() => setShowErrorModal(false)}
+          onChooseOtherMethod={() => {
+            setShowErrorModal(false);
+            router.push('/finalizar-compra');
+          }}
           onClose={() => setShowErrorModal(false)}
         />
       )}
