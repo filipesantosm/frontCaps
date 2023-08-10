@@ -6,14 +6,17 @@ import Results from '@/components/Results/Results';
 import { useCurrentDraw } from '@/hooks/useCurrentDraw';
 import { getDrawImage } from '@/utils/imageUrl';
 import { format, parseISO } from 'date-fns';
+import { FaYoutube } from 'react-icons/fa';
 import { IoLogoWhatsapp } from 'react-icons/io';
 import {
   FloatingContactButton,
   HeroImage,
   HomeContent,
+  PlayIconWrapper,
   RaffleDescription,
   RaffleHeader,
   RaffleImage,
+  RaffleImageWrapperLink,
   RaffleInformation,
   RaffleTitle,
 } from './styles';
@@ -27,9 +30,11 @@ const Home = () => {
       )
     : undefined;
 
+  const drawImageUrl = getDrawImage(currentDraw);
+
   return (
     <Layout>
-      <HeroImage src={getDrawImage(currentDraw)} />
+      <HeroImage src={drawImageUrl} />
       <HomeContent>
         <NextRaffle containerMarginTop="-7rem" />
         <RaffleInformation>
@@ -39,11 +44,22 @@ const Home = () => {
             </RaffleTitle>
             {drawDate && (
               <RaffleDescription>
-                Estaremos online no dia {format(drawDate, 'dd/MM/yyyy')}
+                Estaremos ao vivo no dia {format(drawDate, 'dd/MM/yyyy')}
               </RaffleDescription>
             )}
           </RaffleHeader>
-          <RaffleImage src={getDrawImage(currentDraw)} />
+          <RaffleImageWrapperLink
+            href={currentDraw?.attributes?.lnkYoutube || undefined}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <RaffleImage src={drawImageUrl} />
+            {currentDraw?.attributes?.lnkYoutube && (
+              <PlayIconWrapper>
+                <FaYoutube />
+              </PlayIconWrapper>
+            )}
+          </RaffleImageWrapperLink>
         </RaffleInformation>
 
         <Results />

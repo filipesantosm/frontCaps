@@ -43,6 +43,14 @@ export const RaffleDescription = styled.p`
   color: ${({ theme }) => theme.colors.gray74};
 `;
 
+export const RaffleImageWrapperLink = styled.a`
+  width: 100%;
+
+  position: relative;
+
+  display: block;
+`;
+
 export const RaffleImage = styled.img`
   margin-top: 1.25rem;
 
@@ -51,6 +59,34 @@ export const RaffleImage = styled.img`
   object-fit: cover;
   object-position: top;
   border-radius: 1.25rem;
+`;
+
+export const PlayIconWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: red;
+  font-size: 4rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 1rem;
+  height: 2rem;
+  background: #fff;
+
+  svg {
+    min-width: 4rem;
+    min-height: 4rem;
+  }
+
+  transition: filter 0.3s;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
 `;
 
 export const FloatingContactButton = styled.button`

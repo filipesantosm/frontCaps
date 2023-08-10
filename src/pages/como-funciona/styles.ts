@@ -37,6 +37,10 @@ export const CardsList = styled.div`
 
   display: flex;
   gap: 1.25rem;
+
+  @media (max-width: 600px) {
+    flex-wrap: wrap;
+  }
 `;
 
 export const CardsColumn = styled.div`
