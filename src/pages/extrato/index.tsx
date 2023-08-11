@@ -9,7 +9,7 @@ import handleError from '@/utils/handleToast';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FaPlusCircle } from 'react-icons/fa';
-import { GetMyExtractResponse } from '@/interfaces/MyExtract';
+import { ExtractPayment, GetMyExtractResponse } from '@/interfaces/MyExtract';
 import { format, parseISO } from 'date-fns';
 import {
   AddBalanceButton,
@@ -32,12 +32,17 @@ import {
   TabSelector,
 } from './styles';
 
+interface ExtractToDisplay {
+  creditCardPayments: ExtractPayment[];
+  otherPayments: ExtractPayment[];
+}
+
 const PurchaseHistory = () => {
   const router = useRouter();
 
   const [tab, setTab] = useState<'pix' | 'credit_card'>('pix');
   const [balance, setBalance] = useState<GetBalanceResponse>();
-  const [extract, setExtract] = useState<GetMyExtractResponse>();
+  const [extract, setExtract] = useState<ExtractToDisplay>();
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingExtract, setIsLoadingExtract] = useState(false);
 
@@ -64,12 +69,40 @@ const PurchaseHistory = () => {
     try {
       const { data } = await api.get<GetMyExtractResponse>('/getMyExtract');
 
-      setExtract(data);
+      const extractToDisplay = data.payment.reduce<ExtractToDisplay>(
+        (acc, curr) => {
+          if (curr.type === 'Cartão Crédito') {
+            acc.creditCardPayments.push(curr);
+          } else {
+            acc.otherPayments.push(curr);
+          }
+
+          return acc;
+        },
+        {
+          creditCardPayments: [],
+          otherPayments: [],
+        },
+      );
+
+      setExtract(extractToDisplay);
     } catch (error) {
       handleError(error);
     } finally {
       setIsLoadingExtract(false);
     }
+  };
+
+  const formatTitleQuantity = (quantity: number) => {
+    if (!quantity) {
+      return '-';
+    }
+
+    if (quantity === 1) {
+      return '1 título';
+    }
+
+    return `${quantity} títulos`;
   };
 
   return (
@@ -105,26 +138,26 @@ const PurchaseHistory = () => {
               <PurchaseHeaderText>MÉTODO</PurchaseHeaderText>
             </PurchaseHeader>
             <PurchaseList>
-              {tab === 'pix' &&
-                extract?.payment?.map((extractPayment, index) => (
-                  <PurchaseItem key={`${index}-${extractPayment.date}`}>
-                    <PurchaseText>
-                      {format(
-                        parseISO(extractPayment.date),
-                        "dd/MM/yyyy '|' HH:mm'H'",
-                      )}
-                    </PurchaseText>
-                    <PurchaseText>
-                      {extractPayment.quantity
-                        ? `${extractPayment.quantity} títulos`
-                        : '-'}
-                    </PurchaseText>
-                    <PurchaseText>
-                      {formatCurrency(extractPayment.value || 0)}
-                    </PurchaseText>
-                    <PurchaseText>{extractPayment.type}</PurchaseText>
-                  </PurchaseItem>
-                ))}
+              {(tab === 'pix'
+                ? extract?.otherPayments
+                : extract?.creditCardPayments
+              )?.map((extractPayment, index) => (
+                <PurchaseItem key={`${index}-${extractPayment.date}`}>
+                  <PurchaseText>
+                    {format(
+                      parseISO(extractPayment.date),
+                      "dd/MM/yyyy '|' HH:mm'H'",
+                    )}
+                  </PurchaseText>
+                  <PurchaseText>
+                    {formatTitleQuantity(extractPayment.quantity)}
+                  </PurchaseText>
+                  <PurchaseText>
+                    {formatCurrency(extractPayment.value || 0)}
+                  </PurchaseText>
+                  <PurchaseText>{extractPayment.type}</PurchaseText>
+                </PurchaseItem>
+              ))}
             </PurchaseList>
           </PurchaseTableWrapper>
         </Column>
