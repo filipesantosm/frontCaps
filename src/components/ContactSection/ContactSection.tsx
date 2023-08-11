@@ -1,7 +1,14 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
+import api from '@/services/api';
+import handleError, { handleSuccess } from '@/utils/handleToast';
 import { maskPhone } from '@/utils/masks';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { ContactSchema, IContactForm } from '@/validations/ContactSchema';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import Input from '../Input/Input';
+import MaskedInput from '../Input/MaskedInput';
+import Loading from '../Loading/Loading';
+import TextArea from '../TextArea/TextArea';
 import {
   CardText,
   CardTitle,
@@ -13,9 +20,6 @@ import {
   InputsContainer,
   SubmitButton,
 } from './styles';
-import Input from '../Input/Input';
-import TextArea from '../TextArea/TextArea';
-import MaskedInput from '../Input/MaskedInput';
 
 const ContactSection = () => {
   const {
@@ -26,11 +30,31 @@ const ContactSection = () => {
   } = useForm<IContactForm>({
     resolver: yupResolver(ContactSchema),
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const onSubmit: SubmitHandler<IContactForm> = form => {
-    console.log(form);
+  const onSubmit: SubmitHandler<IContactForm> = async form => {
+    setIsSubmitting(true);
 
-    reset();
+    const payload = {
+      data: {
+        subject: form.topic,
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        question: form.message,
+      },
+    };
+
+    try {
+      await api.post('/user-supports', payload);
+
+      reset();
+      handleSuccess('Mensagem enviada com sucesso!');
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -77,6 +101,7 @@ const ContactSection = () => {
               <MaskedInput
                 label="TELEFONE"
                 id="phone"
+                maxLength={15}
                 maskFunction={maskPhone}
                 containerClassName="contact-field"
                 placeholder="(00) 9 1234-5678"
@@ -108,7 +133,13 @@ const ContactSection = () => {
               error={errors?.message?.message}
               {...register('message')}
             />
-            <SubmitButton>Enviar mensagem</SubmitButton>
+            <SubmitButton disabled={isSubmitting}>
+              {isSubmitting ? (
+                <Loading iconColor="white" iconFontSize="1.5rem" />
+              ) : (
+                'Enviar mensagem'
+              )}
+            </SubmitButton>
           </ContactForm>
         </ContactCard>
       </ContactContainer>

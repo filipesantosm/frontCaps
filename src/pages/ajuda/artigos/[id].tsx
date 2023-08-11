@@ -71,7 +71,9 @@ const FaqArticles = () => {
   };
 
   const questionsArray = useMemo(() => {
-    return faq ? createQuestionsArray(faq?.attributes.faq_questions.data) : [];
+    return faq
+      ? createQuestionsArray(faq?.attributes?.faq_questions?.data || [])
+      : [];
   }, [faq]);
 
   return (

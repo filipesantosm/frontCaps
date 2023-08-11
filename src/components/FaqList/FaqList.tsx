@@ -73,7 +73,7 @@ const FaqList = () => {
           <Item key={faq.id}>
             <ItemTitle>{faq.attributes.title}</ItemTitle>
             <QuestionList>
-              {faq.attributes.faq_questions.data.map(faqQuestion => (
+              {faq.attributes?.faq_questions?.data?.map(faqQuestion => (
                 <QuestionLink
                   key={faqQuestion.id}
                   href={`/ajuda/pergunta/${faqQuestion.id}`}
