@@ -222,7 +222,7 @@ const Results = ({ showVideo = false }: Props) => {
           </ItemWinner>
         </ResultItem>
       ))}
-      {drawWinnings?.specialPrizes?.length &&
+      {!!drawWinnings?.specialPrizes?.length &&
         drawWinnings.specialPrizes.length > 0 && (
           <SpecialPrizeContainer>
             <SpecialPrizeHeader>
