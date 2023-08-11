@@ -6,12 +6,12 @@ import { useCurrentDraw } from '@/hooks/useCurrentDraw';
 import { GetMyTitleResponse, ITitle } from '@/interfaces/MyTitle';
 import api from '@/services/api';
 import { formatCurrency } from '@/utils/formatCurrency';
+import { getTitleNumbers } from '@/utils/getTitleNumbers';
 import handleError from '@/utils/handleToast';
-import { format, isBefore, parseISO } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FaTable } from 'react-icons/fa';
-import { getTitleNumbers } from '@/utils/getTitleNumbers';
 import {
   BuyButton,
   EmptyContent,
@@ -167,7 +167,7 @@ const Purchases = () => {
                         </InformationItem>
                         <InformationItem>
                           <p>Nº da sorte</p>
-                          <p>{title.luckyNumber}</p>
+                          <p>{title.lucky_number}</p>
                         </InformationItem>
                       </div>
                       <div>
@@ -178,8 +178,8 @@ const Purchases = () => {
                         <InformationItem>
                           <p>Compra</p>
                           <p>
-                            {title.dateSale
-                              ? format(parseISO(title.dateSale), 'dd/MM/yyyy')
+                            {title.date_sale
+                              ? format(parseISO(title.date_sale), 'dd/MM/yyyy')
                               : '-'}
                           </p>
                         </InformationItem>
