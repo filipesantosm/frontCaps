@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import { IDraw } from '@/interfaces/Draw';
 import { PaginatedResponse } from '@/interfaces/Paginated';
-import { GetUserWinningResponse, IWinner } from '@/interfaces/Winner';
+import { GetUserWinningResponse } from '@/interfaces/Winner';
 import api from '@/services/api';
 import { formatCurrency } from '@/utils/formatCurrency';
 import handleError from '@/utils/handleToast';
@@ -49,11 +49,6 @@ interface IOption {
   lnkYoutubeDraw?: string;
 }
 
-interface IResultsWinners {
-  normalPrizes: IWinner[];
-  specialPrizes: IWinner[];
-}
-
 interface Props {
   showVideo?: boolean;
 }
@@ -61,7 +56,7 @@ interface Props {
 const Results = ({ showVideo = false }: Props) => {
   const [drawOptions, setDrawOptions] = useState<IOption[]>([]);
   const [selectedDrawOption, setSelectedDrawOption] = useState<IOption>();
-  const [drawWinnings, setDrawWinnings] = useState<IResultsWinners>();
+  const [drawWinnings, setDrawWinnings] = useState<GetUserWinningResponse>();
   const [isLoadingWinners, setIsLoadingWinners] = useState(false);
 
   useEffect(() => {
@@ -122,26 +117,7 @@ const Results = ({ showVideo = false }: Props) => {
         },
       );
 
-      if (data?.Premiados) {
-        const reducedObj = data.Premiados.reduce<IResultsWinners>(
-          (acc, winner) => {
-            if (winner.type === 'Especial') {
-              acc.specialPrizes.push(winner);
-            } else {
-              acc.normalPrizes.push(winner);
-            }
-
-            return acc;
-          },
-          {
-            normalPrizes: [],
-            specialPrizes: [],
-          },
-        );
-        setDrawWinnings(reducedObj);
-      } else {
-        setDrawWinnings(undefined);
-      }
+      setDrawWinnings(data);
     } catch (error) {
       setDrawWinnings(undefined);
       // handleError(error);
@@ -151,7 +127,9 @@ const Results = ({ showVideo = false }: Props) => {
   };
 
   const hasWinners =
-    drawWinnings?.normalPrizes?.length || drawWinnings?.specialPrizes?.length;
+    drawWinnings?.entriesCategorie1?.length ||
+    drawWinnings?.entriesCategorie2?.length ||
+    drawWinnings?.entriesCategorie3?.length;
 
   const embedLink = selectedDrawOption?.lnkYoutubeDraw
     ? getEmbedFromYoutubeLink(selectedDrawOption?.lnkYoutubeDraw)
@@ -176,54 +154,54 @@ const Results = ({ showVideo = false }: Props) => {
       {!hasWinners && !isLoadingWinners && (
         <EmptyText>Nenhum ganhador encontrado</EmptyText>
       )}
-      {drawWinnings?.normalPrizes?.map(winner => (
-        <ResultItem key={winner.title}>
+      {drawWinnings?.entriesCategorie1?.map((drawPremium, index) => (
+        <ResultItem key={drawPremium.id}>
           <ItemTop>
             <PrizeContainer>
               <PrizeIndex>
                 <TrophyImage src="/trophy-icon.svg" />
-                {winner.premiumNumber}º PRÊMIO
+                {drawPremium.number}º PRÊMIO
               </PrizeIndex>
               <Prize>
-                <PrizeName>{winner.premium}</PrizeName>
+                <PrizeName>{drawPremium.title}</PrizeName>
                 <PrizeLiquidValue>
-                  Valor líquido de {formatCurrency(winner.value)}
+                  Valor líquido de {formatCurrency(drawPremium.value)}
                 </PrizeLiquidValue>
               </Prize>
             </PrizeContainer>
             <SelectedNumbersContainer>
-              {Object.values(winner.titlePremium).map(value => (
-                <SelectedNumber key={value}>
-                  {value.toString().padStart(2, '0')}
-                </SelectedNumber>
+              {drawPremium?.dezena?.split(',').map(value => (
+                <SelectedNumber key={value}>{value}</SelectedNumber>
               ))}
             </SelectedNumbersContainer>
           </ItemTop>
-          <ItemWinner>
-            <WinnerName>{winner.name}</WinnerName>
-            <WinnerCertificateSection>
-              <CertificateInfo>
-                <CertificateTitle>TÍTULO</CertificateTitle>
-                <CertificateText>{winner.title}</CertificateText>
-              </CertificateInfo>
-              <CertificateInfo>
-                <CertificateTitle>CIDADE</CertificateTitle>
-                <CertificateText>{winner.city}</CertificateText>
-              </CertificateInfo>
-              <CertificateInfo>
-                <CertificateTitle>VENDEDOR</CertificateTitle>
-                <CertificateText>{winner.seller}</CertificateText>
-              </CertificateInfo>
-              <CertificateInfo>
-                <CertificateTitle>PONTOS</CertificateTitle>
-                <CertificateText>{winner.points}</CertificateText>
-              </CertificateInfo>
-            </WinnerCertificateSection>
-          </ItemWinner>
+          {drawPremium.draw_premium_winnings.map(winner => (
+            <ItemWinner key={winner.id}>
+              <WinnerName>{winner.name}</WinnerName>
+              <WinnerCertificateSection>
+                <CertificateInfo>
+                  <CertificateTitle>TÍTULO</CertificateTitle>
+                  <CertificateText>{winner.title}</CertificateText>
+                </CertificateInfo>
+                <CertificateInfo>
+                  <CertificateTitle>CIDADE</CertificateTitle>
+                  <CertificateText>{winner.city}</CertificateText>
+                </CertificateInfo>
+                <CertificateInfo>
+                  <CertificateTitle>VENDEDOR</CertificateTitle>
+                  <CertificateText>{winner.seller}</CertificateText>
+                </CertificateInfo>
+                {/* <CertificateInfo>
+                  <CertificateTitle>PONTOS</CertificateTitle>
+                  <CertificateText>{winner.}</CertificateText>
+                </CertificateInfo> */}
+              </WinnerCertificateSection>
+            </ItemWinner>
+          ))}
         </ResultItem>
       ))}
-      {!!drawWinnings?.specialPrizes?.length &&
-        drawWinnings.specialPrizes.length > 0 && (
+      {!!drawWinnings?.entriesCategorie2?.length &&
+        drawWinnings.entriesCategorie2.length > 0 && (
           <SpecialPrizeContainer>
             <SpecialPrizeHeader>
               <TrophyImage src="/trophy-icon.svg" />
@@ -231,43 +209,44 @@ const Results = ({ showVideo = false }: Props) => {
             </SpecialPrizeHeader>
             <SpecialPrizeBottom>
               <SpecialPrizeName>
-                {drawWinnings?.specialPrizes.length === 1
+                {drawWinnings?.entriesCategorie2.length === 1
                   ? '1 PRÊMIO'
-                  : `${drawWinnings.specialPrizes.length} PRÊMIOS`}{' '}
-                DE {formatCurrency(drawWinnings?.specialPrizes?.[0]?.value)}
+                  : `${drawWinnings.entriesCategorie2.length} PRÊMIOS`}{' '}
+                DE {drawWinnings?.entriesCategorie2?.[0]?.title}
               </SpecialPrizeName>
               <SpecialPrizeDescription>
                 Valor líquido de{' '}
-                {formatCurrency(drawWinnings?.specialPrizes?.[0]?.value)}
+                {formatCurrency(drawWinnings?.entriesCategorie2?.[0]?.value)}
               </SpecialPrizeDescription>
             </SpecialPrizeBottom>
           </SpecialPrizeContainer>
         )}
       <SpecialWinnerList>
-        {drawWinnings?.specialPrizes?.map(specialWinner => (
-          <SpecialWinner key={specialWinner.title}>
-            <WinnerName>{specialWinner.name}</WinnerName>
-            <SpecialWinnerBottom>
-              <CertificateInfo>
-                <CertificateTitle>CIDADE</CertificateTitle>
-                <CertificateText>{specialWinner.city}</CertificateText>
-              </CertificateInfo>
-              <CertificateInfo>
-                <CertificateTitle>VENDEDOR</CertificateTitle>
-                <CertificateText>{specialWinner.seller}</CertificateText>
-              </CertificateInfo>
-              <CertificateInfo>
-                <CertificateTitle>TÍTULO</CertificateTitle>
-                <CertificateText>{specialWinner.title}</CertificateText>
-              </CertificateInfo>
-            </SpecialWinnerBottom>
-          </SpecialWinner>
-        ))}
+        {drawWinnings?.entriesCategorie2?.map(drawPremium =>
+          drawPremium.draw_premium_winnings.map(winner => (
+            <SpecialWinner key={winner.title}>
+              <WinnerName>{winner.name}</WinnerName>
+              <SpecialWinnerBottom>
+                <CertificateInfo>
+                  <CertificateTitle>CIDADE</CertificateTitle>
+                  <CertificateText>{winner.city}</CertificateText>
+                </CertificateInfo>
+                <CertificateInfo>
+                  <CertificateTitle>VENDEDOR</CertificateTitle>
+                  <CertificateText>{winner.seller}</CertificateText>
+                </CertificateInfo>
+                <CertificateInfo>
+                  <CertificateTitle>TÍTULO</CertificateTitle>
+                  <CertificateText>{winner.title}</CertificateText>
+                </CertificateInfo>
+              </SpecialWinnerBottom>
+            </SpecialWinner>
+          )),
+        )}
       </SpecialWinnerList>
       {showVideo && embedLink && (
         <>
           <ResultsVideoTitle>Veja o resultado!</ResultsVideoTitle>
-          {/* <ResultsVideoImage src="/results-video-thumb.png" /> */}
           <iframe
             src={embedLink}
             title="Sorteio ao vivo"

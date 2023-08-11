@@ -81,6 +81,7 @@ interface PrizeProps {
 export const PrizeContainer = styled.div<PrizeProps>`
   width: 100%;
   max-width: 18.875rem;
+  height: fit-content;
 
   background: ${({ theme }) => theme.colors.grayf3};
 

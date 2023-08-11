@@ -1,16 +1,37 @@
 export interface GetUserWinningResponse {
-  Premiados: IWinner[];
+  entriesCategorie1: WinnersDrawPremium[];
+  entriesCategorie2: WinnersDrawPremium[];
+  entriesCategorie3: WinnersDrawPremium[];
 }
 
-export interface IWinner {
+export interface WinnersDrawPremium {
+  createdAt: string;
+  id: number;
+  value: number;
+  updatedAt: string;
+  publishedAt: null | string;
+  active: boolean | null;
+  number: number;
+  description: string;
+  title: string;
+  isDetach: boolean | null;
+  idTtitle: null;
+  idUser: null;
+  totalPay: number;
+  payWinning: number;
+  refer: string;
+  dezena: string;
+  draw_premium_winnings: DrawPremiumWinning[];
+}
+
+export interface DrawPremiumWinning {
+  id: number;
+  title: string;
   name: string;
+  adress: string;
   city: string;
   seller: string;
-  points: string;
-  title: number;
-  type: string;
-  premium: string;
-  value: number;
-  premiumNumber: number;
-  titlePremium: Record<string, number>;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
 }
