@@ -76,7 +76,7 @@ const Results = ({ showVideo = false }: Props) => {
           'filters[active][$eq]': true,
           'filters[dateDraw][$notNull]': true,
           'filters[dateDraw][$lte]': new Date().toISOString(),
-          fields: ['dateDraw', 'dateFinal', 'name', 'lnkYoutubeDraw'],
+          fields: 'dateDraw,dateFinal,name,lnkYoutubeDraw',
         },
       });
 

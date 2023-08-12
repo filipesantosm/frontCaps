@@ -57,7 +57,7 @@ const CurrentDrawProvider = ({ children }: Props) => {
       const { data } = await api.get<PaginatedResponse<IDraw>>('/draws', {
         params: {
           'filters[isPublished][$eq]': true,
-          populate: ['draw_promos', 'image'],
+          populate: 'draw_promos,image',
         },
       });
 
