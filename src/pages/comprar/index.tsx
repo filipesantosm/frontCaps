@@ -60,15 +60,13 @@ const Purchase = () => {
     try {
       const { data } = await api.get<ITitle[]>('/getSuggestedTitle', {
         params: {
-          id: currentDraw?.id,
+          quantity: selectedDrawPromo?.quantity || 1,
         },
       });
 
       const suggestedCartItems = data.map(titleToCartItem);
 
-      setCartItems(
-        suggestedCartItems.slice(0, selectedDrawPromo?.quantity || 1),
-      );
+      setCartItems(suggestedCartItems);
 
       router.push('/finalizar-compra');
     } catch (error) {

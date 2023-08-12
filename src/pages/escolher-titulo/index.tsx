@@ -57,11 +57,7 @@ const ChooseTitles = () => {
 
     setIsLoadingMore(true);
     try {
-      const { data } = await api.get<ITitle[]>('/getSuggestedTitle', {
-        params: {
-          id: currentDraw?.id,
-        },
-      });
+      const { data } = await api.get<ITitle[]>('/getSuggestedTitle');
 
       clearCart();
 

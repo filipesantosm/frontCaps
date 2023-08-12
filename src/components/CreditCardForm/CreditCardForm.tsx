@@ -114,7 +114,7 @@ const CreditCardForm = ({ onSuccess, onError }: Props) => {
                 lastDig: tokenizePayload.number.substring(
                   tokenizePayload.number.length - 4,
                 ),
-                brand: tokenizePayload.brand,
+                branch: tokenizePayload.brand,
               },
             });
           }
