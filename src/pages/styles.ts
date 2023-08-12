@@ -7,7 +7,8 @@ export const HeroImage = styled.img`
   width: 100%;
   object-fit: cover;
   object-position: top;
-  height: 25.9375rem;
+  // height: 25.9375rem;
+  aspect-ratio: 3;
 `;
 
 export const HomeContent = styled.div`
