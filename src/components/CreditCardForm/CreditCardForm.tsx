@@ -111,6 +111,10 @@ const CreditCardForm = ({ onSuccess, onError }: Props) => {
             await api.post('/createCard', {
               data: {
                 tokencard: tokenizeResponse.data.payment_token,
+                lastDig: tokenizePayload.number.substring(
+                  tokenizePayload.number.length - 4,
+                ),
+                brand: tokenizePayload.brand,
               },
             });
           }

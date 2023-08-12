@@ -11,3 +11,11 @@ export interface TokenizeError {
   error: string;
   error_description: string;
 }
+
+export interface UserCard {
+  id: number;
+  createdAt: string;
+  tokencard: string;
+  lastDig: string;
+  branch: string;
+}

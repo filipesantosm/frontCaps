@@ -26,6 +26,8 @@ export const CardOption = styled.label`
   color: ${({ theme }) => theme.colors.primaryDark};
   font-size: 1.125rem;
   font-weight: 500;
+
+  text-transform: capitalize;
 `;
 
 export const Checkbox = styled.input`
