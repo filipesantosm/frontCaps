@@ -1,20 +1,20 @@
 import HelpFooter from '@/components/HelpFooter/HelpFooter';
 import Layout from '@/components/Layout/Layout';
+import Loading from '@/components/Loading/Loading';
 import PageTitle from '@/components/PageTitle/PageTitle';
-import api from '@/services/api';
-import handleError, { handleSuccess } from '@/utils/handleToast';
-import { useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { FaCopy } from 'react-icons/fa';
-import { useRouter } from 'next/router';
-import { format, parseISO } from 'date-fns';
-import { PaginatedResponse } from '@/interfaces/Paginated';
 import {
   CreateCreditResponse,
   ICreditSaleValue,
 } from '@/interfaces/CreditSales';
+import { PaginatedResponse } from '@/interfaces/Paginated';
+import api from '@/services/api';
 import { formatCurrency } from '@/utils/formatCurrency';
-import Loading from '@/components/Loading/Loading';
+import handleError, { handleSuccess } from '@/utils/handleToast';
+import { format, parseISO } from 'date-fns';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { FaCopy } from 'react-icons/fa';
 import {
   AmountItem,
   AmountsList,
@@ -46,9 +46,8 @@ const AddBalance = () => {
   const [validDate, setValidDate] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [billetCode, setBilletCode] = useState(
-    '00020.101021.226770. 014456.456123.564884.6654555555',
-  );
+  const [billetCode, setBilletCode] = useState('');
+  const [billetLink, setBilletLink] = useState('');
   const [creditValues, setCreditValues] = useState<ICreditSaleValue[]>([]);
   const { register, handleSubmit } = useForm<AddBalanceForm>();
 
@@ -88,9 +87,18 @@ const AddBalance = () => {
     }
   };
 
+  const handleOpenLink = (link: string) => {
+    window.open(link, '_blank', 'noreferrer');
+  };
+
   const onSubmit: SubmitHandler<AddBalanceForm> = async form => {
     if (!form.value) {
       handleError('Selecione um valor');
+      return;
+    }
+
+    if (hasGenerated) {
+      handleOpenLink(billetLink);
       return;
     }
 
@@ -110,6 +118,8 @@ const AddBalance = () => {
       );
 
       setBilletCode(data.ourNumber);
+      setBilletLink(data.linkbillet);
+      handleOpenLink(data.linkbillet);
       setHasGenerated(true);
     } catch (error) {
       handleError(error);
@@ -148,10 +158,10 @@ const AddBalance = () => {
               </AmountsList>
               <SubmitButton
                 type="button"
-                disabled={isGenerating || hasGenerated}
+                disabled={isGenerating}
                 onClick={handleSubmit(onSubmit)}
               >
-                Gerar boleto
+                {isGenerating ? <Loading iconColor="white" /> : 'Gerar boleto'}
               </SubmitButton>
             </ChooseAmountContent>
           </ChooseAmountContainer>

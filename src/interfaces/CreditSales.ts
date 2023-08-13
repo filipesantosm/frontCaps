@@ -14,4 +14,6 @@ export interface CreditSaleValueAttributes {
 
 export interface CreateCreditResponse {
   ourNumber: string;
+  qrcode_image: string;
+  linkbillet: string;
 }
