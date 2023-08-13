@@ -29,7 +29,19 @@ export type IPersonalDetailsStepForm = Yup.InferType<
 >;
 
 export const PersonalDetailsStepSchema = Yup.object({
-  name: Yup.string().required('Nome completo é obrigatório'),
+  name: Yup.string()
+    .required('Nome completo é obrigatório')
+    .test({
+      test: value => {
+        if (!value) {
+          return false;
+        }
+
+        return /^(.+[ ]+)+.+$/.test(value);
+      },
+      name: 'first-and-last-name',
+      message: 'O campo deve conter nome e sobrenome',
+    }),
   dateBirth: Yup.string()
     .required('Data de nascimento é obrigatória')
     .test({
