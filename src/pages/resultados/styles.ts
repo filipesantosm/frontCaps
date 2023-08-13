@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Banner = styled.img`
   width: 100%;
   aspect-ratio: 7.95;
+  min-height: 10.75rem;
 
   object-fit: cover;
   object-position: 50% 10%;
