@@ -1,8 +1,9 @@
 import { handleSuccess } from '@/utils/handleToast';
-import { differenceInSeconds } from 'date-fns';
+import { differenceInSeconds, parseISO } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { FaCheckCircle, FaCopy } from 'react-icons/fa';
 import { FaPix } from 'react-icons/fa6';
+import { PixPaymentResponse } from '@/interfaces/Payment';
 import {
   Column,
   Container,
@@ -19,10 +20,12 @@ import {
 } from './styles';
 
 interface Props {
-  finalDate: Date;
+  pixPayment: PixPaymentResponse;
 }
 
-const PixSection = ({ finalDate }: Props) => {
+const PixSection = ({ pixPayment }: Props) => {
+  const finalDate = parseISO(pixPayment.dateExpiration);
+
   const [secondsRemaining, setSecondsRemaining] = useState(
     differenceInSeconds(finalDate, new Date()),
   );
@@ -43,6 +46,7 @@ const PixSection = ({ finalDate }: Props) => {
 
         if (secondsDifference <= 0) {
           setPixExpired(true);
+          clearInterval(interval);
         }
 
         return Math.max(secondsDifference, 0);
@@ -105,9 +109,8 @@ const PixSection = ({ finalDate }: Props) => {
           )}
         </PixStatus>
         <QrCodeContainer>
-          <QrCodeImage src="/qr-code.png" />
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sed
-          placerat elit. Aenean eu massa dictum, luctus eros et, lobortis velit.
+          <QrCodeImage src={pixPayment.qrcode_image} />
+          {pixPayment.qrcode}
         </QrCodeContainer>
         <CopyCodeButton onClick={handleCopyCode}>
           <FaCopy />

@@ -6,9 +6,9 @@ import PageTitle from '@/components/PageTitle/PageTitle';
 import PixSection from '@/components/PixSection/PixSection';
 import { useCart } from '@/hooks/useCart';
 import { useCurrentDraw } from '@/hooks/useCurrentDraw';
+import { PixPaymentResponse } from '@/interfaces/Payment';
 import api from '@/services/api';
 import handleError from '@/utils/handleToast';
-import { addMinutes } from 'date-fns';
 import { useState } from 'react';
 import {
   ContinueButton,
@@ -23,6 +23,7 @@ import {
 const PixPayment = () => {
   const [isPaying, setIsPaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [pixPayment, setPixPayment] = useState<PixPaymentResponse>();
   const { selectedDrawPromo } = useCurrentDraw();
 
   const { cartItems } = useCart();
@@ -36,7 +37,7 @@ const PixPayment = () => {
     setIsLoading(true);
 
     try {
-      const { data } = await api.post('/paymentTitle', {
+      const { data } = await api.post<PixPaymentResponse>('/paymentTitle', {
         data: {
           payment_type: {
             id: 1,
@@ -49,7 +50,7 @@ const PixPayment = () => {
         },
       });
 
-      // TODO: Terminar
+      setPixPayment(data);
 
       setIsPaying(true);
     } catch (error) {
@@ -59,12 +60,12 @@ const PixPayment = () => {
     }
   };
 
-  if (isPaying) {
+  if (isPaying && pixPayment) {
     return (
       <Layout>
         <PageContent>
           <PageTitle>Finalizar Compra</PageTitle>
-          <PixSection finalDate={addMinutes(new Date(), 30)} />
+          <PixSection pixPayment={pixPayment} />
           <HelpFooter />
         </PageContent>
       </Layout>
