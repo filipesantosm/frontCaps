@@ -60,7 +60,7 @@ const CreditCardList = ({ onClickAddCard, onError, onSuccess }: Props) => {
       await api.post('/paymentTitle', {
         data: {
           payment_type: {
-            id: 3,
+            id: 2,
           },
           tokencard: selectedCardToken,
           titles: cartItems.map(cartItem => ({

@@ -96,7 +96,7 @@ const CreditCardForm = ({ onSuccess, onError }: Props) => {
           await api.post('/paymentTitle', {
             data: {
               payment_type: {
-                id: 3,
+                id: 2,
               },
               tokencard: tokenizeResponse.data.payment_token,
               titles: cartItems.map(cartItem => ({
