@@ -81,6 +81,8 @@ export const TermsText = styled.div`
   max-height: max(10rem, 35vh);
   width: 100%;
 
+  white-space: pre-line;
+
   padding-right: 3rem;
 
   font-size: 1rem;
