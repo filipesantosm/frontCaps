@@ -61,6 +61,22 @@ export const PersonalDetailsStepSchema = Yup.object({
       },
     }),
   email: Yup.string().required('E-mail é obrigatório').email('E-mail inválido'),
+  phone: Yup.string()
+    .required('Telefone obrigatório')
+    .test({
+      message: 'Telefone inválido',
+      test: value => {
+        if (!value) {
+          return false;
+        }
+
+        if (value.length < 14) {
+          return false;
+        }
+
+        return true;
+      },
+    }),
 });
 
 export type IAddressStepForm = Yup.InferType<typeof AddressStepSchema>;
@@ -75,6 +91,7 @@ export const AddressStepSchema = Yup.object({
     }),
   state: Yup.string().required('Estado é obrigatório'),
   city: Yup.string().required('Cidade é obrigatória'),
+  neighborhood: Yup.string().required('Bairro é obrigatório'),
   street: Yup.string().required('Rua é obrigatória'),
   number: Yup.string().required('Número é obrigatório'),
 });

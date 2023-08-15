@@ -4,4 +4,5 @@ export interface SignUpStepProps {
   onNext: (data?: Partial<ISignUpFormData>) => void;
   onClickLogin?: () => void;
   signUpFormData: ISignUpFormData;
+  isSubmitting?: boolean;
 }

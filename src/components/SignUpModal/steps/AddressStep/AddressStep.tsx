@@ -23,7 +23,6 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
     getValues,
     reset,
     trigger,
-    setValue,
     setError,
   } = useForm<IAddressStepForm>({
     resolver: yupResolver(AddressStepSchema),
@@ -33,6 +32,7 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
       state: signUpFormData?.state,
       number: signUpFormData?.number,
       street: signUpFormData?.street,
+      neighborhood: signUpFormData?.neighborhood,
     },
   });
 
@@ -100,6 +100,12 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
             id="city"
             error={errors?.city?.message}
             {...register('city')}
+          />
+          <Input
+            label="BAIRRO"
+            id="neighborhood"
+            error={errors?.neighborhood?.message}
+            {...register('neighborhood')}
           />
           <Input
             label="RUA"
