@@ -4,7 +4,7 @@ import { PaginatedResponse } from '@/interfaces/Paginated';
 import api from '@/services/api';
 import handleError from '@/utils/handleToast';
 import { isBefore, parseISO } from 'date-fns';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 export interface PromoOption {
   value: number;
@@ -82,9 +82,13 @@ const CurrentDrawProvider = ({ children }: Props) => {
     }
   };
 
-  const drawPromos = currentDraw?.attributes?.draw_promos?.data || [];
+  const promoOptions = useMemo(() => {
+    const drawPromos = currentDraw?.attributes?.draw_promos?.data || [];
 
-  const promoOptions = drawPromos.map(drawPromoToOption);
+    drawPromos.sort((a, b) => a.attributes.quantity - b.attributes.quantity);
+
+    return drawPromos.map(drawPromoToOption);
+  }, [currentDraw]);
 
   return (
     <CurrentDrawContext.Provider
