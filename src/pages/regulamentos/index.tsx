@@ -16,7 +16,7 @@ const Rules = ({ data }: Props) => {
 
   return (
     <Layout>
-      <Banner src={getDrawImage(currentDraw)} />
+      <Banner src={getDrawImage(currentDraw)} alt="" />
       <PageContent>
         <NextRaffle />
         <RulesSection>

@@ -92,13 +92,14 @@ const NextRaffle = ({ containerMarginTop }: Props) => {
       }}
     >
       <LeftSection>
-        <Title>PARTICIPE AGORA!</Title>
+        <Title htmlFor="drawPromo">PARTICIPE AGORA!</Title>
         <BuyContainer>
           <ShadowSelect
             defaultValue={promoOptions[0]}
             options={promoOptions}
             noOptionsMessage={() => 'Nenhuma opção disponível'}
             value={selectedDrawPromo}
+            inputId="drawPromo"
             onChange={option => {
               if (option) {
                 setSelectedDrawPromo(option as PromoOption);

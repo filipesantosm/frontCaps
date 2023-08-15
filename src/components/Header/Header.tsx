@@ -11,7 +11,7 @@ const Header = () => {
   return (
     <Container>
       <Content>
-        <Logo src="/logo.png" />
+        <Logo src="/logo.png" alt="logo" />
         <Nav>
           <StyledLink href="/">Início</StyledLink>
           <StyledLink href="/como-funciona">Como funciona</StyledLink>

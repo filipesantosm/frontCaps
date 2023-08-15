@@ -34,7 +34,7 @@ const Home = () => {
 
   return (
     <Layout>
-      <HeroImage src={drawImageUrl} />
+      <HeroImage src={drawImageUrl} alt="" />
       <HomeContent>
         <NextRaffle containerMarginTop="-7rem" />
         <RaffleInformation>
@@ -52,6 +52,7 @@ const Home = () => {
             href={currentDraw?.attributes?.lnkYoutube || undefined}
             target="_blank"
             rel="noreferrer"
+            aria-label="Link para o vídeo promocional do sorteio"
           >
             <RaffleImage src={drawImageUrl} />
             {currentDraw?.attributes?.lnkYoutube && (

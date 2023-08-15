@@ -26,7 +26,7 @@ export const LeftSection = styled.div`
   gap: 0.5rem;
 `;
 
-export const Title = styled.p`
+export const Title = styled.label`
   font-weight: 700;
   letter-spacing: 0.053em;
   // TODO: theme;
