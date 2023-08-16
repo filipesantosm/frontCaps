@@ -26,6 +26,7 @@ export const TermsText = styled.div`
   line-height: 1.5;
   font-weight: 400;
   text-align: justify;
+  white-space: pre-line;
 
   overflow: auto;
 
