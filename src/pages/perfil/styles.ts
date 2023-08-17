@@ -32,6 +32,10 @@ export const VerticalSeparator = styled.div`
   background: ${({ theme }) => theme.colors.grayb9};
 `;
 
+export const Form = styled.form`
+  width: 100%;
+`;
+
 export const Column = styled.article`
   width: 100%;
   max-width: 18.4375rem;
@@ -65,11 +69,38 @@ export const ColumnTitle = styled.h2`
   color: ${({ theme }) => theme.colors.primaryDark};
 `;
 
+export const ButtonsContainer = styled.div`
+  margin-top: 3.75rem;
+
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (max-width: 600px) {
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+`;
+
+export const EditButtonsContainer = styled.div`
+  width: 100%;
+  max-width: 44rem;
+  gap: 2rem;
+  display: flex;
+
+  @media (max-width: 400px) {
+    flex-wrap: wrap;
+  }
+`;
+
 export const DeleteAccountButton = styled.button`
   border: none;
   background: ${({ theme }) => theme.colors.white};
 
-  margin-top: 3.75rem;
+  width: 100%;
+  max-width: 10rem;
 
   padding: 0.5rem 1rem;
   border-radius: 5px;
@@ -82,5 +113,27 @@ export const DeleteAccountButton = styled.button`
 
   &:hover {
     filter: brightness(0.95);
+  }
+`;
+
+export const SubmitButton = styled.button`
+  border: none;
+
+  width: 100%;
+  max-width: 16rem;
+  min-height: 3rem;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+
+  background: ${({ theme }) => theme.colors.primary};
+
+  font-size: 1rem;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.white};
+
+  transition: filter 0.3s;
+
+  &:hover {
+    filter: brightness(0.9);
   }
 `;
