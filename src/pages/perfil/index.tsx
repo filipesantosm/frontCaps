@@ -89,6 +89,12 @@ const Profile = () => {
               containerClassName="profile-field"
             />
             <Input
+              label="BAIRRO"
+              defaultValue={user?.neighborhood || ''}
+              disabled
+              containerClassName="profile-field"
+            />
+            <Input
               label="RUA"
               defaultValue={user?.street || ''}
               disabled

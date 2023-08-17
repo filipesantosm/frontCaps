@@ -68,6 +68,7 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
           state: data.uf,
           city: data.localidade,
           street: data.logradouro,
+          neighborhood: data.bairro,
         });
         setIsCepValid(true);
       }
