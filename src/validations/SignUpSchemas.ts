@@ -94,6 +94,8 @@ export const AddressStepSchema = Yup.object({
   neighborhood: Yup.string().required('Bairro é obrigatório'),
   street: Yup.string().required('Rua é obrigatória'),
   number: Yup.string().required('Número é obrigatório'),
+  cityCodIBGE: Yup.string().optional(),
+  stateCodIBGE: Yup.string().optional(),
 });
 
 export type IPasswordStepForm = Yup.InferType<typeof PasswordStepSchema>;

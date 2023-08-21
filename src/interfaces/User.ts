@@ -28,4 +28,6 @@ export interface IUser {
   country: null | string;
   phone: null | string;
   isTermAccepted: boolean;
+  cityCodIBGE: null | number;
+  stateCodIBGE: null | number;
 }

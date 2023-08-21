@@ -33,6 +33,8 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
       number: signUpFormData?.number,
       street: signUpFormData?.street,
       neighborhood: signUpFormData?.neighborhood,
+      cityCodIBGE: signUpFormData?.cityCodIBGE,
+      stateCodIBGE: signUpFormData?.stateCodIBGE,
     },
   });
 
@@ -69,6 +71,8 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
           city: data.localidade,
           street: data.logradouro,
           neighborhood: data.bairro,
+          cityCodIBGE: data.ibge?.toString(),
+          stateCodIBGE: data.ibge?.toString()?.substring(0, 2),
         });
         setIsCepValid(true);
       }

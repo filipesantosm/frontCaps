@@ -41,6 +41,8 @@ const ChangeAddress = () => {
       number: user.number ?? '',
       state: user.state ?? '',
       street: user.street ?? '',
+      cityCodIBGE: user.cityCodIBGE?.toString() ?? '',
+      stateCodIBGE: user.stateCodIBGE?.toString() ?? '',
     },
   });
 
@@ -73,6 +75,8 @@ const ChangeAddress = () => {
           city: data.localidade,
           street: data.logradouro,
           neighborhood: data.bairro,
+          cityCodIBGE: data.ibge?.toString(),
+          stateCodIBGE: data.ibge?.toString()?.substring(0, 2),
         });
       }
     } catch (error) {
@@ -84,10 +88,21 @@ const ChangeAddress = () => {
     setIsSubmitting(true);
 
     try {
+      const newFields = {
+        number: form.number || undefined,
+        city: form.city || undefined,
+        cep: form.cep || undefined,
+        cityCodIBGE: form.cityCodIBGE || undefined,
+        state: form.state || undefined,
+        stateCodIBGE: form.stateCodIBGE || undefined,
+        street: form.street || undefined,
+        neighborhood: form.neighborhood || undefined,
+      };
+
       await api.put('/UserUpdate', {
         data: {
           ...user,
-          ...form,
+          ...newFields,
         },
       });
 
@@ -133,6 +148,12 @@ const ChangeAddress = () => {
               error={errors?.state?.message}
             />
             <Input
+              label="CIDADE"
+              {...register('city')}
+              containerClassName="profile-field"
+              error={errors?.city?.message}
+            />
+            <Input
               label="BAIRRO"
               {...register('neighborhood')}
               containerClassName="profile-field"
@@ -149,12 +170,6 @@ const ChangeAddress = () => {
               {...register('number')}
               containerClassName="profile-field"
               error={errors?.number?.message}
-            />
-            <Input
-              label="CIDADE"
-              {...register('city')}
-              containerClassName="profile-field"
-              error={errors?.city?.message}
             />
             <SubmitButton
               style={{
