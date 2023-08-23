@@ -5,25 +5,11 @@ import {
   CompanyName,
   Container,
   TermsColumn,
-  TopSection,
-  TopSectionDescription,
-  TopSectionLogo,
-  TopSectionTitle,
 } from './styles';
 
 const HomeFooter = () => {
   return (
     <Container>
-      <TopSection>
-        <TopSectionLogo src="/apae-logo.svg" />
-        <div>
-          <TopSectionTitle>CESSÃO DE RESGATE</TopSectionTitle>
-          <TopSectionDescription>
-            Você pode ajudar a APAE, comprando o MTCAP e cedendo o direito de
-            resgate.
-          </TopSectionDescription>
-        </div>
-      </TopSection>
       <BottomSection>
         <CompanyColumn>
           <CompanyName>MTCAP - TÍTULO DE CAPITALIZAÇÃO</CompanyName>
