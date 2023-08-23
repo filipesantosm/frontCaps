@@ -13,6 +13,9 @@ import {
   Container,
   CountdownContainer,
   CountdownItem,
+  CountdownPoints,
+  CountdownUnit,
+  CountdownValue,
   LeftSection,
   RightSection,
   RightTitle,
@@ -124,23 +127,39 @@ const NextRaffle = ({ containerMarginTop }: Props) => {
       <RightSection>
         <RightTitle>Próximo sorteio em</RightTitle>
         <CountdownContainer>
-          <CountdownItem>
-            <span>{durationToNext.days.toString().padStart(2, '0')}</span>
+          <CountdownItem
+            style={{
+              width: '2.5rem',
+            }}
+          >
+            <CountdownValue>
+              {durationToNext.days.toString().padStart(2, '0')}
+            </CountdownValue>
+            <CountdownUnit>Dias</CountdownUnit>
           </CountdownItem>
           <CountdownItem
             style={{
               marginLeft: '0.5rem',
             }}
           >
-            <span>{durationToNext.hours.toString().padStart(2, '0')}</span>
+            <CountdownValue>
+              {durationToNext.hours.toString().padStart(2, '0')}
+            </CountdownValue>
+            <CountdownUnit>Horas</CountdownUnit>
           </CountdownItem>
-          :
+          <CountdownPoints>:</CountdownPoints>
           <CountdownItem>
-            <span>{durationToNext.minutes.toString().padStart(2, '0')}</span>
+            <CountdownValue>
+              {durationToNext.minutes.toString().padStart(2, '0')}
+            </CountdownValue>
+            <CountdownUnit>Minutos</CountdownUnit>
           </CountdownItem>
-          :
+          <CountdownPoints>:</CountdownPoints>
           <CountdownItem>
-            <span>{durationToNext.seconds.toString().padStart(2, '0')}</span>
+            <CountdownValue>
+              {durationToNext.seconds.toString().padStart(2, '0')}
+            </CountdownValue>
+            <CountdownUnit>Segundos</CountdownUnit>
           </CountdownItem>
         </CountdownContainer>
       </RightSection>
