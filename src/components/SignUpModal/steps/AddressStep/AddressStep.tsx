@@ -10,11 +10,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import Loading from '@/components/Loading/Loading';
 import { SignUpStepProps } from '../../interfaces';
 import { Form, SubmitButton } from '../../styles';
 
 const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
   const [isCepValid, setIsCepValid] = useState(!!signUpFormData.cep);
+  const [isValidatingCep, setIsValidatingCep] = useState(false);
 
   const {
     register,
@@ -51,6 +53,7 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
 
     const cep = getValues('cep');
 
+    setIsValidatingCep(true);
     try {
       const cepFormatted = cep.replace('-', '');
       if (cepFormatted.length >= 8) {
@@ -59,6 +62,7 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
         );
 
         if (data.erro) {
+          setIsValidatingCep(false);
           setError('cep', {
             message: 'CEP não encontrado',
             type: 'inexistent-cep',
@@ -78,6 +82,8 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
       }
     } catch (error) {
       handleError(error);
+    } finally {
+      setIsValidatingCep(false);
     }
   };
 
@@ -130,8 +136,13 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
       <SubmitButton
         type={isCepValid ? 'submit' : 'button'}
         onClick={isCepValid ? undefined : handleCep}
+        disabled={isValidatingCep}
       >
-        Continuar
+        {isValidatingCep ? (
+          <Loading iconColor="white" iconFontSize="1.625rem" />
+        ) : (
+          'Continuar'
+        )}
       </SubmitButton>
     </Form>
   );

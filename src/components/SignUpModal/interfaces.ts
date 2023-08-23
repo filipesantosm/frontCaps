@@ -6,3 +6,9 @@ export interface SignUpStepProps {
   signUpFormData: ISignUpFormData;
   isSubmitting?: boolean;
 }
+
+export interface CpfValidatorResponse {
+  cpf: string;
+  dateBirth: string; // dd/MM/yyyy
+  name: string;
+}
