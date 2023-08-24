@@ -33,7 +33,7 @@ export const Content = styled.main`
 export const Title = styled.h1`
   margin-top: 1.25rem;
 
-  color: #00214b;
+  color: ${({ theme }) => theme.colors.primaryDarker};
   font-size: 1.375rem;
   font-weight: 600;
 `;

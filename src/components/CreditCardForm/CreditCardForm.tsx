@@ -15,6 +15,7 @@ import creditCardType from 'credit-card-type';
 import Script from 'next/script';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useTheme } from 'styled-components';
 import Input from '../Input/Input';
 import MaskedInput from '../Input/MaskedInput';
 import Loading from '../Loading/Loading';
@@ -43,6 +44,7 @@ const CreditCardForm = ({ onSuccess, onError }: Props) => {
   const { cartItems } = useCart();
   const { selectedDrawPromo } = useCurrentDraw();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const theme = useTheme();
 
   const {
     handleSubmit,
@@ -158,7 +160,7 @@ const CreditCardForm = ({ onSuccess, onError }: Props) => {
                 right: '1rem',
                 bottom: '0.375rem',
                 fontSize: '2.5rem',
-                color: '#00214b',
+                color: theme.colors.primaryDarker,
               }}
             />
           ) : null

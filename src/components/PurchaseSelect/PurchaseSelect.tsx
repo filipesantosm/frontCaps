@@ -8,6 +8,7 @@ import ReactSelect, {
 } from 'react-select';
 import { formatCurrency } from '@/utils/formatCurrency';
 import { FaChevronDown } from 'react-icons/fa';
+import { useTheme } from 'styled-components';
 import {
   DropdownIndicatorContainer,
   OptionContainer,
@@ -36,6 +37,8 @@ const PurchaseSelect = ({
   onChange,
   ...rest
 }: SelectProps) => {
+  const theme = useTheme();
+
   return (
     <ReactSelect
       components={{
@@ -57,13 +60,13 @@ const PurchaseSelect = ({
           ...prev,
           fontSize: '1rem',
           fontWeight: 600,
-          color: '#00214b',
+          color: theme.colors.primaryDarker,
         }),
         option: prev => ({
           ...prev,
           fontSize: '1rem',
           fontWeight: 600,
-          color: '#00214b',
+          color: theme.colors.primaryDarker,
           background: 'transparent',
         }),
         control: prev => ({

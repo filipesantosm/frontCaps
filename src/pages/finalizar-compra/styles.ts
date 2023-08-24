@@ -81,7 +81,7 @@ export const Checkbox = styled.input`
     font-family: 'FontAwesome';
     color: transparent !important;
     background: transparent;
-    border: 1px solid #00214b;
+    border: 1px solid ${({ theme }) => theme.colors.primaryDarker};
   }
   &:checked:before {
     color: ${({ theme }) => theme.colors.white} !important;

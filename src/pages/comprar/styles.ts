@@ -53,7 +53,7 @@ export const ContestImage = styled.img`
 export const Title = styled.h1`
   font-size: 1.75rem;
   font-weight: 600;
-  color: #00214b;
+  color: ${({ theme }) => theme.colors.primaryDarker};
 
   margin-bottom: 1.25rem;
 `;

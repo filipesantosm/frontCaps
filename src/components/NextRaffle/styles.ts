@@ -33,8 +33,7 @@ export const LeftSection = styled.div`
 export const Title = styled.label`
   font-weight: 700;
   letter-spacing: 0.053em;
-  // TODO: theme;
-  color: #00214b;
+  color: ${({ theme }) => theme.colors.primaryDarker};
 `;
 
 export const BuyContainer = styled.div`

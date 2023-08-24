@@ -118,7 +118,7 @@ export const ContinueButton = styled.button`
 export const PasswordTitle = styled.h1`
   font-size: 1.375rem;
   font-weight: 600;
-  color: #00214b;
+  color: ${({ theme }) => theme.colors.primaryDarker};
 `;
 
 export const DeleteAccountButton = styled.button`

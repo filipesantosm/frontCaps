@@ -9,7 +9,7 @@ export const OptionContainer = styled.div`
 
   font-size: 1.1875rem;
   font-weight: 600;
-  color: #00214b;
+  color: ${({ theme }) => theme.colors.primaryDarker};
 `;
 
 export const OptionSeparator = styled.div`

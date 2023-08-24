@@ -60,5 +60,5 @@ export const CardDescription = styled.p`
 
   font-size: 0.875rem;
   font-weight: 400;
-  color: #00214b;
+  color: ${({ theme }) => theme.colors.primaryDarker};
 `;

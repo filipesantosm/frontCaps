@@ -1,6 +1,9 @@
 import ReactSelect, { Props as ReactSelectProps } from 'react-select';
+import { useTheme } from 'styled-components';
 
 const OutlinedSelect = (props: ReactSelectProps) => {
+  const theme = useTheme();
+
   return (
     <ReactSelect
       {...props}
@@ -13,13 +16,13 @@ const OutlinedSelect = (props: ReactSelectProps) => {
           ...prev,
           fontSize: '0.875rem',
           fontWeight: 600,
-          color: '#00214b',
+          color: theme.colors.primaryDarker,
         }),
         option: (prev, { isSelected }) => ({
           ...prev,
           fontSize: '0.875rem',
           fontWeight: 600,
-          color: '#00214b',
+          color: theme.colors.primaryDarker,
           background: isSelected ? '#E4EEF7' : '#fff',
         }),
         control: prev => ({
@@ -28,22 +31,22 @@ const OutlinedSelect = (props: ReactSelectProps) => {
           borderRadius: '0.625rem',
           minWidth: '13rem',
           minHeight: '2.375rem',
-          border: '1px solid #003a83',
+          border: `1px solid ${theme.colors.primaryDark}`,
           zIndex: 2,
           boxShadow: 'none',
           ':focus': {
-            borderColor: '#003a83',
+            borderColor: theme.colors.primaryDark,
           },
           ':hover': {
-            borderColor: '#003a83',
+            borderColor: theme.colors.primaryDark,
           },
         }),
         dropdownIndicator: prev => ({
           ...prev,
-          color: '#0054BC',
+          color: theme.colors.primary,
           padding: '0.5rem',
           ':hover': {
-            color: '#0054BC',
+            color: theme.colors.primary,
           },
         }),
         menu: prev => ({

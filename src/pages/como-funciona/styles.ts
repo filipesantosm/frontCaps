@@ -78,7 +78,7 @@ export const CardText = styled.p`
 
   font-size: 1rem;
   line-height: 1.5;
-  color: #00214b;
+  color: ${({ theme }) => theme.colors.primaryDarker};
 `;
 
 export const HelpTitle = styled.h2`
