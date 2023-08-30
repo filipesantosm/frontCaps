@@ -13,11 +13,15 @@ export const Container = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  padding: 1.75rem 5.625rem 1.75rem 2.25rem;
+  padding: 1.25rem 5.625rem 1.25rem 2.25rem;
 
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
 
   background: ${({ theme }) => theme.colors.white};
+
+  @media (max-width: 800px) {
+    padding-right: 2rem;
+  }
 `;
 
 export const LeftSection = styled.div`
@@ -26,11 +30,10 @@ export const LeftSection = styled.div`
   gap: 0.5rem;
 `;
 
-export const Title = styled.p`
+export const Title = styled.label`
   font-weight: 700;
   letter-spacing: 0.053em;
-  // TODO: theme;
-  color: #00214b;
+  color: ${({ theme }) => theme.colors.primaryDarker};
 `;
 
 export const BuyContainer = styled.div`
@@ -99,7 +102,7 @@ export const RightTitle = styled.p`
 `;
 
 export const CountdownContainer = styled.div`
-  margin-top: 0.75rem;
+  margin-top: 0.625rem;
 
   font-size: 1.75rem;
 
@@ -109,7 +112,25 @@ export const CountdownContainer = styled.div`
 `;
 
 export const CountdownItem = styled.div`
-  min-width: 2.75rem;
+  width: 3.375rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+`;
+
+export const CountdownPoints = styled.p`
+  align-self: baseline;
+`;
+
+export const CountdownUnit = styled.p`
+  font-size: 0.75rem;
+`;
+
+export const CountdownValue = styled.span`
+  min-width: 2.875rem;
   padding: 0 0.25rem;
   height: 2.75rem;
   border-radius: 0.625rem;
@@ -123,9 +144,4 @@ export const CountdownItem = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-
-  span {
-    position: relative;
-    top: 1px;
-  }
 `;

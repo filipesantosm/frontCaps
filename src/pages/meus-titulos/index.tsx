@@ -148,14 +148,14 @@ const Purchases = () => {
                       <RaffleText>{formattedDrawDate}</RaffleText>
                     </RaffleColumn>
                     <RaffleColumn>
-                      <RaffleTitle>QTD</RaffleTitle>
+                      {/* <RaffleTitle>QTD</RaffleTitle>
                       <RaffleText
                         style={{
                           textAlign: 'right',
                         }}
                       >
                         01
-                      </RaffleText>
+                      </RaffleText> */}
                     </RaffleColumn>
                   </RaffleRow>
                   <PurchasedTitleContainer>

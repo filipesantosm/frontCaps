@@ -1,6 +1,9 @@
 import ReactSelect, { Props as ReactSelectProps } from 'react-select';
+import { useTheme } from 'styled-components';
 
 const ShadowSelect = (props: ReactSelectProps) => {
+  const theme = useTheme();
+
   return (
     <ReactSelect
       {...props}
@@ -13,13 +16,13 @@ const ShadowSelect = (props: ReactSelectProps) => {
           ...prev,
           fontSize: '1rem',
           fontWeight: 600,
-          color: '#00214b',
+          color: theme.colors.primaryDarker,
         }),
         option: (prev, { isSelected }) => ({
           ...prev,
           fontSize: '1rem',
           fontWeight: 600,
-          color: '#00214b',
+          color: theme.colors.primaryDarker,
           background: isSelected ? '#E4EEF7' : '#fff',
         }),
         control: prev => ({
@@ -33,10 +36,10 @@ const ShadowSelect = (props: ReactSelectProps) => {
         }),
         dropdownIndicator: prev => ({
           ...prev,
-          color: '#00214b',
+          color: theme.colors.primaryDarker,
           padding: '0.5rem',
           ':hover': {
-            color: '#00214b',
+            color: theme.colors.primaryDarker,
           },
         }),
         indicatorsContainer: prev => ({

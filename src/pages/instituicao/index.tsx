@@ -27,7 +27,7 @@ const Institution = ({ institution }: Props) => {
 
   return (
     <Layout>
-      <Banner src={getDrawImage(currentDraw)} />
+      <Banner src={getDrawImage(currentDraw)} alt="" />
       <PageContent>
         <NextRaffle />
         <PrivacyPolicySection>

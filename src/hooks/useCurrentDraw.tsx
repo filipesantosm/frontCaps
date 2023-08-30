@@ -46,6 +46,7 @@ const drawPromoToOption = (drawPromotion: DrawPromo) => {
 const CurrentDrawProvider = ({ children }: Props) => {
   const [currentDraw, setCurrentDraw] = useState<IDraw>();
   const [selectedDrawPromo, setSelectedDrawPromo] = useState<PromoOption>();
+  const [promoOptions, setPromoOptions] = useState<PromoOption[]>([]);
   const [disablePurchase, setDisablePurchase] = useState(true);
 
   useEffect(() => {
@@ -72,19 +73,22 @@ const CurrentDrawProvider = ({ children }: Props) => {
 
       setDisablePurchase(!!finalDate && isBefore(finalDate, new Date()));
 
-      const drawPromo = draw?.attributes?.draw_promos?.data?.[0];
+      const drawPromos = draw?.attributes?.draw_promos?.data || [];
 
-      if (drawPromo) {
-        setSelectedDrawPromo(drawPromoToOption(drawPromo));
+      drawPromos.sort((a, b) => a.attributes.quantity - b.attributes.quantity);
+
+      const options = drawPromos.map(drawPromoToOption);
+      const drawPromoOption = options[0];
+
+      setPromoOptions(options);
+
+      if (drawPromoOption) {
+        setSelectedDrawPromo(drawPromoOption);
       }
     } catch (error) {
       handleError(error);
     }
   };
-
-  const drawPromos = currentDraw?.attributes?.draw_promos?.data || [];
-
-  const promoOptions = drawPromos.map(drawPromoToOption);
 
   return (
     <CurrentDrawContext.Provider

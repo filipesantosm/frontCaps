@@ -5,6 +5,8 @@ import {
 } from '@/validations/SignUpSchemas';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import MaskedInput from '@/components/Input/MaskedInput';
+import { maskPhone } from '@/utils/masks';
 import { SignUpStepProps } from '../../interfaces';
 import { Form, SubmitButton } from '../../styles';
 
@@ -46,6 +48,14 @@ const PersonalDetailsStep = ({ onNext, signUpFormData }: SignUpStepProps) => {
         type="email"
         {...register('email')}
         error={errors?.email?.message}
+      />
+      <MaskedInput
+        id="phone"
+        maskFunction={maskPhone}
+        maxLength={15}
+        label="TELEFONE"
+        {...register('phone')}
+        error={errors?.phone?.message}
       />
       <SubmitButton>Continuar</SubmitButton>
     </Form>

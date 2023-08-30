@@ -26,6 +26,7 @@ export const TermsText = styled.div`
   line-height: 1.5;
   font-weight: 400;
   text-align: justify;
+  white-space: pre-line;
 
   overflow: auto;
 
@@ -77,7 +78,7 @@ export const Checkbox = styled.input`
     font-family: 'FontAwesome';
     color: transparent !important;
     background: transparent;
-    border: 1px solid #00214b;
+    border: 1px solid ${({ theme }) => theme.colors.primaryDarker};
     border-radius: 0.25rem;
   }
   &:checked:before {
@@ -93,7 +94,7 @@ export const CheckboxLabel = styled.label`
   font-size: 1rem;
   font-weight: 400;
 
-  color: #00214b;
+  color: ${({ theme }) => theme.colors.primaryDarker};
 
   strong {
     font-weight: 600;

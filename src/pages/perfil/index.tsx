@@ -9,11 +9,14 @@ import { useAuth } from '@/hooks/useAuth';
 import { format, parseISO } from 'date-fns';
 import { useRouter } from 'next/router';
 import {
+  ButtonsContainer,
   Column,
   ColumnTitle,
   DeleteAccountButton,
+  EditButtonsContainer,
   PageContent,
   ProfileContainer,
+  SubmitButton,
   VerticalSeparator,
 } from './styles';
 
@@ -89,6 +92,12 @@ const Profile = () => {
               containerClassName="profile-field"
             />
             <Input
+              label="BAIRRO"
+              defaultValue={user?.neighborhood || ''}
+              disabled
+              containerClassName="profile-field"
+            />
+            <Input
               label="RUA"
               defaultValue={user?.street || ''}
               disabled
@@ -108,13 +117,28 @@ const Profile = () => {
             />
           </Column>
         </ProfileContainer>
-
-        <DeleteAccountButton
-          type="button"
-          onClick={() => setShowDeleteAccountModal(true)}
-        >
-          Excluir conta
-        </DeleteAccountButton>
+        <ButtonsContainer>
+          <EditButtonsContainer>
+            <SubmitButton
+              type="button"
+              onClick={() => router.push('/perfil/endereco')}
+            >
+              Alterar endereço
+            </SubmitButton>
+            <SubmitButton
+              type="button"
+              onClick={() => router.push('/perfil/telefone')}
+            >
+              Alterar telefone
+            </SubmitButton>
+          </EditButtonsContainer>
+          <DeleteAccountButton
+            type="button"
+            onClick={() => setShowDeleteAccountModal(true)}
+          >
+            Excluir conta
+          </DeleteAccountButton>
+        </ButtonsContainer>
       </PageContent>
       {showDeleteAccountModal && (
         <DeleteAccountModal

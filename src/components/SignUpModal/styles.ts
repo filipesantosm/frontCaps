@@ -126,7 +126,7 @@ export const TextButton = styled.button`
 
   font-size: 1rem;
   font-weight: 400;
-  color: #00214b;
+  color: ${({ theme }) => theme.colors.primaryDarker};
   text-decoration: underline;
 `;
 

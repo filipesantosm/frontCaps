@@ -18,7 +18,7 @@ export const TitleContainer = styled.div`
 export const Title = styled.h1`
   font-size: 1.75rem;
   font-weight: 600;
-  color: #00214b;
+  color: ${({ theme }) => theme.colors.primaryDarker};
 `;
 
 export const GoBackButton = styled.button`
@@ -50,7 +50,7 @@ export const ChooseNumbersLabel = styled.label`
 
   font-size: 1rem;
   font-weight: 400;
-  color: #00214b;
+  color: ${({ theme }) => theme.colors.primaryDarker};
 `;
 
 export const Toggle = styled.input`

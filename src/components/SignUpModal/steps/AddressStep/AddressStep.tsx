@@ -10,11 +10,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import Loading from '@/components/Loading/Loading';
+import api from '@/services/api';
 import { SignUpStepProps } from '../../interfaces';
 import { Form, SubmitButton } from '../../styles';
 
 const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
   const [isCepValid, setIsCepValid] = useState(!!signUpFormData.cep);
+  const [isValidatingCep, setIsValidatingCep] = useState(false);
 
   const {
     register,
@@ -23,7 +26,6 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
     getValues,
     reset,
     trigger,
-    setValue,
     setError,
   } = useForm<IAddressStepForm>({
     resolver: yupResolver(AddressStepSchema),
@@ -33,6 +35,9 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
       state: signUpFormData?.state,
       number: signUpFormData?.number,
       street: signUpFormData?.street,
+      neighborhood: signUpFormData?.neighborhood,
+      cityCodIBGE: signUpFormData?.cityCodIBGE,
+      stateCodIBGE: signUpFormData?.stateCodIBGE,
     },
   });
 
@@ -49,6 +54,7 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
 
     const cep = getValues('cep');
 
+    setIsValidatingCep(true);
     try {
       const cepFormatted = cep.replace('-', '');
       if (cepFormatted.length >= 8) {
@@ -57,6 +63,7 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
         );
 
         if (data.erro) {
+          setIsValidatingCep(false);
           setError('cep', {
             message: 'CEP não encontrado',
             type: 'inexistent-cep',
@@ -64,15 +71,31 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
           return;
         }
 
-        reset({
+        const address = {
           state: data.uf,
           city: data.localidade,
           street: data.logradouro,
+          neighborhood: data.bairro,
+          cityCodIBGE: data.ibge?.toString(),
+          stateCodIBGE: data.ibge?.toString()?.substring(0, 2),
+          cep,
+        };
+
+        await api.post('/validatorUser', {
+          data: {
+            ...signUpFormData,
+            ...address,
+            username: signUpFormData.cpf,
+          },
         });
+
+        reset(address);
         setIsCepValid(true);
       }
     } catch (error) {
       handleError(error);
+    } finally {
+      setIsValidatingCep(false);
     }
   };
 
@@ -102,6 +125,12 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
             {...register('city')}
           />
           <Input
+            label="BAIRRO"
+            id="neighborhood"
+            error={errors?.neighborhood?.message}
+            {...register('neighborhood')}
+          />
+          <Input
             label="RUA"
             id="street"
             error={errors?.street?.message}
@@ -119,8 +148,13 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
       <SubmitButton
         type={isCepValid ? 'submit' : 'button'}
         onClick={isCepValid ? undefined : handleCep}
+        disabled={isValidatingCep}
       >
-        Continuar
+        {isValidatingCep ? (
+          <Loading iconColor="white" iconFontSize="1.625rem" />
+        ) : (
+          'Continuar'
+        )}
       </SubmitButton>
     </Form>
   );

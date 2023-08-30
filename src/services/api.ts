@@ -12,7 +12,7 @@ const api = axios.create({
 api.interceptors.request.use(
   async config => {
     const cookieAccessToken = getTokenFromCookies();
-    if (cookieAccessToken) {
+    if (cookieAccessToken && !config?.url?.includes('/auth/local')) {
       config.headers!.Authorization = `Bearer ${cookieAccessToken}`;
     }
     return config;

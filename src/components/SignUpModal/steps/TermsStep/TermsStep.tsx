@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import api from '@/services/api';
 import { PaginatedResponse } from '@/interfaces/Paginated';
 import { ITerm } from '@/interfaces/Terms';
+import Loading from '@/components/Loading/Loading';
 import { SignUpStepProps } from '../../interfaces';
 import { SubmitButton } from '../../styles';
 import {
@@ -13,7 +14,7 @@ import {
   TermsText,
 } from './styles';
 
-const TermsStep = ({ onNext }: SignUpStepProps) => {
+const TermsStep = ({ isSubmitting, onNext }: SignUpStepProps) => {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [terms, setTerms] = useState('');
 
@@ -71,8 +72,9 @@ const TermsStep = ({ onNext }: SignUpStepProps) => {
         }}
         type="button"
         onClick={onSubmit}
+        disabled={isSubmitting}
       >
-        ACEITAR E FINALIZAR
+        {isSubmitting ? <Loading iconColor="white" /> : 'ACEITAR E FINALIZAR'}
       </SubmitButton>
     </TermsContainer>
   );

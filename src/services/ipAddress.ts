@@ -2,16 +2,16 @@ import handleError from '@/utils/handleToast';
 import axios from 'axios';
 
 interface GeoLocationApiResponse {
-  IPv4: string;
+  ipAddress: string;
 }
 
 export const getUserIpAddress = async () => {
   try {
     const { data } = await axios.get<GeoLocationApiResponse>(
-      'https://geolocation-db.com/json/',
+      'https://freeipapi.com/api/json',
     );
 
-    return data.IPv4;
+    return data.ipAddress;
   } catch (error) {
     handleError(error);
   }

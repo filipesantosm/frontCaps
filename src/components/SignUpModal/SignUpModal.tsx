@@ -37,8 +37,10 @@ const LAST_STEP = 4;
 const SignUpModal = ({ onClose, onClickLogin }: Props) => {
   const [step, setStep] = useState(0);
   const [form, setForm] = useState({} as ISignUpFormData);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (finalForm: ISignUpFormData) => {
+    setIsSubmitting(true);
     try {
       const payload = {
         ...finalForm,
@@ -56,6 +58,8 @@ const SignUpModal = ({ onClose, onClickLogin }: Props) => {
       onClickLogin();
     } catch (error) {
       handleError(error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -88,6 +92,7 @@ const SignUpModal = ({ onClose, onClickLogin }: Props) => {
     onNext: handleNextStep,
     signUpFormData: form,
     onClickLogin,
+    isSubmitting,
   };
 
   const stepComponents = [

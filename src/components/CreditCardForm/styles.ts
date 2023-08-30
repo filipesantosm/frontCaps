@@ -1,5 +1,4 @@
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 export const Form = styled.form`
   margin-top: 2rem;
@@ -47,7 +46,7 @@ export const Checkbox = styled.input`
     font-family: 'FontAwesome';
     color: transparent !important;
     background: transparent;
-    border: 1px solid #00214b;
+    border: 1px solid ${({ theme }) => theme.colors.primaryDarker};
     border-radius: 0.25rem;
   }
   &:checked:before {
@@ -63,7 +62,7 @@ export const CheckboxLabel = styled.label`
   font-size: 1rem;
   font-weight: 400;
 
-  color: #00214b;
+  color: ${({ theme }) => theme.colors.primaryDarker};
 
   strong {
     font-weight: 600;

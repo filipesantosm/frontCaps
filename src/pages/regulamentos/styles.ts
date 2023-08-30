@@ -35,7 +35,7 @@ export const Text = styled.p`
 
   font-size: 1rem;
   font-weight: 400;
-  color: #00214b;
+  color: ${({ theme }) => theme.colors.primaryDarker};
   line-height: 1.5;
   white-space: pre-line;
 `;

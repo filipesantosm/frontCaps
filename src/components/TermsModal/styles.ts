@@ -81,6 +81,8 @@ export const TermsText = styled.div`
   max-height: max(10rem, 35vh);
   width: 100%;
 
+  white-space: pre-line;
+
   padding-right: 3rem;
 
   font-size: 1rem;
@@ -138,7 +140,7 @@ export const Checkbox = styled.input`
     font-family: 'FontAwesome';
     color: transparent !important;
     background: transparent;
-    border: 1px solid #00214b;
+    border: 1px solid ${({ theme }) => theme.colors.primaryDarker};
     border-radius: 0.25rem;
   }
   &:checked:before {
@@ -154,7 +156,7 @@ export const CheckboxLabel = styled.label`
   font-size: 1rem;
   font-weight: 400;
 
-  color: #00214b;
+  color: ${({ theme }) => theme.colors.primaryDarker};
 
   strong {
     font-weight: 600;

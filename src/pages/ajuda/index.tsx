@@ -21,7 +21,7 @@ const HelpPage = () => {
 
   return (
     <Layout>
-      <Banner src={getDrawImage(currentDraw)} />
+      <Banner src={getDrawImage(currentDraw)} alt="" />
       <PageContent>
         <NextRaffle containerMarginTop="-7rem" />
 

@@ -32,17 +32,14 @@ import {
   TabSelector,
 } from './styles';
 
-interface ExtractToDisplay {
-  creditCardPayments: ExtractPayment[];
-  otherPayments: ExtractPayment[];
-}
+type PurchaseTabs = 'payment' | 'paymentAccount';
 
 const PurchaseHistory = () => {
   const router = useRouter();
 
-  const [tab, setTab] = useState<'pix' | 'credit_card'>('pix');
+  const [tab, setTab] = useState<PurchaseTabs>('paymentAccount');
   const [balance, setBalance] = useState<GetBalanceResponse>();
-  const [extract, setExtract] = useState<ExtractToDisplay>();
+  const [extract, setExtract] = useState<GetMyExtractResponse>();
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingExtract, setIsLoadingExtract] = useState(false);
 
@@ -69,23 +66,7 @@ const PurchaseHistory = () => {
     try {
       const { data } = await api.get<GetMyExtractResponse>('/getMyExtract');
 
-      const extractToDisplay = data.payment.reduce<ExtractToDisplay>(
-        (acc, curr) => {
-          if (curr.type === 'Cartão Crédito') {
-            acc.creditCardPayments.push(curr);
-          } else {
-            acc.otherPayments.push(curr);
-          }
-
-          return acc;
-        },
-        {
-          creditCardPayments: [],
-          otherPayments: [],
-        },
-      );
-
-      setExtract(extractToDisplay);
+      setExtract(data);
     } catch (error) {
       handleError(error);
     } finally {
@@ -111,14 +92,17 @@ const PurchaseHistory = () => {
         <Column>
           <PageTitle>Extrato de compra</PageTitle>
           <TabSelector>
-            <TabButton isActive={tab === 'pix'} onClick={() => setTab('pix')}>
-              BOLETO/PIX
+            <TabButton
+              isActive={tab === 'paymentAccount'}
+              onClick={() => setTab('paymentAccount')}
+            >
+              Saldo em conta
             </TabButton>
             <TabButton
-              isActive={tab === 'credit_card'}
-              onClick={() => setTab('credit_card')}
+              isActive={tab === 'payment'}
+              onClick={() => setTab('payment')}
             >
-              CRÉDITO
+              Compra de títulos
             </TabButton>
           </TabSelector>
 
@@ -138,9 +122,9 @@ const PurchaseHistory = () => {
               <PurchaseHeaderText>MÉTODO</PurchaseHeaderText>
             </PurchaseHeader>
             <PurchaseList>
-              {(tab === 'pix'
-                ? extract?.otherPayments
-                : extract?.creditCardPayments
+              {(tab === 'payment'
+                ? extract?.payment
+                : extract?.paymentAccount
               )?.map((extractPayment, index) => (
                 <PurchaseItem key={`${index}-${extractPayment.date}`}>
                   <PurchaseText>
@@ -163,7 +147,7 @@ const PurchaseHistory = () => {
         </Column>
         <Separator />
         <Column>
-          {tab === 'pix' && (
+          {tab === 'paymentAccount' && (
             <>
               <ColumnTitle>Saldo da conta</ColumnTitle>
               <BalanceCardsContainer>

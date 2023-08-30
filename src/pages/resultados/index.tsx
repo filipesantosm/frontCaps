@@ -11,7 +11,7 @@ const ResultsPage = () => {
 
   return (
     <Layout>
-      <Banner src={getDrawImage(currentDraw)} />
+      <Banner src={getDrawImage(currentDraw)} alt="" />
       <PageContent>
         <NextRaffle />
         <Spacing />

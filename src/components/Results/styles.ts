@@ -322,7 +322,7 @@ export const ResultsVideoTitle = styled.p`
 
   font-size: 1.75rem;
   font-weight: 500;
-  color: #00214b;
+  color: ${({ theme }) => theme.colors.primaryDarker};
   text-align: center;
 `;
 
