@@ -11,6 +11,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Loading from '@/components/Loading/Loading';
+import api from '@/services/api';
 import { SignUpStepProps } from '../../interfaces';
 import { Form, SubmitButton } from '../../styles';
 
@@ -70,14 +71,25 @@ const AddressStep = ({ signUpFormData, onNext }: SignUpStepProps) => {
           return;
         }
 
-        reset({
+        const address = {
           state: data.uf,
           city: data.localidade,
           street: data.logradouro,
           neighborhood: data.bairro,
           cityCodIBGE: data.ibge?.toString(),
           stateCodIBGE: data.ibge?.toString()?.substring(0, 2),
+          cep,
+        };
+
+        await api.post('/validatorUser', {
+          data: {
+            ...signUpFormData,
+            ...address,
+            username: signUpFormData.cpf,
+          },
         });
+
+        reset(address);
         setIsCepValid(true);
       }
     } catch (error) {
