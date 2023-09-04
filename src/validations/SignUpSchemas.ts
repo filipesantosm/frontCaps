@@ -101,8 +101,11 @@ export const AddressStepSchema = Yup.object({
 export type IPasswordStepForm = Yup.InferType<typeof PasswordStepSchema>;
 
 export const PasswordStepSchema = Yup.object({
-  password: Yup.string().required('Senha obrigatória'),
+  password: Yup.string()
+    .required('Senha obrigatória')
+    .min(6, 'Senha deve conter no mínimo 6 caracteres'),
   confirm_password: Yup.string()
     .required('Confirmação de senha obrigatória')
+    .min(6, 'Senha deve conter no mínimo 6 caracteres')
     .oneOf([Yup.ref('password'), null], 'Senhas devem ser iguais'),
 });

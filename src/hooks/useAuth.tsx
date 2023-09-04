@@ -59,7 +59,7 @@ const AuthProvider = ({ children }: ChildrenProps) => {
 
       setUser(data);
 
-      localStorage.setItem('@multCapWeb: user', JSON.stringify(data));
+      localStorage.setItem('@MultCapWeb: user', JSON.stringify(data));
     } catch (error) {
       handleError(error);
     }
