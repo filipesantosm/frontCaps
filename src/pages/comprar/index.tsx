@@ -19,7 +19,6 @@ import {
   ContestImage,
   LeftButtonContent,
   OptionButton,
-  OptionLink,
   OptionsContainer,
   OptionsLabel,
   PageContent,
@@ -46,12 +45,7 @@ const Purchase = () => {
 
   const handleQuickPurchase = async () => {
     if (!isAuthenticated) {
-      router.push({
-        pathname: '',
-        query: {
-          modal: 'login',
-        },
-      });
+      handleOpenLoginModal();
       return;
     }
 
@@ -74,6 +68,24 @@ const Purchase = () => {
     } finally {
       setIsBuying(false);
     }
+  };
+
+  const handleChooseTitle = () => {
+    if (!isAuthenticated) {
+      handleOpenLoginModal();
+      return;
+    }
+
+    router.push('/escolher-titulo');
+  };
+
+  const handleOpenLoginModal = () => {
+    router.push({
+      pathname: '',
+      query: {
+        modal: 'login',
+      },
+    });
   };
 
   return (
@@ -139,7 +151,10 @@ const Purchase = () => {
                   <FaChevronRight />
                 </ButtonArrow>
               </OptionButton>
-              <OptionLink href={disablePurchase ? '' : '/escolher-titulo'}>
+              <OptionButton
+                disabled={disablePurchase}
+                onClick={handleChooseTitle}
+              >
                 <LeftButtonContent>
                   <PiShoppingCartSimpleFill />
                   Escolher meu título
@@ -147,7 +162,7 @@ const Purchase = () => {
                 <ButtonArrow>
                   <FaChevronRight />
                 </ButtonArrow>
-              </OptionLink>
+              </OptionButton>
             </OptionsContainer>
           </PurchaseColumn>
           <ContestImage src={getDrawImage(currentDraw)} />
