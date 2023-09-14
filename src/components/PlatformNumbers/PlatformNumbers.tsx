@@ -14,19 +14,19 @@ const PlatformNumbers = () => {
       <Title>Nossos números</Title>
       <CardsContainer>
         <Card>
-          <CardValue>11</CardValue>
+          <CardValue>8</CardValue>
           <CardLabel>ANOS</CardLabel>
 
           <CardDescription>
-            Realizando sonhos de Mato Grosso e Região
+            Realizando sonhos de Sorocaba e Região
           </CardDescription>
         </Card>
         <Card>
-          <CardValue>10.044</CardValue>
+          <CardValue>11.210</CardValue>
           <CardLabel>GANHADORES</CardLabel>
 
           <CardDescription>
-            Mais de 10.044 ganhadores nesses 10 anos
+            Mais de 11.210 ganhadores nesses 10 anos
           </CardDescription>
         </Card>
         <Card>
@@ -34,7 +34,7 @@ const PlatformNumbers = () => {
           <CardLabel>DOADOS</CardLabel>
 
           <CardDescription>
-            Mais de 14 milhões doados para a APAE
+            Mais de 14 milhões doados para o BOS
           </CardDescription>
         </Card>
       </CardsContainer>
