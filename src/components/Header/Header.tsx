@@ -1,7 +1,15 @@
 import { useCurrentDraw } from '@/hooks/useCurrentDraw';
 import AboutUsButton from '../AboutUsButton/AboutUsButton';
 import HeaderUser from '../HeaderUser/HeaderUser';
-import { Container, Content, Logo, Nav, StyledLink } from './styles';
+import {
+  Container,
+  Content,
+  Logo,
+  Nav,
+  StyledLink,
+  BlackLabel,
+  TextoBranco,
+} from './styles';
 
 const Header = () => {
   const { currentDraw } = useCurrentDraw();
@@ -10,6 +18,11 @@ const Header = () => {
 
   return (
     <Container>
+      <BlackLabel>
+        <TextoBranco>
+          É PROIBIDA A VENDA DE TÍTULOS DE CAPITALIZAÇÃO A MENORES DE 16 ANOS.
+        </TextoBranco>
+      </BlackLabel>
       <Content>
         <Logo src="/logo.png" alt="logo" />
         <Nav>
