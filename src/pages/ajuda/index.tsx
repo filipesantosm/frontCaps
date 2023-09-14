@@ -21,14 +21,14 @@ const HelpPage = () => {
 
   return (
     <Layout>
-      <Banner src={getDrawImage(currentDraw)} alt="" />
+      <Banner src={getDrawImage(currentDraw)} />
       <PageContent>
         <NextRaffle containerMarginTop="-7rem" />
 
         <HelpSection>
-          <HelpTitle>Olá! Boas-vindas à Central de Ajuda da MTCAP</HelpTitle>
+          <HelpTitle>Olá! Boas-vindas à Central de Ajuda da SuperCap</HelpTitle>
 
-          <HelpSectionBanner src="/mtcap-banner.png" />
+          <HelpSectionBanner src="" />
 
           <SearchTitle>Como podemos te ajudar?</SearchTitle>
 
