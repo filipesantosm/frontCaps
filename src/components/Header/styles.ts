@@ -6,8 +6,8 @@ export const Container = styled.header`
   z-index: 10;
 
   width: 100%;
-  min-height: 5.375rem;
-  padding: 0.5rem;
+  min-height: 6.375rem;
+  padding: 2rem 5rem 0.5rem 0.5rem;
 
   background: ${({ theme }) => theme.colors.grayf3};
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.37);
@@ -16,18 +16,41 @@ export const Container = styled.header`
   align-items: center;
 `;
 
+export const BlackLabel = styled.div`
+  position: absolute;
+  z-index: 10;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  min-height: 2rem;
+
+  background: #000;
+  display: flex;
+  align-items: center;
+`;
+
+export const TextoBranco = styled.p`
+  color: white;
+  margin: auto;
+`;
+
 export const Content = styled.div`
   width: 90%;
   max-width: 68.75rem;
-  margin: 0 auto;
 
+  margin: 0 auto;
   display: flex;
+
   align-items: center;
 `;
 
 export const Logo = styled.img`
   width: 3.125rem;
+
   height: 2.9375rem;
+
   object-fit: contain;
 `;
 
