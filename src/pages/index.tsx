@@ -44,7 +44,8 @@ const Home = () => {
             </RaffleTitle>
             {drawDate && (
               <RaffleDescription>
-                Estaremos ao vivo no dia {format(drawDate, 'dd/MM/yyyy')}
+                Estamos ao vivo todos os domingos a partir das 9h
+                {/* Estaremos ao vivo no dia {format(drawDate, 'dd/MM/yyyy')} */}
               </RaffleDescription>
             )}
           </RaffleHeader>
