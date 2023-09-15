@@ -72,8 +72,8 @@ const ContactSection = () => {
             <CardText> (65) 3365-6562</CardText>
             <br />
             <CardText>
-              Av. Historiador Rubens de Mendonça, 2368 – Ed top Tower, Sala 606,
-              Bairro Jd Aclimação, Cuiabá, MT. CEP 78050-280.
+              Av. São Luís Rei de França, 12 – Olho D’Água CEP 65067-485 São
+              Luis / MA
             </CardText>
           </ContactCard>
           <ContactCard>
