@@ -41,4 +41,3 @@ const PlatformNumbers = () => {
     </Container>
   );
 };
-
