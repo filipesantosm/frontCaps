@@ -26,9 +26,9 @@ const HelpPage = () => {
         <NextRaffle containerMarginTop="-7rem" />
 
         <HelpSection>
-          <HelpTitle>Olá! Boas-vindas à Central de Ajuda da MTCAP</HelpTitle>
+          <HelpTitle>Olá! Boas-vindas à Central de Ajuda da Maracap</HelpTitle>
 
-          <HelpSectionBanner src="/mtcap-banner.png" />
+          <HelpSectionBanner src="/" />
 
           <SearchTitle>Como podemos te ajudar?</SearchTitle>
 
