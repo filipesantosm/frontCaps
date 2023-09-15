@@ -1,7 +1,6 @@
 import HomeFooter from '@/components/HomeFooter/HomeFooter';
 import Layout from '@/components/Layout/Layout';
 import NextRaffle from '@/components/NextRaffle/NextRaffle';
-import PlatformNumbers from '@/components/PlatformNumbers/PlatformNumbers';
 import Results from '@/components/Results/Results';
 import { useCurrentDraw } from '@/hooks/useCurrentDraw';
 import { getDrawImage } from '@/utils/imageUrl';
@@ -65,8 +64,6 @@ const Home = () => {
         </RaffleInformation>
 
         <Results />
-
-        <PlatformNumbers />
 
         <HomeFooter />
       </HomeContent>
