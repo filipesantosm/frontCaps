@@ -20,7 +20,7 @@ const HomeFooter = () => {
           Contribuição Única, emitido pela CAPEMISA Capitalização S/A, CNPJ
           14.056.028/0001-55, aprovado pelo Processo SUSEP indicado no título.
           CONTATO LOCAL: (65) 3021-7240 / (65) 99651-6131. SAC 0800 940 1130.
-          OUVIDORIA 0800 707 4936, de segunda a sexta-feira, das 8h às 17h. É
+          OUVIDORIA 0800 707 4936, de segunda a sexta-feira, das 8h às 18h. É
           proibida a venda de título de capitalização a menores de dezesseis
           anos. O valor não exigido dentro do prazo prescricional, estabelecido
           pela legislação em vigor, acarretará a perda desse direito. A
