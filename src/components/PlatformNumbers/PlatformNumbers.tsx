@@ -18,7 +18,7 @@ const PlatformNumbers = () => {
           <CardLabel>ANOS</CardLabel>
 
           <CardDescription>
-            Realizando sonhos de Mato Grosso e Região
+            Realizando sonhos para todo o Estado do Mato Grosso
           </CardDescription>
         </Card>
         <Card>
