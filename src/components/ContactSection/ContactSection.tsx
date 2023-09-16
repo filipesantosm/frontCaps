@@ -65,15 +65,15 @@ const ContactSection = () => {
           <ContactCard>
             <CardTitle>Entre em contato com nosso suporte</CardTitle>
             <br />
-            <CardText>faleconosco@maracap.com.br</CardText>
+            <CardText>faleconosco@amapacap.com.br</CardText>
             <br />
             <CardText>(65) 3055-1100</CardText>
             <br />
             <CardText> (65) 3365-6562</CardText>
             <br />
             <CardText>
-              Av. São Luís Rei de França, 12 – Olho D’Água CEP 65067-485 São
-              Luis / MA
+              Rua Santos Dumont, n° 2786, Buritizal, Macapá/AP (96) 3242-0758 /
+              (96) 8121-1713 faleconosco@amapacap.com.br
             </CardText>
           </ContactCard>
           <ContactCard>

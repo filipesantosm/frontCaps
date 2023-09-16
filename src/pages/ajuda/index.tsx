@@ -26,7 +26,7 @@ const HelpPage = () => {
         <NextRaffle containerMarginTop="-7rem" />
 
         <HelpSection>
-          <HelpTitle>Olá! Boas-vindas à Central de Ajuda da Amapá CAP</HelpTitle>
+          <HelpTitle>Olá! Boas-vindas à Central de Ajuda da AmapáCAP</HelpTitle>
 
           <HelpSectionBanner src="/" />
 
