@@ -20,7 +20,7 @@ const Rules = ({ data }: Props) => {
       <PageContent>
         <NextRaffle />
         <RulesSection>
-          <Title>Regulamentos</Title>
+          <Title>Condições de Participação</Title>
           <Text>{data?.attributes?.description || ''}</Text>
         </RulesSection>
       </PageContent>
