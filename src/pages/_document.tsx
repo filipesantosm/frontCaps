@@ -16,9 +16,9 @@ export default function Document() {
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
           rel="stylesheet"
         />
-        <meta name="description" content="Multcap" />
-        {/* <link rel="icon" href="/favicon.svg" />
-        <link rel="apple-touch-icon" href="/favicon.svg" /> */}
+        <meta name="description" content="MTCAP" />
+        <link rel="icon" href="/logo.png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
       </Head>
       <body>
         <Main />
