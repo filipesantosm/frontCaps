@@ -19,7 +19,8 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <AuthProvider>
       <Head>
-        <title>Multcap</title>
+        
+        <title>MT CAP</title>
       </Head>
       <ThemeProvider theme={theme}>
         <ToastContainer />
