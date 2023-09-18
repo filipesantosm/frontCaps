@@ -12,7 +12,7 @@ const HomeFooter = () => {
     <Container>
       <BottomSection>
         <CompanyColumn>
-          <CompanyName>MTCAP - TÍTULO DE CAPITALIZAÇÃO</CompanyName>
+          <CompanyName>MT CAP - TÍTULO DE CAPITALIZAÇÃO</CompanyName>
           <CompanyLogo src="/capemisa-logo.svg" />
         </CompanyColumn>
         <TermsColumn>

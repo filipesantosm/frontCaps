@@ -26,13 +26,13 @@ const HelpFooter = ({ showBilletSection = false }: Props) => {
           <Section>
             <SectionTitle>Compra por boleto</SectionTitle>
             <SectionText>
-              Os Títulos da MTCAP não são vendidos por boleto.{' '}
+              Os Títulos da MT CAP não são vendidos por boleto.{' '}
               <strong>
                 O boleto é utilizado somente para adicionar saldo ao aplicativo.
               </strong>{' '}
               A compensação de boletos bancários acontece somente em dias úteis
-              e pode demorar até 72hs para o banco confirmar para o MTCAP o
-              recebimento. Boleto gerado em nome da Razão Social da MTCAP: CRP
+              e pode demorar até 72hs para o banco confirmar para o MT CAP o
+              recebimento. Boleto gerado em nome da Razão Social da MT CAP: CRP
               Publicidade. <br />
               <br />
               Para adicionar saldo, escolha continuar pagamento por saldo para
