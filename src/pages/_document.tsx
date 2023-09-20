@@ -17,8 +17,8 @@ export default function Document() {
           rel="stylesheet"
         />
         <meta name="description" content="Multcap" />
-        {/* <link rel="icon" href="/favicon.svg" />
-        <link rel="apple-touch-icon" href="/favicon.svg" /> */}
+        <link rel="icon" href="/logo.png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
       </Head>
       <body>
         <Main />
