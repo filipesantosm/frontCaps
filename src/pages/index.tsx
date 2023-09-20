@@ -40,7 +40,7 @@ const Home = () => {
         <RaffleInformation>
           <RaffleHeader>
             <RaffleTitle>
-              Acompanhe nosso sorteio online pelo youtube!
+              Acompanhe nosso sorteio online pelo YouTube!
             </RaffleTitle>
             {drawDate && (
               <RaffleDescription>
