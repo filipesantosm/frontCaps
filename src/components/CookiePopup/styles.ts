@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  background: rgba(0, 33, 75, 0.44);
-  position: fixed;
-  z-index: 9999;
-  bottom:0
 
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+position: fixed;
+z-index: 9999;
+inset: 0;
+
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
 `;
 
 export const Content = styled.div`
@@ -35,4 +35,5 @@ export const Content = styled.div`
 
   background: #fff;
   border-radius: 0.5rem;
+
 `;

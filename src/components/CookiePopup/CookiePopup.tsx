@@ -1,28 +1,35 @@
-import React, { useState } from 'react';
-import {Container, Content} from './styles';
+// components/CookiePopup.tsx
+import { useState } from 'react';
+import { Content, Container } from './styles';
 
-interface CookiePopupProps {
-  onAccept: () => void;
-}
-
-const CookiePopup: React.FC<CookiePopupProps> = ({ onAccept }) => {
-  const [showPopup, setShowPopup] = useState(true);
+const CookiePopup = () => {
+  const [accepted, setAccepted] = useState<boolean | null>(null);
 
   const handleAccept = () => {
-    setShowPopup(true);
-    onAccept();
+    setAccepted(true);
+    // Aqui você pode adicionar lógica para armazenar o consentimento do usuário em um cookie ou no localStorage.
   };
 
+  const handleDecline = () => {
+    setAccepted(false);
+    // Aqui você pode adicionar lógica para registrar a recusa do usuário em um cookie ou no localStorage.
+  };
+
+  if (accepted === true || accepted === false) {
+    // O usuário já tomou uma decisão, não exiba mais o popup.
+    return null;
+  }
+
   return (
-    showPopup && (
-      <Container>
-        <Content>
-          <h2>Política de Privacidade</h2>
-          <p>Texto da sua política de privacidade aqui...</p>
-          <button onClick={handleAccept}>Aceitar Cookies</button>
-        </Content>
-      </Container>
-    )
+    <Container>
+      <Content>
+        <p>
+          Este site utiliza cookies para melhorar a sua experiência. Ao continuar a navegar, você concorda com o uso de cookies.
+        </p>
+        <button onClick={handleAccept}>Aceitar</button>
+        <button onClick={handleDecline}>Recusar</button>
+      </Content>
+    </Container>
   );
 };
 

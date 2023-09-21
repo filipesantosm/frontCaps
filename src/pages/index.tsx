@@ -8,7 +8,7 @@ import { getDrawImage } from '@/utils/imageUrl';
 import { format, parseISO } from 'date-fns';
 import { FaYoutube } from 'react-icons/fa';
 import { IoLogoWhatsapp } from 'react-icons/io';
-import React, { useState, useEffect } from 'react';
+
 import CookiePopup from '@/components/CookiePopup/CookiePopup';
 import {
   FloatingContactButton,
@@ -33,24 +33,6 @@ const Home = () => {
     : undefined;
 
   const drawImageUrl = getDrawImage(currentDraw);
-
-  
-  const [showCookiePopup, setShowCookiePopup] = useState(true);
-
-  // Verifica se o usuário já aceitou os cookies em visitas anteriores
-  useEffect(() => {
-    const hasAcceptedCookies = localStorage.getItem('acceptedCookies');
-    if (hasAcceptedCookies) {
-      setShowCookiePopup(true);
-    }
-  }, []);
-
-  const handleAcceptCookies = () => {
-    localStorage.setItem('acceptedCookies', 'true');
-    setShowCookiePopup(false);
-  };
-
-
 
   return (
     <Layout>
@@ -83,15 +65,13 @@ const Home = () => {
             )}
           </RaffleImageWrapperLink>
         </RaffleInformation>
-      {/* Se o estado showCookiePopup for true, exibe o pop-up */}
-      {showCookiePopup && <CookiePopup onAccept={handleAcceptCookies} />}
         <Results />
 
         <PlatformNumbers />
 
         <HomeFooter />
       </HomeContent>
-
+      <CookiePopup />
       <FloatingContactButton type="button">
         <IoLogoWhatsapp />
         Fale com a gente!
