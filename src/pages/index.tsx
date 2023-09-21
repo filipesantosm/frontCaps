@@ -70,7 +70,7 @@ const Home = () => {
 
         <HomeFooter />
       </HomeContent>
-
+              
       <FloatingContactButton type="button">
         <IoLogoWhatsapp />
         Fale com a gente!
