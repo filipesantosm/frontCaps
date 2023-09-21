@@ -42,18 +42,18 @@ const StyledButton = styled.button`
   border: none;
 
   margin-top: 1rem;
+  margin-right: 0.5rem;
   min-height: 2.8125rem;
-  width: 100%;
+  width: 30%;
+
   min-width: 8rem;
   border-radius: 0.625rem;
 
   font-size: 0.875rem;
   font-weight: 600;
 
-  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.625rem;
 
   transition: filter 0.3s;
 
@@ -65,4 +65,9 @@ const StyledButton = styled.button`
 export const AcceptButton = styled(StyledButton)`
   background: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.white};
+`;
+
+export const DeclineButton = styled(StyledButton)`
+  background: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.primary};
 `;

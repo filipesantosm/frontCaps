@@ -1,6 +1,6 @@
 // components/CookiePopup.tsx
 import { useState } from 'react';
-import { Content, Container, AcceptButton } from './styles';
+import { Content, Container, AcceptButton, DeclineButton } from './styles';
 
 const CookiePopup = () => {
   const [accepted, setAccepted] = useState<boolean | null>(null);
@@ -32,7 +32,12 @@ const CookiePopup = () => {
           >
             Aceitar
           </AcceptButton>
-        <button onClick={handleDecline}>Recusar</button>
+          <DeclineButton
+            type="button"
+            onClick={handleDecline}
+          >
+            Rejeitar
+          </DeclineButton>
       </Content>
     </Container>
   );
