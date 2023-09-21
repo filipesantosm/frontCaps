@@ -9,7 +9,7 @@ const CookiePopup: React.FC<CookiePopupProps> = ({ onAccept }) => {
   const [showPopup, setShowPopup] = useState(true);
 
   const handleAccept = () => {
-    setShowPopup(false);
+    setShowPopup(true);
     onAccept();
   };
 

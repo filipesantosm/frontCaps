@@ -18,6 +18,7 @@ const poppins = Poppins({
 const App = ({ Component, pageProps }: AppProps) => {
   return (
     <AuthProvider>
+
       <Head>
         <title>MT CAP</title>
       </Head>
@@ -34,6 +35,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           </CurrentDrawProvider>
         </AuthProvider>
       </ThemeProvider>
+     
     </AuthProvider>
   );
 };
