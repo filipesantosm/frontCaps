@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Container} from './styles';
+import {Container, Content} from './styles';
 
 interface CookiePopupProps {
   onAccept: () => void;
@@ -16,11 +16,11 @@ const CookiePopup: React.FC<CookiePopupProps> = ({ onAccept }) => {
   return (
     showPopup && (
       <Container>
-        <div className="cookie-content">
+        <Content>
           <h2>Política de Privacidade</h2>
           <p>Texto da sua política de privacidade aqui...</p>
           <button onClick={handleAccept}>Aceitar Cookies</button>
-        </div>
+        </Content>
       </Container>
     )
   );

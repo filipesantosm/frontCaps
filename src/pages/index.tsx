@@ -83,20 +83,20 @@ const Home = () => {
             )}
           </RaffleImageWrapperLink>
         </RaffleInformation>
-
-        {/* Se o estado showCookiePopup for true, exibe o pop-up */}
-        {showCookiePopup && <CookiePopup onAccept={handleAcceptCookies} />}
+      {/* Se o estado showCookiePopup for true, exibe o pop-up */}
+      {showCookiePopup && <CookiePopup onAccept={handleAcceptCookies} />}
         <Results />
 
         <PlatformNumbers />
 
         <HomeFooter />
       </HomeContent>
-              
+
       <FloatingContactButton type="button">
         <IoLogoWhatsapp />
         Fale com a gente!
       </FloatingContactButton>
+      
     </Layout>
   );
 };
