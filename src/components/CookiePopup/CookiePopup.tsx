@@ -1,18 +1,29 @@
 // components/CookiePopup.tsx
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Cookies from 'universal-cookie';
 import { Content, Container, AcceptButton, DeclineButton } from './styles';
+
+const cookies = new Cookies();
 
 const CookiePopup = () => {
   const [accepted, setAccepted] = useState<boolean | null>(null);
 
+  useEffect(() => {
+    const consent = cookies.get('cookieConsent');
+    if (consent === 'accepted' || consent === 'declined') {
+      // O usuário já tomou uma decisão, não exiba mais o popup.
+      setAccepted(consent === 'accepted');
+    }
+  }, []);
+
   const handleAccept = () => {
     setAccepted(true);
-    // Aqui você pode adicionar lógica para armazenar o consentimento do usuário em um cookie ou no localStorage.
+    cookies.set('cookieConsent', 'accepted', { maxAge: 31536000 });
   };
 
   const handleDecline = () => {
     setAccepted(false);
-    // Aqui você pode adicionar lógica para registrar a recusa do usuário em um cookie ou no localStorage.
+    cookies.set('cookieConsent', 'declined', { maxAge: 31536000 });
   };
 
   if (accepted === true || accepted === false) {
