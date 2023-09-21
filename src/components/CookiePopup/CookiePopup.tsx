@@ -1,6 +1,6 @@
 // components/CookiePopup.tsx
 import { useState } from 'react';
-import { Content, Container } from './styles';
+import { Content, Container, AcceptButton } from './styles';
 
 const CookiePopup = () => {
   const [accepted, setAccepted] = useState<boolean | null>(null);
@@ -26,7 +26,12 @@ const CookiePopup = () => {
         <p>
           Este site utiliza cookies para melhorar a sua experiência. Ao continuar a navegar, você concorda com o uso de cookies.
         </p>
-        <button onClick={handleAccept}>Aceitar</button>
+        <AcceptButton
+            type="button"
+            onClick={handleAccept}
+          >
+            Aceitar
+          </AcceptButton>
         <button onClick={handleDecline}>Recusar</button>
       </Content>
     </Container>

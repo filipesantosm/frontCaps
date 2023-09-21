@@ -37,3 +37,32 @@ export const Content = styled.div`
   border-radius: 0.5rem;
 
 `;
+
+const StyledButton = styled.button`
+  border: none;
+
+  margin-top: 1rem;
+  min-height: 2.8125rem;
+  width: 100%;
+  min-width: 8rem;
+  border-radius: 0.625rem;
+
+  font-size: 0.875rem;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+
+  transition: filter 0.3s;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+`;
+
+export const AcceptButton = styled(StyledButton)`
+  background: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.white};
+`;
