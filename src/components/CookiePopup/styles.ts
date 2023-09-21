@@ -1,22 +1,19 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
 
-
-position: fixed;
-z-index: 9999;
-inset: 0;
-
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Content = styled.div`
   border: none;
-
-  padding:1.5rem;
+  padding: 1.5rem;
   position: fixed;
   bottom: 2rem;
   z-index: 3;
@@ -35,12 +32,10 @@ export const Content = styled.div`
 
   background: #fff;
   border-radius: 0.5rem;
-
 `;
 
 const StyledButton = styled.button`
   border: none;
-
   margin-top: 1rem;
   margin-right: 0.5rem;
   min-height: 2.8125rem;

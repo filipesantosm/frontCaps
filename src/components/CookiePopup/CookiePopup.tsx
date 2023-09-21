@@ -35,20 +35,15 @@ const CookiePopup = () => {
     <Container>
       <Content>
         <p>
-          Este site utiliza cookies para melhorar a sua experiência. Ao continuar a navegar, você concorda com o uso de cookies.
+          Este site utiliza cookies para melhorar a sua experiência. Ao
+          continuar a navegar, você concorda com o uso de cookies.
         </p>
-        <AcceptButton
-            type="button"
-            onClick={handleAccept}
-          >
-            Aceitar
-          </AcceptButton>
-          <DeclineButton
-            type="button"
-            onClick={handleDecline}
-          >
-            Rejeitar
-          </DeclineButton>
+        <AcceptButton type="button" onClick={handleAccept}>
+          Aceitar
+        </AcceptButton>
+        <DeclineButton type="button" onClick={handleDecline}>
+          Rejeitar
+        </DeclineButton>
       </Content>
     </Container>
   );

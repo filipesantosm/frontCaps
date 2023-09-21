@@ -76,7 +76,6 @@ const Home = () => {
         <IoLogoWhatsapp />
         Fale com a gente!
       </FloatingContactButton>
-      
     </Layout>
   );
 };
