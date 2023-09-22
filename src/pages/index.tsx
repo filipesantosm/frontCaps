@@ -8,6 +8,7 @@ import { getDrawImage } from '@/utils/imageUrl';
 import { format, parseISO } from 'date-fns';
 import { FaYoutube } from 'react-icons/fa';
 import { IoLogoWhatsapp } from 'react-icons/io';
+import CookiePopup from '@/components/CookiePopup/CookiePopup';
 import {
   FloatingContactButton,
   HeroImage,
@@ -70,7 +71,7 @@ const Home = () => {
 
         <HomeFooter />
       </HomeContent>
-
+      <CookiePopup />
       <FloatingContactButton type="button">
         <IoLogoWhatsapp />
         Fale com a gente!
