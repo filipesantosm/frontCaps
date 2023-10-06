@@ -72,8 +72,8 @@ const ContactSection = () => {
             <CardText> (65) 3365-6562</CardText>
             <br />
             <CardText>
-              Escritório Central: Rua Horácio Cenci, nº 75 
-              – Ed. West Point, 10º Andar PQ. Campolim Sorocaba – SP
+              Escritório Central: Rua Horácio Cenci, nº 75 – Ed. West Point, 10º
+              Andar PQ. Campolim Sorocaba – SP
             </CardText>
           </ContactCard>
           <ContactCard>

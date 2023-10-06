@@ -32,8 +32,8 @@ const HelpFooter = ({ showBilletSection = false }: Props) => {
               </strong>{' '}
               A compensação de boletos bancários acontece somente em dias úteis
               e pode demorar até 72hs para o banco confirmar para o SUPERCAP o
-              recebimento. Boleto gerado em nome da Razão Social da SUPERCAP: CRP
-              Publicidade. <br />
+              recebimento. Boleto gerado em nome da Razão Social da SUPERCAP:
+              CRP Publicidade. <br />
               <br />
               Para adicionar saldo, escolha continuar pagamento por saldo para
               gerar o boleto.
