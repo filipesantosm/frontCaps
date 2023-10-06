@@ -54,7 +54,7 @@ const ScratchCardsList = () => {
 
       <Description>
         Caso seja premiado, o valor do prêmio será adicionado como saldo na sua
-        conta do MTCAP.
+        conta do SUPERCAP.
       </Description>
       {selectedScratchCardIndex != null && (
         <ScratchCardsModal

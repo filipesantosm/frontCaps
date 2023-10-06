@@ -65,15 +65,15 @@ const ContactSection = () => {
           <ContactCard>
             <CardTitle>Entre em contato com nosso suporte</CardTitle>
             <br />
-            <CardText>faleconosco@mtcap.com.br</CardText>
+            <CardText>faleconosco@supercap.com.br</CardText>
             <br />
             <CardText>(65) 3055-1100</CardText>
             <br />
             <CardText> (65) 3365-6562</CardText>
             <br />
             <CardText>
-              Av. Historiador Rubens de Mendonça, 2368 – Ed top Tower, Sala 606,
-              Bairro Jd Aclimação, Cuiabá, MT. CEP 78050-280.
+              Escritório Central: Rua Horácio Cenci, nº 75 
+              – Ed. West Point, 10º Andar PQ. Campolim Sorocaba – SP
             </CardText>
           </ContactCard>
           <ContactCard>

@@ -52,7 +52,7 @@ const CpfStep = ({ onNext, onClickLogin, signUpFormData }: SignUpStepProps) => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormDescription>
-        Bem vindo(a) ao MTCAP! <br />
+        Bem vindo(a) ao SUPERCAP! <br />
         Para se cadastrar, informe seu CPF abaixo:
       </FormDescription>
       <MaskedInput
