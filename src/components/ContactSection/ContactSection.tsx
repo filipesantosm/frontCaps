@@ -81,7 +81,9 @@ const ContactSection = () => {
           <ContactCard>
             <CardTitle>Horário de atendimento</CardTitle>
             <br />
-            <CardText>Segunda a Sexta das 8:00h às 17:00h</CardText>
+            <CardText>Segunda a Sexta das 9h às 18:00</CardText>
+            <br />
+            <CardText>Sábado 21 às 00h</CardText>
             <br />
             <CardText>
               Deixe uma mensagem e em breve entraremos em contato com você.
