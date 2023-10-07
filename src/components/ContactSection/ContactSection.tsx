@@ -67,9 +67,11 @@ const ContactSection = () => {
             <br />
             <CardText>faleconosco@supercap.com.br</CardText>
             <br />
-            <CardText>(65) 3055-1100</CardText>
+            <CardText> (15) 3035-2699</CardText>
             <br />
-            <CardText> (65) 3365-6562</CardText>
+            <CardText> 0800 646 8378</CardText>
+            <br />
+            <CardText> 0800 606 2320</CardText>
             <br />
             <CardText>
               Escritório Central: Rua Horácio Cenci, nº 75 – Ed. West Point, 10º
