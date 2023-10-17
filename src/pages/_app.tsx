@@ -10,9 +10,6 @@ import { ThemeProvider } from 'styled-components';
 import CartProvider from '@/hooks/useCart';
 import CurrentDrawProvider from '@/hooks/useCurrentDraw';
 
-import Pixel from '../components/Pixel'
-
-
 const poppins = Poppins({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700'],
@@ -34,9 +31,6 @@ const App = ({ Component, pageProps }: AppProps) => {
                 <Component {...pageProps} />
               </main>
             </CartProvider>
-            <div>
-              <Pixel name='FACEBOOK_PIXEL' />
-            </div>
           </CurrentDrawProvider>
         </AuthProvider>
       </ThemeProvider>
