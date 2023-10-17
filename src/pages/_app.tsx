@@ -34,7 +34,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <AuthProvider>
       <Head>
-        <title>Proeste</title>
+        <title>SUPERCAP</title>
       </Head>
       <ThemeProvider theme={theme}>
         <ToastContainer />
