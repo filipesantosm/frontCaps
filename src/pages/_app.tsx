@@ -9,6 +9,8 @@ import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
 import CartProvider from '@/hooks/useCart';
 import CurrentDrawProvider from '@/hooks/useCurrentDraw';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -16,6 +18,19 @@ const poppins = Poppins({
 });
 
 const App = ({ Component, pageProps }: AppProps) => {
+  const router = useRouter();
+  useEffect(() => {
+    import('react-facebook-pixel')
+      .then(x => x.default)
+      .then(ReactPixel => {
+        ReactPixel.init('274246015566635'); // facebookPixelId
+        ReactPixel.pageView();
+
+        router.events.on('routeChangeComplete', () => {
+          ReactPixel.pageView();
+        });
+      });
+  }, [router.events]);
   return (
     <AuthProvider>
       <Head>
