@@ -98,3 +98,18 @@ export const Hamburger = styled.div`
     display: block;
   }
 `;
+
+export const MobileMenu = styled.div`
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+`;

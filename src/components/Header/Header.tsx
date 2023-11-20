@@ -12,11 +12,12 @@ import {
   BlackLabel,
   TextoBranco,
   Hamburger,
+  MobileMenu
 } from './styles';
 
 const Header = () => {
   const { currentDraw } = useCurrentDraw();
-
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const youtubeLink = currentDraw?.attributes?.lnkYoutubeDraw || '/';
 
   return (
@@ -31,7 +32,7 @@ const Header = () => {
         <Hamburger>
           <FiMenu size={24} />
         </Hamburger>
-        <Nav>
+        <Nav open={isMobileMenuOpen}>
           <StyledLink href="/">Início</StyledLink>
           <StyledLink href="/como-funciona">Como funciona</StyledLink>
           <StyledLink href="/resultados">Resultados</StyledLink>
@@ -47,6 +48,9 @@ const Header = () => {
         </Nav>
         <HeaderUser />
       </Content>
+        <MobileMenu>
+          {/* */}
+        </MobileMenu>
     </Container>
   );
 };
