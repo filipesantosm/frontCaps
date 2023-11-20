@@ -1,4 +1,0 @@
-interface NavProps {
-    open: boolean;
-}
-  

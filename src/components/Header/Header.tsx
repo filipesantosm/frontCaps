@@ -29,9 +29,7 @@ const Header = () => {
       </BlackLabel>
       <Content>
         <Logo src="/logo.png" alt="logo" />
-        <Hamburger onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-          <FiMenu size={24} />
-        </Hamburger>
+        
         <Nav>
           <StyledLink href="/">Início</StyledLink>
           <StyledLink href="/como-funciona">Como funciona</StyledLink>
@@ -47,9 +45,11 @@ const Header = () => {
           <StyledLink href="/ajuda">Ajuda</StyledLink>
         </Nav>
         <HeaderUser />
+        <Hamburger onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          <FiMenu size={24} />
+        </Hamburger>
       </Content>
-      {isMobileMenuOpen && (
-        <MobileMenu>
+        <MobileMenu open={isMobileMenuOpen}>
           <StyledLink href="/">Início</StyledLink>
           <StyledLink href="/como-funciona">Como funciona</StyledLink>
           <StyledLink href="/resultados">Resultados</StyledLink>
@@ -58,9 +58,8 @@ const Header = () => {
             target={youtubeLink !== '/' ? '_blank' : undefined}
             referrerPolicy={youtubeLink !== '/' ? 'no-referrer' : undefined}>
               Sorteio ao vivo
-            </StyledLink>
+          </StyledLink>
         </MobileMenu>
-      )}
     </Container>
   );
 };

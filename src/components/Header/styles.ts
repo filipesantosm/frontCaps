@@ -99,23 +99,26 @@ export const StyledLink = styled(Link)`
 `;
 
 export const Hamburger = styled.div`
+  padding: 0rem 2rem;
   display: none;
+  position:absolute;
+  right:0;
   @media (max-width: 768px) {
     display: block;
   }
 `;
 
-export const MobileMenu = styled.div`
+export const MobileMenu = styled.nav<MenuProps>`
   display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background-color: white;
-  padding: 20px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-
   @media (max-width: 768px) {
-    display: block;
+    display: ${props => props.open ? 'block' : 'none'};
+    transition: ease-out, opacity 0.3s ease-in-out;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   }
 `;
