@@ -47,9 +47,9 @@ export const Content = styled.div`
 `;
 
 export const Logo = styled.img`
-  width: 3.125rem;
-
-  height: 2.9375rem;
+  width: 6.125rem;
+  height: auto;
+  margin: 0rem 2rem 0rem 0rem;
 
   object-fit: contain;
 `;
@@ -67,9 +67,8 @@ export const Nav = styled.nav`
     flex-wrap: wrap;
   }
   
-  // estilos existentes
   @media (max-width: 768px) {
-    display: ${props => props.open ? 'block' : 'none'};
+    display:none;
   }
 `;
 
