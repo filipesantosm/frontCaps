@@ -66,6 +66,11 @@ export const Nav = styled.nav`
   @media (max-width: 900px) {
     flex-wrap: wrap;
   }
+  
+  // estilos existentes
+  @media (max-width: 768px) {
+    display: ${props => props.open ? 'block' : 'none'};
+  }
 `;
 
 export const StyledLink = styled(Link)`
@@ -77,6 +82,7 @@ export const StyledLink = styled(Link)`
   white-space: nowrap;
 
   padding: 0rem 1rem;
+  margin: 1rem 0rem;
   min-height: 2.8125rem;
   border-radius: 0.5rem;
 

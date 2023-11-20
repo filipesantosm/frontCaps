@@ -32,7 +32,7 @@ const Header = () => {
         <Hamburger onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
           <FiMenu size={24} />
         </Hamburger>
-        <Nav open={isMobileMenuOpen}>
+        <Nav>
           <StyledLink href="/">Início</StyledLink>
           <StyledLink href="/como-funciona">Como funciona</StyledLink>
           <StyledLink href="/resultados">Resultados</StyledLink>
@@ -50,7 +50,15 @@ const Header = () => {
       </Content>
       {isMobileMenuOpen && (
         <MobileMenu>
-          {/* */}
+          <StyledLink href="/">Início</StyledLink>
+          <StyledLink href="/como-funciona">Como funciona</StyledLink>
+          <StyledLink href="/resultados">Resultados</StyledLink>
+          <StyledLink
+            href={youtubeLink}
+            target={youtubeLink !== '/' ? '_blank' : undefined}
+            referrerPolicy={youtubeLink !== '/' ? 'no-referrer' : undefined}>
+              Sorteio ao vivo
+            </StyledLink>
         </MobileMenu>
       )}
     </Container>
