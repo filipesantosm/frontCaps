@@ -29,7 +29,7 @@ const Header = () => {
       </BlackLabel>
       <Content>
         <Logo src="/logo.png" alt="logo" />
-        <Hamburger>
+        <Hamburger onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
           <FiMenu size={24} />
         </Hamburger>
         <Nav open={isMobileMenuOpen}>
@@ -48,9 +48,11 @@ const Header = () => {
         </Nav>
         <HeaderUser />
       </Content>
+      {isMobileMenuOpen && (
         <MobileMenu>
           {/* */}
         </MobileMenu>
+      )}
     </Container>
   );
 };
