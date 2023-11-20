@@ -91,3 +91,10 @@ export const StyledLink = styled(Link)`
     filter: brightness(0.9);
   }
 `;
+
+export const Hamburger = styled.div`
+  display: none;
+  @media (max-width: 768px) {
+    display: block;
+  }
+`;

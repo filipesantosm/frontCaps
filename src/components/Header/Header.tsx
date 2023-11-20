@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { useCurrentDraw } from '@/hooks/useCurrentDraw';
 import AboutUsButton from '../AboutUsButton/AboutUsButton';
 import HeaderUser from '../HeaderUser/HeaderUser';
+import { FiMenu } from 'react-icons/fi';
 import {
   Container,
   Content,
@@ -9,6 +11,7 @@ import {
   StyledLink,
   BlackLabel,
   TextoBranco,
+  Hamburger,
 } from './styles';
 
 const Header = () => {
@@ -25,6 +28,9 @@ const Header = () => {
       </BlackLabel>
       <Content>
         <Logo src="/logo.png" alt="logo" />
+        <Hamburger>
+          <FiMenu size={24} />
+        </Hamburger>
         <Nav>
           <StyledLink href="/">Início</StyledLink>
           <StyledLink href="/como-funciona">Como funciona</StyledLink>
