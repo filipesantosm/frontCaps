@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { useCurrentDraw } from '@/hooks/useCurrentDraw';
 import AboutUsButton from '../AboutUsButton/AboutUsButton';
 import HeaderUser from '../HeaderUser/HeaderUser';
+import { FiMenu } from 'react-icons/fi';
 import {
   Container,
   Content,
@@ -9,11 +11,13 @@ import {
   StyledLink,
   BlackLabel,
   TextoBranco,
+  Hamburger,
+  MobileMenu
 } from './styles';
 
 const Header = () => {
   const { currentDraw } = useCurrentDraw();
-
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const youtubeLink = currentDraw?.attributes?.lnkYoutubeDraw || '/';
 
   return (
@@ -25,6 +29,7 @@ const Header = () => {
       </BlackLabel>
       <Content>
         <Logo src="/logo.png" alt="logo" />
+        
         <Nav>
           <StyledLink href="/">Início</StyledLink>
           <StyledLink href="/como-funciona">Como funciona</StyledLink>
@@ -40,7 +45,22 @@ const Header = () => {
           <StyledLink href="/ajuda">Ajuda</StyledLink>
         </Nav>
         <HeaderUser />
+        <Hamburger onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          <FiMenu size={24} />
+        </Hamburger>
       </Content>
+        <MobileMenu open={isMobileMenuOpen}>
+          <StyledLink href="/">Início</StyledLink>
+          <StyledLink href="/como-funciona">Como funciona</StyledLink>
+          <StyledLink href="/resultados">Resultados</StyledLink>
+          <StyledLink
+            href={youtubeLink}
+            target={youtubeLink !== '/' ? '_blank' : undefined}
+            referrerPolicy={youtubeLink !== '/' ? 'no-referrer' : undefined}>
+              Sorteio ao vivo
+          </StyledLink>
+          <AboutUsButton />
+        </MobileMenu>
     </Container>
   );
 };

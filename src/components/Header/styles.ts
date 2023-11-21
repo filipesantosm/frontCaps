@@ -47,9 +47,9 @@ export const Content = styled.div`
 `;
 
 export const Logo = styled.img`
-  width: 3.125rem;
-
-  height: 2.9375rem;
+  width: 6.125rem;
+  height: auto;
+  margin: 0rem 2rem 0rem 0rem;
 
   object-fit: contain;
 `;
@@ -66,6 +66,10 @@ export const Nav = styled.nav`
   @media (max-width: 900px) {
     flex-wrap: wrap;
   }
+  
+  @media (max-width: 768px) {
+    display:none;
+  }
 `;
 
 export const StyledLink = styled(Link)`
@@ -77,6 +81,7 @@ export const StyledLink = styled(Link)`
   white-space: nowrap;
 
   padding: 0rem 1rem;
+  margin: 1rem 0rem;
   min-height: 2.8125rem;
   border-radius: 0.5rem;
 
@@ -89,5 +94,31 @@ export const StyledLink = styled(Link)`
 
   &:hover {
     filter: brightness(0.9);
+  }
+`;
+
+export const Hamburger = styled.div`
+  padding: 0rem 2rem;
+  color: #0054BC;
+  display: none;
+  position:absolute;
+  right:0;
+  @media (max-width: 768px) {
+    display: block;
+  }
+`;
+
+export const MobileMenu = styled.nav<MenuProps>`
+  display: none;
+  @media (max-width: 768px) {
+    display: ${props => props.open ? 'block' : 'none'};
+    transition: ease-out, opacity 0.3s ease-in-out;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   }
 `;
