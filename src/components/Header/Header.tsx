@@ -59,6 +59,7 @@ const Header = () => {
             referrerPolicy={youtubeLink !== '/' ? 'no-referrer' : undefined}>
               Sorteio ao vivo
           </StyledLink>
+          <AboutUsButton />
         </MobileMenu>
     </Container>
   );

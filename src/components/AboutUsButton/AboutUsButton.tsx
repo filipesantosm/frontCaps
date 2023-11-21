@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { FaChevronRight } from 'react-icons/fa';
+import { FaChevronDown } from 'react-icons/fa';
 import { useOutside } from '../../hooks/useOutside';
 import { Container, StyledLink, Links, ToggleButton, Wrapper } from './styles';
 
@@ -17,7 +17,7 @@ const AboutUsButton = () => {
           type="button"
           onClick={() => setIsOpen(prev => !prev)}
         >
-          Sobre Nós <FaChevronRight />
+          Sobre Nós <FaChevronDown />
         </ToggleButton>
         <Links isOpen={isOpen}>
           <StyledLink href="/quem-somos">Quem somos</StyledLink>

@@ -99,6 +99,7 @@ export const StyledLink = styled(Link)`
 
 export const Hamburger = styled.div`
   padding: 0rem 2rem;
+  color: #0054BC;
   display: none;
   position:absolute;
   right:0;
