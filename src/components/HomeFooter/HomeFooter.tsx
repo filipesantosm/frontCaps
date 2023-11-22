@@ -19,14 +19,14 @@ const HomeFooter = () => {
         <div>
           <TopSectionTitle>CESSÃO DE RESGATE</TopSectionTitle>
           <TopSectionDescription>
-            Você pode ajudar o Banco de Olhos de Sorocaba, comprando o SUPERCAP
+            Você pode ajudar o Banco de Olhos de Sorocaba, comprando o MTCAP
             e cedendo o direito de resgate.
           </TopSectionDescription>
         </div>
       </TopSection>
       <BottomSection>
         <CompanyColumn>
-          <CompanyName>SUPERCAP - TÍTULO DE CAPITALIZAÇÃO</CompanyName>
+          <CompanyName>MTCAP - TÍTULO DE CAPITALIZAÇÃO</CompanyName>
           <CompanyLogo src="capemisa.png" />
         </CompanyColumn>
         <TermsColumn>

@@ -65,7 +65,7 @@ const ContactSection = () => {
           <ContactCard>
             <CardTitle>Entre em contato com nosso suporte</CardTitle>
             <br />
-            <CardText>faleconosco@supercap.com.br</CardText>
+            <CardText>faleconosco@mtcap.com.br</CardText>
             <br />
             <CardText> (15) 3035-2699</CardText>
             <br />
