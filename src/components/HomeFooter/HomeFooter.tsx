@@ -27,7 +27,7 @@ const HomeFooter = () => {
       <BottomSection>
         <CompanyColumn>
           <CompanyName>SUPERCAP - TÍTULO DE CAPITALIZAÇÃO</CompanyName>
-          <CompanyLogo src="/kvrcapitalizacao.png" />
+          <CompanyLogo src="/capemisa.png" />
         </CompanyColumn>
         <TermsColumn>
           Escritório Central: Rua Horácio Cenci, nº 75 – Ed. West Point, 10º
