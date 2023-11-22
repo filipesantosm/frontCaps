@@ -62,11 +62,9 @@ export const CompanyName = styled.p`
 
 export const CompanyLogo = styled.img`
   margin-top: 1rem;
-
-  width: 18.25rem;
-  height: 6.75rem;
+  width: 14.25rem;
+  height: auto;
   object-fit: cover;
-  border-radius: 20px;
 `;
 
 export const TermsColumn = styled.p`

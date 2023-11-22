@@ -27,21 +27,23 @@ const HomeFooter = () => {
       <BottomSection>
         <CompanyColumn>
           <CompanyName>SUPERCAP - TÍTULO DE CAPITALIZAÇÃO</CompanyName>
-          <CompanyLogo src="/capemisa.png" />
+          <CompanyLogo src="capemisa.png" />
         </CompanyColumn>
         <TermsColumn>
-          Escritório Central: Rua Horácio Cenci, nº 75 – Ed. West Point, 10º
-          Andar PQ. Campolim Sorocaba – SP Central de Atendimento:
-          faleconosco@supercapsp.com.br – (15) 3035.2699 Sorteios decorrentes de
-          Títulos de Capitalização de Pagamento Único, da Modalidade Filantropia
-          Premiável, emitidos pela KOVR Capitalização S/A., inscrita no CNPJ sob
-          nº 93.202.448/0001-79 e aprovados pela SUSEP. AO ADQUIRIR O TÍTULO DE
-          CAPITALIZAÇÃO VOCÊ AJUDA O BOS CEDENDO O DIREITO DE RESGATE. A
-          aprovação deste Título pela SUSEP não implica, por parte da Autarquia,
-          em incentivo ou recomendação a sua aquisição, representando
-          exclusivamente, sua adequação às normas em vigor. Antes de contratar,
-          consulte previamente as Condições Gerais. MRW PARTICIPACOES SOROCABA
-          LTDA – 21825829/0001-01
+          Título de Capitalização da Modalidade Filantropia Premiável de Contribuição Única,
+          emitido pela CAPEMISA Capitalização S/A, CNPJ 14.056.028/0001-55, aprovado pelo
+          Processo SUSEP indicado no título. CONTATO LOCAL: (65) 3055-1100/3365-6562.
+          SAC 0800 940 1130. OUVIDORIA 0800 707 4936, de segunda a sexta-feira, das 8h às 17h.
+          É proibida a venda de título de capitalização a menores de dezesseis anos. 
+          O valor não exigido dentro do prazo prescricional, estabelecido pela legislação em
+          vigor, acarretará a perda desse direito. A aquisição deste título faculta ao adquirente
+          a cessão ao direito de resgate à APAE Brasil, certificada nos termos da legislação em vigor.
+          Antes de contratar consulte previamente as condições Gerais. As condições
+          contratuais/regulamento deste produto protocolizadas pela sociedade junto à SUSEP
+          poderão ser consultadas no endereço eletrônico www.susep.gov.br, de acordo com o
+          número de processo constante da proposta. Prêmios líquidos de imposto de renda.
+          Confira o resultado dos sorteios e as condições de participação em www.mtcap.com.br.
+          Imagens meramente ilustrativas.
         </TermsColumn>
       </BottomSection>
     </Container>
