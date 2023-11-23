@@ -16,7 +16,6 @@ import {
   CountdownPoints,
   CountdownUnit,
   CountdownValue,
-  LeftSection,
   RightSection,
   RightTitle,
   Title,

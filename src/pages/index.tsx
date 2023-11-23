@@ -35,8 +35,8 @@ const Home = () => {
   return (
     <Layout>
       <HeroImage src={drawImageUrl} alt="" />
+      <NextRaffle/>
       <HomeContent>
-        <NextRaffle containerMarginTop="-7rem" />
         <RaffleInformation>
           <RaffleHeader>
             <RaffleTitle>

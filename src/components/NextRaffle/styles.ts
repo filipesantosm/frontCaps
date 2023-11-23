@@ -1,20 +1,11 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  position: relative;
-  z-index: 2;
-
-  margin-top: -5rem;
-
-  width: 100%;
+  z-index:2;
+  width: 400px;
   border-radius: 1.25rem;
-
-  display: flex;
-  align-items: center;
   justify-content: space-between;
-
   padding: 1.25rem 5.625rem 1.25rem 2.25rem;
-
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
 
   background: ${({ theme }) => theme.colors.white};
