@@ -11,6 +11,7 @@ import CookiePopup from '@/components/CookiePopup/CookiePopup';
 import {
   FloatingContactButton,
   HeroImage,
+  HeroContent,
   HomeContent,
   PlayIconWrapper,
   RaffleDescription,
@@ -34,8 +35,10 @@ const Home = () => {
 
   return (
     <Layout>
-      <HeroImage src={drawImageUrl} alt="" />
-      <NextRaffle/>
+      <HeroContent>
+        <HeroImage src={drawImageUrl} alt="" />
+        <NextRaffle/>
+      </HeroContent>
       <HomeContent>
         <RaffleInformation>
           <RaffleHeader>

@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 
-export const HeroImage = styled.img`
-  position: relative;
-  z-index: 1;
+export const HeroContent = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+`;
 
-  width: 100%;
+export const HeroImage = styled.img`
+  grid-column: span 3; /* Ocupa 3 das 4 colunas */
+  width: 100%; /* Estica para ocupar toda a largura da área designada */
   object-fit: cover;
   object-position: top;
-  min-height: 25.9375rem;
   aspect-ratio: 3;
 `;
 
