@@ -94,36 +94,6 @@ const NextRaffle = ({ containerMarginTop }: Props) => {
         marginTop: containerMarginTop,
       }}
     >
-      <LeftSection>
-        <Title htmlFor="drawPromo">PARTICIPE AGORA!</Title>
-        <BuyContainer>
-          <ShadowSelect
-            defaultValue={promoOptions[0]}
-            options={promoOptions}
-            noOptionsMessage={() => 'Nenhuma opção disponível'}
-            value={selectedDrawPromo}
-            inputId="drawPromo"
-            onChange={option => {
-              if (option) {
-                setSelectedDrawPromo(option as PromoOption);
-              } else {
-                setSelectedDrawPromo(undefined);
-              }
-            }}
-          />
-          <BuyButton
-            type="button"
-            onClick={() => router.push('/comprar')}
-            disabled={disablePurchase}
-          >
-            Comprar{' '}
-            {selectedDrawPromo ? formatCurrency(selectedDrawPromo?.price) : ''}
-            <CartIconWrapper>
-              <PiShoppingCartSimpleFill />
-            </CartIconWrapper>
-          </BuyButton>
-        </BuyContainer>
-      </LeftSection>
       <RightSection>
         <RightTitle>Próximo sorteio em</RightTitle>
         <CountdownContainer>
@@ -162,6 +132,34 @@ const NextRaffle = ({ containerMarginTop }: Props) => {
             <CountdownUnit>Segundos</CountdownUnit>
           </CountdownItem>
         </CountdownContainer>
+        <Title htmlFor="drawPromo">PARTICIPE AGORA!</Title>
+        <BuyContainer>
+          <ShadowSelect
+            defaultValue={promoOptions[0]}
+            options={promoOptions}
+            noOptionsMessage={() => 'Nenhuma opção disponível'}
+            value={selectedDrawPromo}
+            inputId="drawPromo"
+            onChange={option => {
+              if (option) {
+                setSelectedDrawPromo(option as PromoOption);
+              } else {
+                setSelectedDrawPromo(undefined);
+              }
+            }}
+          />
+          <BuyButton
+            type="button"
+            onClick={() => router.push('/comprar')}
+            disabled={disablePurchase}
+          >
+            Comprar{' '}
+            {selectedDrawPromo ? formatCurrency(selectedDrawPromo?.price) : ''}
+            <CartIconWrapper>
+              <PiShoppingCartSimpleFill />
+            </CartIconWrapper>
+          </BuyButton>
+        </BuyContainer>
       </RightSection>
     </Container>
   );

@@ -24,12 +24,6 @@ export const Container = styled.div`
   }
 `;
 
-export const LeftSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-`;
-
 export const Title = styled.label`
   font-weight: 700;
   letter-spacing: 0.053em;
@@ -92,7 +86,6 @@ export const CartIconWrapper = styled.div`
 export const RightSection = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
 `;
 
 export const RightTitle = styled.p`
