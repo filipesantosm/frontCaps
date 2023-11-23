@@ -15,11 +15,11 @@ const HomeFooter = () => {
   return (
     <Container>
       <TopSection>
-        <TopSectionLogo src="/bos.png" />
+        <TopSectionLogo src="/apae.png" />
         <div>
           <TopSectionTitle>CESSÃO DE RESGATE</TopSectionTitle>
           <TopSectionDescription>
-            Você pode ajudar o Banco de Olhos de Sorocaba, comprando o MTCAP
+            Você pode ajudar a APAE, comprando o MTCAP
             e cedendo o direito de resgate.
           </TopSectionDescription>
         </div>

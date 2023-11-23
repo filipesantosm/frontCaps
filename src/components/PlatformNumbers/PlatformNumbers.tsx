@@ -34,7 +34,7 @@ const PlatformNumbers = () => {
           <CardLabel>DOADOS</CardLabel>
 
           <CardDescription>
-            Mais de 14 milhões doados para o BOS
+            Mais de 14 milhões doados para a APAE
           </CardDescription>
         </Card>
       </CardsContainer>
