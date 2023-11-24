@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   z-index:2;
-  width: 400px;
+  width: 100%;
   justify-content: space-between;
   padding: 1.25rem 5.625rem 1.25rem 2.25rem;
   background: ${({ theme }) => theme.colors.white};
