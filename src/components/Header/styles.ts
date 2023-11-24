@@ -47,7 +47,7 @@ export const Content = styled.div`
 `;
 
 export const Logo = styled.img`
-  width: 6.125rem;
+  width: 4.125rem;
   height: auto;
   margin: 0rem 2rem 0rem 0rem;
 
