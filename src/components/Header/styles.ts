@@ -10,8 +10,7 @@ export const Container = styled.header`
   padding: 2rem 5rem 0.5rem 0.5rem;
 
   background: ${({ theme }) => theme.colors.grayf3};
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.37);
-
+  
   display: flex;
   align-items: center;
 `;
@@ -99,7 +98,7 @@ export const StyledLink = styled(Link)`
 
 export const Hamburger = styled.div`
   padding: 0rem 2rem;
-  color: #0054BC;
+  color:${({ theme }) => theme.colors.primary};
   display: none;
   position:absolute;
   right:0;
