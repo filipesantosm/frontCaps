@@ -94,7 +94,6 @@ export const PlayIconWrapper = styled.div`
 
 export const FloatingContactButton = styled.button`
   border: none;
-
   position: fixed;
   bottom: 2rem;
   right: 10%;
@@ -106,10 +105,10 @@ export const FloatingContactButton = styled.button`
 
   display: flex;
   align-items: center;
-  gap: 1rem;
+  
 
-  padding-left: 2.25rem;
-  padding-right: 2.75rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 
   color: ${({ theme }) => theme.colors.white};
   font-size: 1rem;

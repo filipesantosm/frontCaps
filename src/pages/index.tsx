@@ -74,7 +74,6 @@ const Home = () => {
       <CookiePopup />
       <FloatingContactButton type="button">
         <IoLogoWhatsapp />
-        Fale com a gente!
       </FloatingContactButton>
     </Layout>
   );
