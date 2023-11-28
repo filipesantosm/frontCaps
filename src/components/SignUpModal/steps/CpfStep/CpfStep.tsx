@@ -44,6 +44,11 @@ const CpfStep = ({ onNext, onClickLogin, signUpFormData }: SignUpStepProps) => {
       });
     } catch (error) {
       handleError(error);
+      // onNext({
+      //   cpf: '123.315.956-90',
+      //   name: 'Filipe da Silva',
+      //   dateBirth: '',
+      // });
     } finally {
       setIsSubmitting(false);
     }
@@ -71,15 +76,6 @@ const CpfStep = ({ onNext, onClickLogin, signUpFormData }: SignUpStepProps) => {
           'Continuar'
         )}
       </SubmitButton>
-      <TextButton
-        type="button"
-        onClick={onClickLogin}
-        style={{
-          textAlign: 'center',
-        }}
-      >
-        Já tem conta? Entre na sua conta por aqui!
-      </TextButton>
     </Form>
   );
 };
